@@ -521,34 +521,37 @@ Item {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
 
-                    RowLayout {
+                    DurationPicker {
+                        id: estPicker
+                        minMinutes: 0
+                        maxMinutes: 1440
+                        onDurationModified: mins => App.updateTask(root.taskId, { estimatedMinutes: mins })
+                    }
+                    Binding {
+                        target: estPicker
+                        property: "totalMinutes"
+                        value: root.t.estimatedMinutes ?? 0
+                    }
+
+                    QQC2.Label {
                         Layout.fillWidth: true
-                        spacing: Kirigami.Units.smallSpacing
-
-                        PaddedSpinBox {
-                            id: estSpin
-                            minWidthUnits: 7
-                            from: 0
-                            to: 1440
-                            stepSize: 5
-                            value: root.t.estimatedMinutes ?? 0
-                            textFromValue: v => v <= 0 ? i18nc("estimate", "No estimate") : i18nc("minutes est", "%1 min est.", v)
-                            valueFromText: t => parseInt(t.replace(/\D/g, "")) || 0
-                            onValueModified: App.updateTask(root.taskId, { estimatedMinutes: value })
-                        }
-
-                        QQC2.Label {
-                            Layout.fillWidth: true
-                            font: Kirigami.Theme.smallFont
-                            color: Kirigami.Theme.disabledTextColor
-                            elide: Text.ElideRight
-                            text: {
-                                const tracked = root.t.trackedText ?? "0 min";
-                                const poms = root.t.pomodorosCompleted ?? 0;
-                                return poms > 0
-                                    ? i18nc("execution stats", "Spent: %1 · 🍅 ×%2", tracked, poms)
-                                    : i18nc("execution stats", "Spent: %1", tracked);
-                            }
+                        font: Kirigami.Theme.smallFont
+                        color: Kirigami.Theme.disabledTextColor
+                        elide: Text.ElideRight
+                        text: {
+                            const est = root.t.estimatedMinutes ?? 0;
+                            const estLabel = est <= 0
+                                ? i18nc("estimate", "No estimate")
+                                : (est >= 60
+                                   ? (est % 60 === 0 ? i18nc("est h", "%1h est.", Math.floor(est / 60))
+                                                     : i18nc("est h m", "%1h %2m est.", Math.floor(est / 60), est % 60))
+                                   : i18nc("minutes est", "%1 min est.", est));
+                            const tracked = root.t.trackedText ?? "0 min";
+                            const poms = root.t.pomodorosCompleted ?? 0;
+                            const spent = poms > 0
+                                ? i18nc("execution stats", "Spent: %1 · 🍅 ×%2", tracked, poms)
+                                : i18nc("execution stats", "Spent: %1", tracked);
+                            return estLabel + " · " + spent;
                         }
                     }
 

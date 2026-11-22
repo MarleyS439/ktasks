@@ -890,7 +890,7 @@ Item {
             const m = Math.max(0, Math.min(1425, startMin ?? (9 * 60)));
             bStartHour.value = Math.floor(m / 60);
             bStartMin.value = m % 60;
-            bDuration.value = Math.max(15, Math.min(480, durationMins ?? 60));
+            bDuration.totalMinutes = Math.max(15, Math.min(480, durationMins ?? 60));
             daysMask = 127;
             blockColor = "#3daee9";
             bNotify.checked = true;
@@ -918,7 +918,7 @@ Item {
             bNotes.text = info.notes;
             bStartHour.value = Math.floor(info.startMinute / 60);
             bStartMin.value = info.startMinute % 60;
-            bDuration.value = info.durationMinutes;
+            bDuration.totalMinutes = info.durationMinutes;
             daysMask = info.daysMask || 127;
             blockColor = info.color || "#3daee9";
             bNotify.checked = !!info.notifyEnabled;
@@ -947,7 +947,7 @@ Item {
                         category: bCategory.text.trim(),
                         notes: bNotes.text.trim(),
                         startMinute: bStartHour.value * 60 + bStartMin.value,
-                        durationMinutes: bDuration.value,
+                        durationMinutes: bDuration.totalMinutes,
                         isTemplate: blockDialog.isTemplate,
                         daysMask: blockDialog.isTemplate ? blockDialog.daysMask : 0,
                         specificDate: blockDialog.isTemplate ? "" : App.routine.selectedDate,
@@ -1001,15 +1001,11 @@ Item {
                     valueFromText: t => parseInt(t.replace(/\D/g, "")) || 0
                 }
             }
-            PaddedSpinBox {
+            DurationPicker {
                 id: bDuration
-                minWidthUnits: 8
                 Kirigami.FormData.label: i18nc("@label", "Duration:")
-                from: 10
-                to: 480
-                stepSize: 5
-                textFromValue: v => i18ncp("minutes", "%1 min", "%1 min", v)
-                valueFromText: t => parseInt(t.replace(/\D/g, "")) || 30
+                minMinutes: 10
+                maxMinutes: 480
             }
             QQC2.Switch {
                 Kirigami.FormData.label: i18nc("@label", "Repeat:")
@@ -1114,7 +1110,7 @@ Item {
             openTasks = App.openTasks();
             sHour.value = Math.min(22, Math.max(0, new Date().getHours() + 1));
             sMin.value = 0;
-            sDur.value = 60;
+            sDur.totalMinutes = 60;
             sStorage.syncAccId = (App.sync.hasAccounts && App.settings.syncRoutines) ? App.sync.accounts[0].id : 0;
             sStorage.choices = blockDialog.syncChoices();
             sStorage.currentIndex = Math.max(0, sStorage.choices.findIndex(c => c.id === sStorage.syncAccId));
@@ -1132,7 +1128,7 @@ Item {
                 enabled: scheduleTaskDialog.openTasks.length > 0 && taskCombo.currentIndex >= 0
                 onTriggered: {
                     const t = scheduleTaskDialog.openTasks[taskCombo.currentIndex];
-                    const bid = App.routine.scheduleTask(t.id, t.title, sHour.value * 60 + sMin.value, sDur.value);
+                    const bid = App.routine.scheduleTask(t.id, t.title, sHour.value * 60 + sMin.value, sDur.totalMinutes);
                     if (bid > 0 && sStorage.syncAccId > 0) {
                         App.routine.setBlockSyncAccount(bid, sStorage.syncAccId);
                     }
@@ -1171,15 +1167,11 @@ Item {
                     valueFromText: t => parseInt(t.replace(/\D/g, "")) || 0
                 }
             }
-            PaddedSpinBox {
+            DurationPicker {
                 id: sDur
-                minWidthUnits: 8
                 Kirigami.FormData.label: i18nc("@label", "Duration:")
-                from: 10
-                to: 360
-                stepSize: 5
-                textFromValue: v => i18ncp("minutes", "%1 min", "%1 min", v)
-                valueFromText: t => parseInt(t.replace(/\D/g, "")) || 30
+                minMinutes: 10
+                maxMinutes: 360
             }
             QQC2.ComboBox {
                 id: sStorage

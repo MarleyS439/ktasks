@@ -60,6 +60,7 @@ qt_add_qml_module(ktasks
         qml/InsightsPage.qml
         qml/PrintDialog.qml
         qml/PaddedSpinBox.qml
+        qml/DurationPicker.qml
 )
 
 target_link_libraries(ktasks PRIVATE

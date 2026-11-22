@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(ktasks VERSION 1.0.2 LANGUAGES CXX)
+project(ktasks VERSION 1.0.3 LANGUAGES CXX)
 
 set(QT_MIN_VERSION "6.6.0")
 set(KF_MIN_VERSION "6.5.0")

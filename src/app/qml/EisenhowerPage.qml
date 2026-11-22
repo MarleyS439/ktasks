@@ -648,7 +648,10 @@ Item {
                                 visible: card.trackedSeconds > 0 || card.estimatedMinutes > 0
                                 text: {
                                     const spent = card.trackedSeconds > 0 ? card.trackedText : "0m";
-                                    const est = card.estimatedMinutes > 0 ? (" / " + card.estimatedMinutes + "m") : "";
+                                    const em = card.estimatedMinutes;
+                                    const est = em > 0
+                                        ? (" / " + (em >= 60 ? (em % 60 === 0 ? Math.floor(em / 60) + "h" : Math.floor(em / 60) + "h " + (em % 60) + "m") : em + "m"))
+                                        : "";
                                     const pom = card.pomodorosCompleted > 0 ? (" · 🍅×" + card.pomodorosCompleted) : "";
                                     return spent + est + pom;
                                 }
@@ -1456,7 +1459,7 @@ Item {
             targetTask = t;
             msHour.value = Math.min(22, Math.max(0, new Date().getHours() + 1));
             msMin.value = 0;
-            msDur.value = 60;
+            msDur.totalMinutes = 60;
             open();
         }
         title: i18nc("@title:window", "Schedule in Day Planner")
@@ -1471,7 +1474,7 @@ Item {
                     const bid = App.routine.scheduleTask(scheduleMatrixDialog.targetTask.id,
                                                          scheduleMatrixDialog.targetTask.title,
                                                          msHour.value * 60 + msMin.value,
-                                                         msDur.value,
+                                                         msDur.totalMinutes,
                                                          scheduleMatrixDialog.targetTask.listColor || "");
                     if (bid > 0 && App.sync.hasAccounts && App.settings.syncRoutines) {
                         App.routine.setBlockSyncAccount(bid, App.sync.accounts[0].id);
@@ -1508,13 +1511,11 @@ Item {
                     valueFromText: t => parseInt(t.replace(/\D/g, "")) || 0
                 }
             }
-            PaddedSpinBox {
+            DurationPicker {
                 id: msDur
-                minWidthUnits: 8
                 Kirigami.FormData.label: i18nc("@label", "Duration:")
-                from: 10; to: 360; stepSize: 5
-                textFromValue: v => i18ncp("minutes", "%1 min", "%1 min", v)
-                valueFromText: t => parseInt(t.replace(/\D/g, "")) || 30
+                minMinutes: 10
+                maxMinutes: 360
             }
         }
     }
