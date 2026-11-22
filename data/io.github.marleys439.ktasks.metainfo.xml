@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop-application">
+  <id>io.github.marleys439.ktasks</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>KTasks</name>
+  <summary>Task, priority matrix, Pomodoro, routine, and journal manager for KDE Plasma</summary>
+  <summary xml:lang="pt-BR">Gerenciador de tarefas, matriz de prioridades, Pomodoro, rotina e diário para o KDE Plasma</summary>
+  <description>
+    <p>KTasks is an offline-first productivity application for KDE Plasma. Manage tasks, Eisenhower priority quadrants, Pomodoro focus sessions, time-blocked routines, and encrypted Markdown journal notebooks locally or synchronized with Nextcloud.</p>
+    <p xml:lang="pt-BR">KTasks é um aplicativo de produtividade offline-first para o KDE Plasma. Gerencie tarefas, quadrantes da Matriz de Eisenhower, sessões Pomodoro, rotina com blocos de horário e diário em Markdown criptografado localmente ou sincronizado com o Nextcloud.</p>
+    <ul>
+      <li>Summary Home screen with daily KPIs, 10-day Open-Meteo weather forecast, and read-only KOrganizer/Akonadi external agenda</li>
+      <li>Lists, nested subtasks, tags, priorities, recurrence, interactive notifications, and Dolphin-style multi-selection</li>
+      <li>Eisenhower Priority Matrix with Guided Triage, Pomodoro execution timer, and productivity insights</li>
+      <li>Two-way Nextcloud synchronization for Tasks (CalDAV), Routines (CalDAV events), and Journal Notebooks (Nextcloud Notes API)</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.marleys439.ktasks.desktop</launchable>
+  <translation type="gettext">ktasks</translation>
+  <url type="homepage">https://github.com/MarleyS439/ktasks</url>
+  <url type="bugtracker">https://github.com/MarleyS439/ktasks/issues</url>
+  <url type="vcs-browser">https://github.com/MarleyS439/ktasks</url>
+  <developer id="io.github.marleys439">
+    <name>MarleyS439</name>
+  </developer>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Summary dashboard with daily KPIs, weather, priorities, routine, and journal</caption>
+      <image>https://raw.githubusercontent.com/MarleyS439/ktasks/main/docs/screenshots/summary.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Eisenhower Priority Matrix with Guided Triage and Pomodoro tracking</caption>
+      <image>https://raw.githubusercontent.com/MarleyS439/ktasks/main/docs/screenshots/matrix.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+  <provides>
+    <binary>ktasks</binary>
+  </provides>
+  <releases>
+    <release version="1.0.0" date="2026-11-22">
+      <description>
+        <p>Initial community release featuring Summary dashboard, Nextcloud Tasks/Routine/Notes sync, Eisenhower Priority Matrix, Pomodoro &amp; Focus Timer, Productivity Insights, and KOrganizer/Akonadi read-only agenda.</p>
+      </description>
+    </release>
+  </releases>
+</component>

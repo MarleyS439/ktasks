@@ -1,0 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+#pragma once
+#include <QLoggingCategory>
+
+Q_DECLARE_LOGGING_CATEGORY(lcDb)
+Q_DECLARE_LOGGING_CATEGORY(lcSync)
+Q_DECLARE_LOGGING_CATEGORY(lcDav)
+Q_DECLARE_LOGGING_CATEGORY(lcApp)
+Q_DECLARE_LOGGING_CATEGORY(lcNotify)

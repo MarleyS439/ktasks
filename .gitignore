@@ -1,0 +1,9 @@
+build/
+*.mo
+packaging/pkg/
+packaging/src/
+*.pkg.tar.*
+*.tar.gz
+*.tar.zst
+.flatpak-builder/
+repo/

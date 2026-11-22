@@ -1,0 +1,55 @@
+app-id: io.github.marleys439.ktasks
+runtime: org.kde.Platform
+runtime-version: '6.8'
+sdk: org.kde.Sdk
+command: ktasks
+rename-icon: io.github.marleys439.ktasks
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.secrets
+  - --talk-name=org.kde.kwalletd6
+modules:
+  - name: qtkeychain
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_WITH_QT6=ON
+      - -DBUILD_TRANSLATIONS=OFF
+      - -DBUILD_TEST_APPLICATION=OFF
+    sources:
+      - type: archive
+        url: https://github.com/frankosterfeld/qtkeychain/archive/refs/tags/0.15.0.tar.gz
+        sha256: f4254dc8f0933b06d90672d683eab08ef770acd8336e44d030ae2f939a11b2a1
+
+  - name: kcalendarcore
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_TESTING=OFF
+    sources:
+      - type: archive
+        url: https://download.kde.org/stable/frameworks/6.12/kcalendarcore-6.12.0.tar.xz
+        sha256: SKIP
+
+  - name: kirigami-addons
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_TESTING=OFF
+    sources:
+      - type: archive
+        url: https://download.kde.org/stable/kirigami-addons/kirigami-addons-1.7.0.tar.xz
+        sha256: SKIP
+
+  - name: ktasks
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_TESTING=OFF
+    sources:
+      - type: git
+        url: https://github.com/MarleyS439/ktasks.git
+        branch: main

@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Application
+Name=KTasks
+GenericName=Task Manager
+GenericName[pt_BR]=Gerenciador de tarefas
+Comment=Tasks on this device or synchronized with Nextcloud
+Comment[pt_BR]=Tarefas neste dispositivo ou sincronizadas com o Nextcloud
+Exec=ktasks
+Icon=io.github.marleys439.ktasks
+Terminal=false
+Categories=Qt;KDE;Office;ProjectManagement;
+Keywords=todo;tasks;reminder;nextcloud;caldav;tarefas;afazeres;lembrete;
+StartupNotify=true
+StartupWMClass=ktasks
+SingleMainWindow=true
+X-DBUS-ServiceName=io.github.marleys439.ktasks
+Actions=QuickAdd;
+
+[Desktop Action QuickAdd]
+Name=New Task
+Name[pt_BR]=Nova tarefa
+Icon=list-add
+Exec=ktasks --quick-add
+X-KDE-Shortcuts=Meta+Alt+N

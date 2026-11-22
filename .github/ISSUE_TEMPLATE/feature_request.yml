@@ -1,0 +1,19 @@
+name: Feature Request
+description: Propose an improvement or new feature for KTasks
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What workflow or problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should it work inside the KDE Plasma / Kirigami UI?
+    validations:
+      required: true

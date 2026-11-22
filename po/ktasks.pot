@@ -1,0 +1,5246 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ktasks package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ktasks 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/MarleyS439/ktasks/issues\n"
+"POT-Creation-Date: 2026-11-22 11:46-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: src/app/analyticsmanager.cpp:351
+msgctxt "quadrant short label"
+msgid "Q1 · Do Now"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:352
+msgctxt "quadrant short label"
+msgid "Q2 · Schedule"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:353
+msgctxt "quadrant short label"
+msgid "Q3 · Delegate"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:354
+msgctxt "quadrant short label"
+msgid "Q4 · Eliminate"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:434
+msgctxt "insight title"
+msgid "%1 task awaits prioritization"
+msgid_plural "%1 tasks await prioritization"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/analyticsmanager.cpp:435
+msgctxt "insight detail"
+msgid ""
+"Organize open tasks inside the Priority Matrix so high-impact work gets "
+"scheduled before urgent distractions."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:442
+msgctxt "insight title"
+msgid "%1 overdue task needs review"
+msgid_plural "%1 overdue tasks need review"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/analyticsmanager.cpp:443
+msgctxt "insight detail"
+msgid ""
+"Either move urgent deadlines to Q1 and focus now, or reschedule unrealistic "
+"dates."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:451
+msgctxt "insight title"
+msgid "Strong strategic Q2 focus (%1%)"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:452
+msgctxt "insight detail"
+msgid ""
+"You are dedicating real execution time to important goals before they turn "
+"into emergencies."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:456
+msgctxt "insight title"
+msgid "High firefighting load in Q1"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:457
+msgctxt "insight detail"
+msgid ""
+"Most activity is going to urgent Q1 fires. Blocking time for Q2 work helps "
+"prevent future crunches."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:467
+msgctxt "insight title"
+msgid "Time estimates match reality (%1% accurate)"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:468
+msgctxt "insight detail"
+msgid ""
+"Across %1 estimated tasks, actual execution time stayed close to your plan."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:472
+msgctxt "insight title"
+msgid "Tasks take about %1% longer than estimated"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:473
+msgctxt "insight detail"
+msgid ""
+"Try adding a 20–30% time buffer when scheduling tasks in your day planner."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:477
+msgctxt "insight title"
+msgid "Finishing %1% faster than estimated"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:478
+msgctxt "insight detail"
+msgid "Your focused sessions are finishing ahead of planned time estimates."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:485
+msgctxt "insight title"
+msgid "Routine consistency at %1%"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:486
+msgctxt "insight detail"
+msgid "%1 of %2 scheduled routine blocks completed in this period."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:493
+msgctxt "insight title"
+msgid "Most productive day: %1"
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:495
+msgctxt "insight detail"
+msgid "Current active streak: %1 consecutive days."
+msgstr ""
+
+#: src/app/analyticsmanager.cpp:496
+msgctxt "insight detail"
+msgid "Start a Pomodoro timer on your top Q1/Q2 task to build daily momentum."
+msgstr ""
+
+#: src/app/application.cpp:118 src/app/syncmanager.cpp:31
+msgctxt "appended to the title of the local copy kept after a sync conflict"
+msgid "conflicting copy"
+msgstr ""
+
+#: src/app/application.cpp:162
+msgctxt "@action"
+msgid "New Task"
+msgstr ""
+
+#: src/app/application.cpp:165
+msgctxt "@action"
+msgid "New List…"
+msgstr ""
+
+#: src/app/application.cpp:168
+msgctxt "@action"
+msgid "Search"
+msgstr ""
+
+#: src/app/application.cpp:171
+msgctxt "@action"
+msgid "Synchronize Now"
+msgstr ""
+
+#: src/app/application.cpp:174
+msgctxt "@action"
+msgid "Undo"
+msgstr ""
+
+#: src/app/application.cpp:177
+msgctxt "@action"
+msgid "Redo"
+msgstr ""
+
+#: src/app/application.cpp:180
+msgctxt "@action"
+msgid "Show or Hide Completed Tasks"
+msgstr ""
+
+#: src/app/application.cpp:183
+msgctxt "@action"
+msgid "Complete Selected Task"
+msgstr ""
+
+#: src/app/application.cpp:186
+msgctxt "@action"
+msgid "Delete Selected Task"
+msgstr ""
+
+#: src/app/application.cpp:189
+msgctxt "@action"
+msgid "Go to Summary"
+msgstr ""
+
+#: src/app/application.cpp:192
+msgctxt "@action"
+msgid "Go to Today"
+msgstr ""
+
+#: src/app/application.cpp:195
+msgctxt "@action"
+msgid "Go to Next 7 Days"
+msgstr ""
+
+#: src/app/application.cpp:198
+msgctxt "@action"
+msgid "Go to All Tasks"
+msgstr ""
+
+#: src/app/application.cpp:202
+msgctxt "@action"
+msgid "Go to Routine"
+msgstr ""
+
+#: src/app/application.cpp:205
+msgctxt "@action"
+msgid "Go to Journal"
+msgstr ""
+
+#: src/app/application.cpp:208
+msgctxt "@action"
+msgid "Print / Export PDF…"
+msgstr ""
+
+#: src/app/application.cpp:211
+msgctxt "@action"
+msgid "Quick Entry Window"
+msgstr ""
+
+#: src/app/application.cpp:214
+msgctxt "@action"
+msgid "Import from iCalendar File…"
+msgstr ""
+
+#: src/app/application.cpp:217
+msgctxt "@action"
+msgid "Export to iCalendar File…"
+msgstr ""
+
+#: src/app/application.cpp:220
+msgctxt "@action"
+msgid "Settings…"
+msgstr ""
+
+#: src/app/application.cpp:262
+msgctxt "@action global shortcut"
+msgid "Add a Task from Anywhere"
+msgstr ""
+
+#: src/app/application.cpp:265 src/app/application.cpp:574
+#: src/app/application.cpp:617 src/app/main.cpp:73 src/app/main.cpp:115
+#: src/app/qml/Main.qml:153
+msgid "KTasks"
+msgstr ""
+
+#: src/app/application.cpp:372
+msgid "Profile saved"
+msgstr ""
+
+#: src/app/application.cpp:386
+msgid "List: %1"
+msgstr ""
+
+#: src/app/application.cpp:388
+msgid "Completed"
+msgstr ""
+
+#: src/app/application.cpp:388
+msgid "Pending"
+msgstr ""
+
+#: src/app/application.cpp:388
+msgid "Status: %1"
+msgstr ""
+
+#: src/app/application.cpp:390
+msgid "Due: %1"
+msgstr ""
+
+#: src/app/application.cpp:394
+msgid "Start: %1"
+msgstr ""
+
+#: src/app/application.cpp:397 src/app/pdfexporter.cpp:321
+#: src/app/qml/QuickEntry.qml:89 src/app/qml/TaskDetails.qml:513
+#: src/app/qml/TasksPage.qml:478
+msgctxt "priority"
+msgid "High"
+msgstr ""
+
+#: src/app/application.cpp:398 src/app/pdfexporter.cpp:323
+#: src/app/qml/QuickEntry.qml:89 src/app/qml/TaskDetails.qml:513
+#: src/app/qml/TasksPage.qml:478
+msgctxt "priority"
+msgid "Medium"
+msgstr ""
+
+#: src/app/application.cpp:399 src/app/pdfexporter.cpp:325
+#: src/app/qml/QuickEntry.qml:89 src/app/qml/TaskDetails.qml:513
+#: src/app/qml/TasksPage.qml:478
+msgctxt "priority"
+msgid "Low"
+msgstr ""
+
+#: src/app/application.cpp:400
+msgid "Priority: %1"
+msgstr ""
+
+#: src/app/application.cpp:403
+msgid "Repeat: %1"
+msgstr ""
+
+#: src/app/application.cpp:410
+msgid "Tags: %1"
+msgstr ""
+
+#: src/app/application.cpp:415
+msgid "Subtasks:"
+msgstr ""
+
+#: src/app/application.cpp:422
+msgid "Notes:"
+msgstr ""
+
+#: src/app/application.cpp:462
+msgid "Details of %1 task copied to clipboard"
+msgid_plural "Details of %1 tasks copied to clipboard"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:463
+msgid "Task details copied to clipboard"
+msgstr ""
+
+#: src/app/application.cpp:495
+msgid "Task: %1"
+msgstr ""
+
+#: src/app/application.cpp:495
+msgid "%1 task"
+msgid_plural "%1 tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:577
+msgctxt "@action tray menu"
+msgid "New Task…"
+msgstr ""
+
+#: src/app/application.cpp:580
+msgctxt "@action tray menu"
+msgid "Today"
+msgstr ""
+
+#: src/app/application.cpp:584
+msgctxt "@action tray menu"
+msgid "Synchronize Now"
+msgstr ""
+
+#: src/app/application.cpp:586
+msgctxt "@action tray menu"
+msgid "Quit"
+msgstr ""
+
+#: src/app/application.cpp:610
+msgid "Nothing due today"
+msgstr ""
+
+#: src/app/application.cpp:612
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:614 src/app/notifier.cpp:459
+#: src/app/pdfexporter.cpp:383
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:668 src/app/main.cpp:88
+msgid "Start in the system tray without showing the window."
+msgstr ""
+
+#: src/app/application.cpp:669 src/app/main.cpp:89
+msgid "Open the quick entry window."
+msgstr ""
+
+#: src/app/application.cpp:670 src/app/main.cpp:90
+msgid "Add a task, e.g. --add \"Buy milk tomorrow 9am #home\"."
+msgstr ""
+
+#: src/app/application.cpp:876
+msgctxt "recurrence too complex to describe"
+msgid "Custom repetition"
+msgstr ""
+
+#: src/app/application.cpp:881
+msgctxt "recurrence"
+msgid "Every day"
+msgid_plural "Every %1 days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:886
+msgctxt "recurrence"
+msgid "Every weekday"
+msgstr ""
+
+#: src/app/application.cpp:888
+msgctxt "recurrence"
+msgid "Every week"
+msgid_plural "Every %1 weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:904
+msgctxt "recurrence"
+msgid "Every month"
+msgid_plural "Every %1 months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:906
+msgctxt "recurrence"
+msgid "Every year"
+msgid_plural "Every %1 years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:910
+msgctxt "recurrence limit"
+msgid "%1 time"
+msgid_plural "%1 times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:912
+msgctxt "recurrence limit, %1 is date"
+msgid "until %1"
+msgstr ""
+
+#: src/app/application.cpp:925
+msgctxt "reminder"
+msgid "When it starts"
+msgstr ""
+
+#: src/app/application.cpp:925 src/app/qml/TaskDetails.qml:489
+msgctxt "reminder"
+msgid "When it is due"
+msgstr ""
+
+#: src/app/application.cpp:928
+msgctxt "reminder"
+msgid "%1 minute after"
+msgid_plural "%1 minutes after"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:931
+msgctxt "reminder"
+msgid "%1 day before"
+msgid_plural "%1 days before"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:934
+msgctxt "reminder"
+msgid "%1 hour before"
+msgid_plural "%1 hours before"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:936
+msgctxt "reminder"
+msgid "%1 minute before"
+msgid_plural "%1 minutes before"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1076 src/app/application.cpp:1109
+msgctxt "undo step"
+msgid "Edit task"
+msgstr ""
+
+#: src/app/application.cpp:1109
+msgctxt "undo step"
+msgid "Edit tasks"
+msgstr ""
+
+#: src/app/application.cpp:1127
+msgid "Done. Next time: %1"
+msgstr ""
+
+#: src/app/application.cpp:1129
+msgid "Task completed"
+msgstr ""
+
+#: src/app/application.cpp:1158
+msgid "%1 task completed"
+msgid_plural "%1 tasks completed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1159
+msgid "%1 task reopened"
+msgid_plural "%1 tasks reopened"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1171
+msgid "Task and %1 subtask deleted"
+msgid_plural "Task and %1 subtasks deleted"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1171
+msgid "Task deleted"
+msgstr ""
+
+#: src/app/application.cpp:1194
+msgctxt "undo step"
+msgid "Delete tasks"
+msgstr ""
+
+#: src/app/application.cpp:1195
+msgid "%1 task deleted"
+msgid_plural "%1 tasks deleted"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1210
+msgid "\"%1\" is read-only."
+msgstr ""
+
+#: src/app/application.cpp:1227
+msgid "Moved to \"%1\""
+msgstr ""
+
+#: src/app/application.cpp:1228
+msgid "Moved %1 task to \"%2\""
+msgid_plural "Moved %1 tasks to \"%2\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1238
+msgctxt "undo step"
+msgid "Change due date"
+msgstr ""
+
+#: src/app/application.cpp:1252
+msgctxt "undo step"
+msgid "Remove due date"
+msgstr ""
+
+#: src/app/application.cpp:1267
+msgctxt "undo step"
+msgid "Change due time"
+msgstr ""
+
+#: src/app/application.cpp:1280
+msgctxt "undo step"
+msgid "Remove due time"
+msgstr ""
+
+#: src/app/application.cpp:1298
+msgctxt "undo step"
+msgid "Change start date"
+msgstr ""
+
+#: src/app/application.cpp:1308
+msgctxt "undo step"
+msgid "Remove start date"
+msgstr ""
+
+#: src/app/application.cpp:1349
+msgctxt "undo step"
+msgid "Postpone tasks"
+msgstr ""
+
+#: src/app/application.cpp:1349
+msgctxt "undo step"
+msgid "Postpone task"
+msgstr ""
+
+#: src/app/application.cpp:1362
+msgctxt "undo step"
+msgid "Add tag"
+msgstr ""
+
+#: src/app/application.cpp:1371
+msgctxt "undo step"
+msgid "Remove tag"
+msgstr ""
+
+#: src/app/application.cpp:1378
+msgctxt "undo step"
+msgid "Add reminder"
+msgstr ""
+
+#: src/app/application.cpp:1393
+msgctxt "undo step"
+msgid "Remove reminder"
+msgstr ""
+
+#: src/app/application.cpp:1402 src/app/application.cpp:1418
+msgctxt "undo step"
+msgid "Change repetition"
+msgstr ""
+
+#: src/app/application.cpp:1448
+msgid "%1 completed task deleted"
+msgid_plural "%1 completed tasks deleted"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1521
+msgctxt "%1 is the action that was undone"
+msgid "Undone: %1"
+msgstr ""
+
+#: src/app/application.cpp:1530
+msgctxt "%1 is the action that was redone"
+msgid "Redone: %1"
+msgstr ""
+
+#: src/app/application.cpp:1555
+msgid "Could not write %1: %2"
+msgstr ""
+
+#: src/app/application.cpp:1559
+msgid "%1 task exported"
+msgid_plural "%1 tasks exported"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/application.cpp:1567
+msgid "Could not read %1: %2"
+msgstr ""
+
+#: src/app/application.cpp:1572
+msgid "No tasks found in that file."
+msgstr ""
+
+#: src/app/application.cpp:1576
+msgid "%1 task imported"
+msgid_plural "%1 tasks imported"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/backupmanager.cpp:41 src/app/backupmanager.cpp:45
+msgid "No local backup created yet"
+msgstr ""
+
+#: src/app/backupmanager.cpp:47
+msgctxt "%1 is a date and time"
+msgid "Last backup: %1"
+msgstr ""
+
+#: src/app/backupmanager.cpp:95 src/app/backupmanager.cpp:113
+msgid "Backup failed: %1"
+msgstr ""
+
+#: src/app/backupmanager.cpp:101 src/app/backupmanager.cpp:118
+msgid "Backup saved to %1"
+msgstr ""
+
+#: src/app/backupmanager.cpp:130
+msgid "Could not restore backup: %1"
+msgstr ""
+
+#: src/app/backupmanager.cpp:135
+msgid "Backup restored successfully."
+msgstr ""
+
+#: src/app/eisenhowermanager.cpp:676 src/app/eisenhowermanager.cpp:774
+msgctxt "undo step"
+msgid "Prioritize task"
+msgstr ""
+
+#: src/app/eisenhowermanager.cpp:824
+msgctxt "undo step"
+msgid "Reset task priority"
+msgstr ""
+
+#: src/app/eisenhowermanager.cpp:845
+msgctxt "undo step"
+msgid "Clear Q4 tasks"
+msgstr ""
+
+#: src/app/eisenhowermanager.cpp:846
+msgid "%1 task removed from Q4"
+msgid_plural "%1 tasks removed from Q4"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/focusmanager.cpp:33
+msgctxt "duration"
+msgid "0 min"
+msgstr ""
+
+#: src/app/focusmanager.cpp:36
+msgctxt "duration seconds"
+msgid "%1 s"
+msgid_plural "%1 s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/focusmanager.cpp:42
+msgctxt "hours and minutes"
+msgid "%1h %2m"
+msgstr ""
+
+#: src/app/focusmanager.cpp:42
+msgctxt "hours only"
+msgid "%1h"
+msgstr ""
+
+#: src/app/focusmanager.cpp:44
+msgctxt "minutes short"
+msgid "%1 min"
+msgstr ""
+
+#: src/app/focusmanager.cpp:56 src/app/focusmanager.cpp:313
+msgctxt "focus target"
+msgid "Free Focus"
+msgstr ""
+
+#: src/app/focusmanager.cpp:95
+msgctxt "focus status"
+msgid "Ready"
+msgstr ""
+
+#: src/app/focusmanager.cpp:98
+msgctxt "focus status"
+msgid "Break"
+msgstr ""
+
+#: src/app/focusmanager.cpp:98
+msgctxt "focus status"
+msgid "Break (Paused)"
+msgstr ""
+
+#: src/app/focusmanager.cpp:101
+msgctxt "focus status"
+msgid "Stopwatch"
+msgstr ""
+
+#: src/app/focusmanager.cpp:101
+msgctxt "focus status"
+msgid "Stopwatch (Paused)"
+msgstr ""
+
+#: src/app/focusmanager.cpp:104
+msgctxt "focus status"
+msgid "Pomodoro %1/4"
+msgstr ""
+
+#: src/app/focusmanager.cpp:105
+msgctxt "focus status"
+msgid "Pomodoro %1/4 (Paused)"
+msgstr ""
+
+#: src/app/focusmanager.cpp:239
+msgctxt "@info"
+msgid "Recorded %1 on “%2”"
+msgstr ""
+
+#: src/app/focusmanager.cpp:278
+msgctxt "focus target"
+msgid "Manual Focus Log"
+msgstr ""
+
+#: src/app/focusmanager.cpp:291
+msgctxt "@info"
+msgid "Added %1 to execution time"
+msgstr ""
+
+#: src/app/focusmanager.cpp:399
+msgctxt "@info"
+msgid "Pomodoro finished for “%1”! Take a break."
+msgstr ""
+
+#: src/app/focusmanager.cpp:400
+msgctxt "@info"
+msgid "Break finished! Ready for the next focus cycle."
+msgstr ""
+
+#: src/app/focusmanager.cpp:407
+msgctxt "notification title"
+msgid "Pomodoro Completed"
+msgstr ""
+
+#: src/app/focusmanager.cpp:407
+msgctxt "notification title"
+msgid "Break Finished"
+msgstr ""
+
+#: src/app/focusmanager.cpp:412
+msgctxt "notification action"
+msgid "Start Long Break"
+msgstr ""
+
+#: src/app/focusmanager.cpp:412
+msgctxt "notification action"
+msgid "Start Break"
+msgstr ""
+
+#: src/app/focusmanager.cpp:415
+msgctxt "notification action"
+msgid "Resume Focus"
+msgstr ""
+
+#: src/app/journalmanager.cpp:36
+msgctxt "default journal notebook name"
+msgid "Personal"
+msgstr ""
+
+#: src/app/journalmanager.cpp:267 src/app/journalmanager.cpp:891
+msgctxt "untitled journal entry"
+msgid "Untitled entry"
+msgstr ""
+
+#: src/app/journalmanager.cpp:282
+msgid "Locked with password"
+msgstr ""
+
+#: src/app/journalmanager.cpp:392
+msgctxt "default journal title, %1 is date"
+msgid "Journal — %1"
+msgstr ""
+
+#: src/app/journalmanager.cpp:452
+msgid "Unlock the entry before editing."
+msgstr ""
+
+#: src/app/journalmanager.cpp:495
+msgid "Could not encrypt journal entry."
+msgstr ""
+
+#: src/app/journalmanager.cpp:558
+msgid ""
+"Unlock and remove password protection before syncing a note to Nextcloud "
+"Notes."
+msgstr ""
+
+#: src/app/journalmanager.cpp:609
+msgid "Unlock the entry before duplicating."
+msgstr ""
+
+#: src/app/journalmanager.cpp:614
+msgctxt "copy of a journal entry"
+msgid "%1 (copy)"
+msgstr ""
+
+#: src/app/journalmanager.cpp:654
+msgid "Password cannot be empty."
+msgstr ""
+
+#: src/app/journalmanager.cpp:664
+msgid "Entry is already locked."
+msgstr ""
+
+#: src/app/journalmanager.cpp:669 src/app/journalmanager.cpp:781
+msgid "Encryption failed."
+msgstr ""
+
+#: src/app/journalmanager.cpp:683
+msgid ""
+"Password-protected notes stay offline on this device and were detached from "
+"Nextcloud sync."
+msgstr ""
+
+#: src/app/journalmanager.cpp:718 src/app/journalmanager.cpp:811
+msgid "Incorrect password."
+msgstr ""
+
+#: src/app/journalmanager.cpp:723 src/app/journalmanager.cpp:776
+#: src/app/journalmanager.cpp:816
+msgid "Could not decrypt entry."
+msgstr ""
+
+#: src/app/journalmanager.cpp:759
+msgid "New password cannot be empty."
+msgstr ""
+
+#: src/app/journalmanager.cpp:771
+msgid "Current password is incorrect."
+msgstr ""
+
+#: src/app/journalmanager.cpp:845
+msgid "Unlock the entry before exporting."
+msgstr ""
+
+#: src/app/main.cpp:75
+msgid ""
+"Tasks, routines, and journal for Plasma — local or synchronized with "
+"Nextcloud"
+msgstr ""
+
+#: src/app/main.cpp:77
+msgid "© 2026 MarleyS439"
+msgstr ""
+
+#: src/app/main.cpp:78
+msgid "MarleyS439"
+msgstr ""
+
+#: src/app/main.cpp:78
+msgid "Author & Maintainer"
+msgstr ""
+
+#: src/app/main.cpp:115
+msgid ""
+"The task database could not be opened:\n"
+"%1\n"
+"\n"
+"Your data was not changed."
+msgstr ""
+
+#: src/app/notifier.cpp:291
+msgctxt "routine notification title"
+msgid "Routine: %1"
+msgstr ""
+
+#: src/app/notifier.cpp:295
+msgctxt "notification action"
+msgid "Open Routine"
+msgstr ""
+
+#: src/app/notifier.cpp:299 src/app/notifier.cpp:354 src/app/notifier.cpp:525
+msgctxt "notification action"
+msgid "Complete"
+msgstr ""
+
+#: src/app/notifier.cpp:306 src/app/notifier.cpp:359 src/app/notifier.cpp:528
+msgctxt "notification action"
+msgid "Snooze %1 minute"
+msgid_plural "Snooze %1 minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/notifier.cpp:310
+msgctxt "notification action"
+msgid "Skip today"
+msgstr ""
+
+#: src/app/notifier.cpp:328
+msgctxt "notification text, %1 is a date"
+msgid "Was due %1"
+msgstr ""
+
+#: src/app/notifier.cpp:328
+msgctxt "notification text, %1 is a date"
+msgid "Due %1"
+msgstr ""
+
+#: src/app/notifier.cpp:350 src/app/notifier.cpp:387 src/app/notifier.cpp:471
+#: src/app/notifier.cpp:495 src/app/notifier.cpp:512
+msgctxt "notification action"
+msgid "Open"
+msgstr ""
+
+#: src/app/notifier.cpp:363
+msgctxt "notification action: snooze until tomorrow morning"
+msgid "Tomorrow"
+msgstr ""
+
+#: src/app/notifier.cpp:377
+msgid "%1 reminder while you were away"
+msgid_plural "%1 reminders while you were away"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/notifier.cpp:383 src/app/notifier.cpp:467
+msgid "…and %1 more"
+msgid_plural "…and %1 more"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/notifier.cpp:391 src/app/notifier.cpp:475
+msgctxt "notification action"
+msgid "Show tasks"
+msgstr ""
+
+#: src/app/notifier.cpp:456
+msgid "%1 task for today"
+msgid_plural "%1 tasks for today"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/notifier.cpp:488
+msgid "%1 task was changed in two places"
+msgid_plural "%1 tasks were changed in two places"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/notifier.cpp:489
+msgctxt "%1 is an account name"
+msgid ""
+"Both versions were kept in %1; your version has \"conflicting copy\" in its "
+"title:"
+msgstr ""
+
+#: src/app/notifier.cpp:508
+msgctxt "%1 is an account name"
+msgid "Could not synchronize with %1"
+msgstr ""
+
+#: src/app/notifier.cpp:509
+msgid ""
+"%1 Open the settings to sign in again. Your changes are kept on this device."
+msgstr ""
+
+#: src/app/notifier.cpp:510
+msgid "%1 Your changes are kept on this device and will be sent later."
+msgstr ""
+
+#: src/app/notifier.cpp:522
+msgid "This is what a reminder looks like"
+msgstr ""
+
+#: src/app/notifier.cpp:523
+msgid ""
+"Reminders show the task, when it is due and buttons to complete or snooze it."
+msgstr ""
+
+#: src/app/pdfexporter.cpp:206
+msgid "Today's Tasks"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:209
+msgid "Next 7 Days"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:212
+msgid "Overdue Tasks"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:215
+msgid "All Tasks"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:218 src/app/pdfexporter.cpp:448
+msgid "Priority Matrix (Eisenhower)"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:228
+msgid "Tasks"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:331
+msgid "Recurring"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:379 src/app/pdfexporter.cpp:449
+#: src/app/pdfexporter.cpp:512
+msgid "Generated %1"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:380
+msgid "%1 pending"
+msgid_plural "%1 pending"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/pdfexporter.cpp:381
+msgid "%1 completed"
+msgid_plural "%1 completed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/pdfexporter.cpp:387
+msgid "No tasks to print for this selection."
+msgstr ""
+
+#: src/app/pdfexporter.cpp:394
+msgid "No Date"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:396
+msgid "Overdue"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:398
+msgid "Today — %1"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:400
+msgid "Tomorrow — %1"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:447
+msgid "Priority Matrix"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:450
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/pdfexporter.cpp:451
+msgid "Q1: %1 · Q2: %2 · Q3: %3 · Q4: %4"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:461
+msgid "Empty"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:475 src/app/qml/EisenhowerPage.qml:1057
+msgctxt "quadrant title"
+msgid "Do Now"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:475 src/app/qml/EisenhowerPage.qml:1058
+msgctxt "quadrant axis"
+msgid "Urgent & Important"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:476 src/app/qml/EisenhowerPage.qml:1071
+msgctxt "quadrant title"
+msgid "Schedule & Focus"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:476 src/app/qml/EisenhowerPage.qml:1072
+msgctxt "quadrant axis"
+msgid "Important · Not Urgent"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:478 src/app/qml/EisenhowerPage.qml:1085
+msgctxt "quadrant title"
+msgid "Delegate / Quick Wins"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:478 src/app/qml/EisenhowerPage.qml:1086
+msgctxt "quadrant axis"
+msgid "Urgent · Less Important"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:479 src/app/qml/EisenhowerPage.qml:1099
+msgctxt "quadrant title"
+msgid "Eliminate / Someday"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:479 src/app/qml/EisenhowerPage.qml:1100
+msgctxt "quadrant axis"
+msgid "Neither Urgent nor Important"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:484
+msgid "Awaiting Classification"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:510
+msgid "Daily Routine"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:513
+msgid "%1/%2 completed"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:514
+msgid "%1 h %2 min planned"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:517
+msgid "No routine blocks scheduled for this day."
+msgstr ""
+
+#: src/app/pdfexporter.cpp:520
+msgid "Time"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:520
+msgid "Activity"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:520
+msgid "Category"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:520
+msgid "Status"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:523
+msgid "Done"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:524
+msgid "Skipped"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:525
+msgid "Planned"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:550
+msgid "Journal entry not found."
+msgstr ""
+
+#: src/app/pdfexporter.cpp:552
+msgid "Unlock the journal entry before exporting to PDF."
+msgstr ""
+
+#: src/app/pdfexporter.cpp:566
+msgid "Journal"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:632
+msgctxt "page X of Y"
+msgid "Page %1 of %2"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:655
+msgid "PDF exported to %1"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:665
+msgctxt "@title:window"
+msgid "Print — KTasks"
+msgstr ""
+
+#: src/app/pdfexporter.cpp:684
+msgctxt "@title:window"
+msgid "Print Preview — KTasks"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:13
+msgctxt "@title:window"
+msgid "Connect an Account"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:48
+msgctxt "@title:tab"
+msgid "Nextcloud"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:51
+msgctxt "@title:tab"
+msgid "Other CalDAV server"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:64
+msgctxt "@info"
+msgid ""
+"Type the address of your Nextcloud. Your browser opens so you can confirm "
+"the access there; your password is never typed into this application."
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:72
+msgctxt "@label:textbox"
+msgid "Server address"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:80
+msgctxt "@action:button"
+msgid "Sign In with the Browser"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:90 src/app/qml/ListDialog.qml:62
+msgctxt "@action:button"
+msgid "Cancel"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:101
+msgctxt "@info"
+msgid ""
+"For any CalDAV server, or a Nextcloud app password you created yourself. The "
+"password is stored in the system keyring (KWallet)."
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:108
+msgctxt "@label:textbox"
+msgid "Address:"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:115
+msgctxt "@label:textbox"
+msgid "User name:"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:120
+msgctxt "@label:textbox"
+msgid "Password:"
+msgstr ""
+
+#: src/app/qml/AccountDialog.qml:128
+msgctxt "@action:button"
+msgid "Connect"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:30
+msgctxt "@title"
+msgid "Priority Matrix"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:34
+msgctxt "matrix filter"
+msgid "All lists"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:42
+msgctxt "matrix filter"
+msgid "All tags"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:52 src/app/qml/TasksPage.qml:98
+msgctxt "@action:button %1 is what will be undone"
+msgid "Undo: %1"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:52 src/app/qml/Main.qml:579
+#: src/app/qml/TasksPage.qml:98
+msgctxt "@action:button"
+msgid "Undo"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:59 src/app/qml/TasksPage.qml:105
+msgctxt "@action:button %1 is what will be redone"
+msgid "Redo: %1"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:59 src/app/qml/TasksPage.qml:105
+msgctxt "@action:button"
+msgid "Redo"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:67
+msgctxt "@action:button"
+msgid "Guided Triage (%1)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:68
+msgctxt "@action:button"
+msgid "Guided Triage"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:74 src/app/qml/SummaryPage.qml:25
+msgctxt "@action:button"
+msgid "New Task"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:79 src/app/qml/RoutinePage.qml:43
+msgctxt "@action:button"
+msgid "Print / PDF…"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:87
+msgctxt "eisenhower quadrant short"
+msgid "Q1 · Do Now"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:88
+msgctxt "eisenhower quadrant short"
+msgid "Q2 · Schedule"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:89
+msgctxt "eisenhower quadrant short"
+msgid "Q3 · Delegate"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:90
+msgctxt "eisenhower quadrant short"
+msgid "Q4 · Eliminate"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:91
+msgctxt "eisenhower quadrant short"
+msgid "Unclassified"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:322
+msgctxt "@info:tooltip"
+msgid "Quadrant options"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:329
+msgctxt "@action:inmenu"
+msgid "Delete All Q4 Tasks…"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:577
+msgctxt "@info:tooltip"
+msgid "Move up"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:587
+msgctxt "@info:tooltip"
+msgid "Move down"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:597 src/app/qml/SummaryPage.qml:746
+msgctxt "@info:tooltip"
+msgid "Start Pomodoro Focus"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:613
+msgctxt "@info:tooltip"
+msgid "Schedule in Routine"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:622
+msgctxt "@info:tooltip"
+msgid "Task actions"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:665
+msgctxt "@action:button"
+msgid "Due soon → Q1"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:673
+msgctxt "@info:tooltip"
+msgid "Promote to Q1 (Urgent & Important)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:752
+msgctxt "urgency window"
+msgid "Urgent: Today (24h)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:753
+msgctxt "urgency window"
+msgid "Urgent: 48 hours"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:754
+msgctxt "urgency window"
+msgid "Urgent: 7 days"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:763
+msgctxt "@info:placeholder"
+msgid "Filter matrix…"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:769
+msgctxt "@option:check"
+msgid "Show completed"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:806
+msgctxt "triage header"
+msgid ""
+"%1 task awaiting classification — drag or click Q1–Q4 to set priority "
+"(Shift+wheel to scroll)"
+msgid_plural ""
+"%1 tasks awaiting classification — drag or click Q1–Q4 to set priority "
+"(Shift+wheel to scroll)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/EisenhowerPage.qml:815
+msgctxt "@info:tooltip"
+msgid "Scroll left"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:823
+msgctxt "@info:tooltip"
+msgid "Scroll right"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:830
+msgctxt "@info:tooltip"
+msgid "Collapse strip"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:830
+msgctxt "@info:tooltip"
+msgid "Expand strip"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1000
+msgctxt "q1 tip"
+msgid "Do Now (High)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1001
+msgctxt "q2 tip"
+msgid "Schedule (Medium)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1002
+msgctxt "q3 tip"
+msgid "Delegate (Low)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1003
+msgctxt "q4 tip"
+msgid "Eliminate (None)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1059
+msgctxt "quadrant priority"
+msgid "High priority"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1062
+msgctxt "empty q1"
+msgid "No urgent & important fires right now"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1073
+msgctxt "quadrant priority"
+msgid "Medium priority"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1076
+msgctxt "empty q2"
+msgid "Plan high-impact goals before they become urgent"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1087
+msgctxt "quadrant priority"
+msgid "Low priority"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1090
+msgctxt "empty q3"
+msgid "No minor urgencies waiting"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1101
+msgctxt "quadrant priority"
+msgid "No priority"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1104
+msgctxt "empty q4"
+msgid "Noise-free quadrant"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1161
+msgctxt "drag hint"
+msgid "Drop into %1"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1162
+msgctxt "drag hint"
+msgid "Drag over Q1–Q4…"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1175 src/app/qml/TasksPage.qml:430
+msgctxt "@action:inmenu"
+msgid "Reopen"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1175 src/app/qml/TasksPage.qml:430
+msgctxt "@action:inmenu"
+msgid "Complete"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1181 src/app/qml/TasksPage.qml:443
+msgctxt "@action:inmenu"
+msgid "Start Pomodoro Focus"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1187 src/app/qml/TasksPage.qml:450
+msgctxt "@action:inmenu"
+msgid "Start Execution Timer"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1193
+msgctxt "@action:inmenu"
+msgid "Schedule in Routine…"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1199
+msgctxt "@title:menu"
+msgid "Move to Quadrant"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1204 src/app/qml/EisenhowerPage.qml:1436
+#: src/app/qml/TasksPage.qml:495
+msgctxt "quadrant menu"
+msgid "Q1 · Do Now (High)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1205 src/app/qml/EisenhowerPage.qml:1437
+#: src/app/qml/TasksPage.qml:496
+msgctxt "quadrant menu"
+msgid "Q2 · Schedule (Medium)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1206 src/app/qml/EisenhowerPage.qml:1438
+#: src/app/qml/TasksPage.qml:497
+msgctxt "quadrant menu"
+msgid "Q3 · Delegate (Low)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1207 src/app/qml/EisenhowerPage.qml:1439
+#: src/app/qml/TasksPage.qml:498
+msgctxt "quadrant menu"
+msgid "Q4 · Eliminate (None)"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1220
+msgctxt "@action:inmenu"
+msgid "Return to Triage"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1226
+msgctxt "@action:inmenu"
+msgid "Move Up in Quadrant"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1232
+msgctxt "@action:inmenu"
+msgid "Move Down in Quadrant"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1238
+msgctxt "@action:inmenu"
+msgid "Due Today"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1245 src/app/qml/TasksPage.qml:530
+msgctxt "@action:inmenu"
+msgid "Copy Details"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1250 src/app/qml/TasksPage.qml:543
+msgctxt "@action:inmenu"
+msgid "Delete"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1279
+msgctxt "@info"
+msgid "All pending tasks prioritized!"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1283
+msgctxt "@title:window"
+msgid "Guided Priority Triage"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1305
+msgctxt "triage progress"
+msgid "Task %1 of %2 · Press 1–4 to classify or Space to skip"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1360
+msgctxt "triage btn"
+msgid "[1] Q1 · Do Now"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1360
+msgctxt "triage sub"
+msgid "Urgent & Important → High"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1361
+msgctxt "triage btn"
+msgid "[2] Q2 · Schedule"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1361
+msgctxt "triage sub"
+msgid "Important, Not Urgent → Medium"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1362
+msgctxt "triage btn"
+msgid "[3] Q3 · Delegate"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1362
+msgctxt "triage sub"
+msgid "Urgent, Low Impact → Low"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1363
+msgctxt "triage btn"
+msgid "[4] Q4 · Eliminate"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1363
+msgctxt "triage sub"
+msgid "Not Urgent or Important → None"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1394
+msgctxt "@title:window"
+msgid "New Task in Priority Matrix"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1401 src/app/qml/QuickEntry.qml:55
+#: src/app/qml/RoutinePage.qml:941
+msgctxt "@action:button"
+msgid "Add"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1417 src/app/qml/EisenhowerPage.qml:1486
+#: src/app/qml/RoutinePage.qml:1147
+msgctxt "@label"
+msgid "Task:"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1419
+msgctxt "@info:placeholder"
+msgid "What needs to be done?"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1427 src/app/qml/QuickAddWindow.qml:58
+#: src/app/qml/TaskDetails.qml:169
+msgctxt "@label:listbox"
+msgid "List:"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1433
+msgctxt "@label:listbox"
+msgid "Quadrant:"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1446
+msgctxt "@option:check"
+msgid "Set due date to today"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1462
+msgctxt "@title:window"
+msgid "Schedule in Day Planner"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1469 src/app/qml/RoutinePage.qml:1131
+msgctxt "@action:button"
+msgid "Schedule"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1480
+msgctxt "@info"
+msgid "Scheduled in Routine & Day Planner"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1493 src/app/qml/RoutinePage.qml:983
+#: src/app/qml/RoutinePage.qml:1153
+msgctxt "@label"
+msgid "Start time:"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1514 src/app/qml/RoutinePage.qml:1007
+#: src/app/qml/RoutinePage.qml:1177
+msgctxt "@label"
+msgid "Duration:"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1516 src/app/qml/RoutinePage.qml:1011
+#: src/app/qml/RoutinePage.qml:1181
+msgctxt "minutes"
+msgid "%1 min"
+msgid_plural "%1 min"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/EisenhowerPage.qml:1525
+msgctxt "@title:window"
+msgid "Delete Q4 Tasks?"
+msgstr ""
+
+#: src/app/qml/EisenhowerPage.qml:1526
+msgctxt "@info"
+msgid "Delete %1 task in Q4? You can undo this action immediately afterward."
+msgid_plural ""
+"Delete all %1 tasks in Q4? You can undo this action immediately afterward."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/EisenhowerPage.qml:1533
+msgctxt "@action:button"
+msgid "Delete Q4 Tasks"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:14
+msgctxt "@title"
+msgid "Productivity & Insights"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:22 src/app/qml/SummaryPage.qml:30
+msgctxt "@action:button"
+msgid "Refresh"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:29
+msgctxt "focus target"
+msgid "Free Focus (unlinked)"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:125
+msgctxt "analytics period"
+msgid "Today"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:126
+msgctxt "analytics period"
+msgid "7 Days"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:127
+msgctxt "analytics period"
+msgid "30 Days"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:166
+#, c-format
+msgctxt "@action:button"
+msgid "Pomodoro (%1m)"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:174 src/app/qml/TaskDetails.qml:575
+msgctxt "@action:button"
+msgid "Timer"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:194
+msgctxt "kpi label"
+msgid "Tasks Completed"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:196
+msgctxt "kpi sub"
+msgid "%1 open · %2% rate"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:202
+msgctxt "kpi label"
+msgid "Execution Time"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:204
+msgctxt "kpi sub"
+msgid "%1 Pomodoros · %2 min/day"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:210
+msgctxt "kpi label"
+msgid "Strategic Focus (Q1+Q2)"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:212
+msgctxt "kpi sub"
+msgid "%1% in Q2 planning"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:218
+msgctxt "kpi label"
+msgid "Routine & Streak"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:219
+msgctxt "days unit"
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/InsightsPage.qml:221
+msgctxt "kpi sub"
+msgid "Routine %1% · Est. %2% acc."
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:222
+msgctxt "kpi sub"
+msgid "Routine consistency: %1%"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:251
+msgctxt "@title:group"
+msgid "Productivity Insights"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:305
+msgctxt "@action:button"
+msgid "Open Matrix"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:306
+msgctxt "@action:button"
+msgid "Open Routine"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:307
+msgctxt "@action:button"
+msgid "Open Tasks"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:349
+msgctxt "@title:group"
+msgid "Daily Activity & Focus"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:354
+msgctxt "chart legend"
+msgid "Blue: focus time · Green: tasks"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:428
+msgctxt "chart tooltip"
+msgid ""
+"%1\n"
+"Focus: %2 min (%3 Pomodoros)\n"
+"Completed: %4 tasks · Routine: %5"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:461
+msgctxt "@title:group"
+msgid "Time & Effort by Quadrant"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:482
+msgctxt "quadrant stats"
+msgid "%1 open · %2 done · %3 (%4%)"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:511
+msgctxt "@title:group"
+msgid "Top Lists"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:537
+msgctxt "list breakdown"
+msgid "%1 done · %2"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:567
+msgctxt "@title:group"
+msgid "Recent Focus & Execution Log"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:574
+msgctxt "@info"
+msgid ""
+"No focus sessions logged yet. Start a Pomodoro timer or execution stopwatch "
+"on any task to measure effort and calibrate estimates."
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:637
+msgctxt "@info:tooltip"
+msgid "Remove log entry"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:24
+msgctxt "@title"
+msgid "Journal"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:29
+msgctxt "@action:button"
+msgid "New Page"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:34 src/app/qml/JournalPage.qml:231
+msgctxt "@action:button"
+msgid "New Notebook"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:39
+msgctxt "@action:button"
+msgid "Sync Notes"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:46
+msgctxt "@action:button"
+msgid "Lock All"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:56 src/app/qml/PrintDialog.qml:63
+msgctxt "@action:button"
+msgid "Export PDF…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:227
+msgctxt "@title"
+msgid "Notebooks"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:243 src/app/qml/JournalPage.qml:325
+msgctxt "all notebooks"
+msgid "All Notebooks"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:292
+msgctxt "@info:tooltip"
+msgid "Synced with Nextcloud Notes"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:338
+msgctxt "@info:placeholder"
+msgid "Search pages…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:449
+msgctxt "offline badge"
+msgid "Local"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:473
+msgctxt "@info:placeholder"
+msgid "No pages in this notebook"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:476
+msgctxt "@action:button"
+msgid "Create First Page"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:491
+msgctxt "@info"
+msgid "Click a page to read • Double-click to edit"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:492
+msgctxt "@info"
+msgid "Click selected page again to close • Double-click to edit"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:535
+msgctxt "@info"
+msgid "This page is encrypted and protected with a password."
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:543 src/app/qml/JournalPage.qml:979
+msgctxt "@info:placeholder"
+msgid "Enter password…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:560 src/app/qml/JournalPage.qml:957
+msgctxt "@action:button"
+msgid "Unlock"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:574 src/app/qml/JournalPage.qml:1130
+#: src/app/qml/JournalPage.qml:1325 src/app/qml/ListDialog.qml:155
+#: src/app/qml/TasksPage.qml:270
+msgctxt "@action:button"
+msgid "Delete"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:579
+msgctxt "@action:button"
+msgid "Close"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:612
+msgctxt "@info:placeholder"
+msgid "Page title…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:619 src/app/qml/MarkdownEditor.qml:302
+msgctxt "@action:button"
+msgid "Edit"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:626
+msgctxt "@action:button"
+msgid "Done"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:627
+msgctxt "@info:tooltip"
+msgid "Finish editing and close editor"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:634
+msgctxt "@info:tooltip"
+msgid "Protection & Password"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:634
+msgctxt "@info:tooltip"
+msgid "Lock with password"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:643 src/app/qml/JournalPage.qml:1154
+msgctxt "@action:inmenu"
+msgid "Lock with Password…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:649 src/app/qml/JournalPage.qml:1166
+msgctxt "@action:inmenu"
+msgid "Lock Now"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:659
+msgctxt "@action:inmenu"
+msgid "Change Password…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:665 src/app/qml/JournalPage.qml:1176
+msgctxt "@action:inmenu"
+msgid "Remove Password Protection…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:673
+msgctxt "@info:tooltip"
+msgid "Delete entry"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:686 src/app/qml/JournalPage.qml:1148
+msgctxt "@action:inmenu"
+msgid "Rename…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:691 src/app/qml/JournalPage.qml:1197
+msgctxt "@action:inmenu"
+msgid "Duplicate"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:703 src/app/qml/JournalPage.qml:1182
+msgctxt "@action:inmenu"
+msgid "Keep Offline Only (Local)"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:709 src/app/qml/JournalPage.qml:1188
+msgctxt "@action:inmenu"
+msgid "Sync with Nextcloud Notes"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:721
+msgctxt "@action:inmenu"
+msgid "Export Markdown (.md)…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:726
+msgctxt "@action:inmenu"
+msgid "Export PDF / Print…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:734
+msgctxt "@info:tooltip"
+msgid "Close page"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:799
+msgctxt "@action:button"
+msgid "Nextcloud Notes"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:800
+msgctxt "@action:button"
+msgid "Offline Only"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:802
+msgctxt "@info:tooltip"
+msgid "Synced with %1 — click to switch storage mode"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:803
+msgctxt "@info:tooltip"
+msgid ""
+"Stored offline only on this computer — click to sync with Nextcloud Notes"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:827 src/app/qml/TaskDetails.qml:607
+msgctxt "@info:placeholder"
+msgid "Add tag…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:871
+msgid "Empty page — double-click to start writing in Markdown"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:893
+msgctxt "@info:placeholder"
+msgid "Start typing your note or journal entry in Markdown…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:911
+msgctxt "@action:inmenu"
+msgid "Offline Only (this computer)"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:924
+msgctxt "@action:inmenu %1 is Nextcloud account name"
+msgid "Sync with Nextcloud (%1)"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:933
+msgctxt "@info"
+msgid "Connect a Nextcloud account in Settings to sync notes."
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:950
+msgctxt "@title:window"
+msgid "Unlock Protected Page"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:999
+msgctxt "storage option"
+msgid "Offline Only (local)"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1001
+msgctxt "storage option"
+msgid "Nextcloud Notes (%1)"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1027
+msgctxt "@title:window"
+msgid "Edit Notebook"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1027
+msgctxt "@title:window"
+msgid "New Notebook"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1046
+msgctxt "@label"
+msgid "Name:"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1048
+msgctxt "@info:placeholder"
+msgid "e.g. Work, Personal, Studies…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1052 src/app/qml/ListDialog.qml:109
+#: src/app/qml/RoutinePage.qml:1048
+msgctxt "@label"
+msgid "Color:"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1072
+msgctxt "@label"
+msgid "Storage:"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1084
+msgctxt "@option:check"
+msgid "Apply storage mode to existing unlocked pages"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1095
+msgctxt "@action:inmenu"
+msgid "Edit Notebook…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1101
+msgctxt "@action:inmenu"
+msgid "Make Notebook Offline Only"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1107
+msgctxt "@action:inmenu"
+msgid "Sync Notebook with Nextcloud Notes"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1117
+msgctxt "@action:inmenu"
+msgid "Delete Notebook…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1124
+msgctxt "@title:window"
+msgid "Delete Notebook?"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1125
+msgctxt "@info"
+msgid "“%1” and all pages inside it will be permanently deleted."
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1143
+msgctxt "@action:inmenu"
+msgid "Edit in Markdown"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1160
+msgctxt "@action:inmenu"
+msgid "Unlock…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1208
+msgctxt "@action:inmenu"
+msgid "Close Page Panel"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1214
+msgctxt "@action:inmenu"
+msgid "Delete Entry…"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1226
+msgctxt "@title:window"
+msgid "Rename Entry"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1251
+msgctxt "@title:window"
+msgid "Protect Entry with Password"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1252
+msgctxt "@title:window"
+msgid "Change Entry Password"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1253
+msgctxt "@title:window"
+msgid "Remove Password Protection"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1260
+msgctxt "@action:button"
+msgid "Confirm"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1263
+msgid "Passwords do not match."
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1293
+msgctxt "@label"
+msgid "Current password:"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1299
+msgctxt "@label"
+msgid "New password:"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1305
+msgctxt "@label"
+msgid "Confirm password:"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1319
+msgctxt "@title:window"
+msgid "Delete Journal Entry?"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1320
+msgctxt "@info"
+msgid "“%1” will be permanently deleted."
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1337
+msgctxt "@title:window"
+msgid "Export Markdown"
+msgstr ""
+
+#: src/app/qml/JournalPage.qml:1340
+msgctxt "file type"
+msgid "Markdown files (*.md)"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:21 src/app/qml/ListDialog.qml:96
+msgctxt "where a list is stored"
+msgid "On this device"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:48
+msgctxt "@title:window"
+msgid "Edit List"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:48
+msgctxt "@title:window"
+msgid "New List"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:57
+msgctxt "@action:button"
+msgid "Delete List…"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:67 src/app/qml/RoutinePage.qml:941
+msgctxt "@action:button"
+msgid "Save"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:67
+msgctxt "@action:button"
+msgid "Create"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:81 src/app/qml/SettingsPage.qml:56
+msgctxt "@label:textbox"
+msgid "Name:"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:87
+msgctxt "@label:listbox"
+msgid "Stored in:"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:94
+msgctxt "@label"
+msgid "Stored in:"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:106
+msgctxt "@info"
+msgid ""
+"Converting to local keeps all tasks on this device and removes the copy from "
+"the Nextcloud server."
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:125
+msgctxt "@option:radio"
+msgid "No color"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:145
+msgctxt "@title:window"
+msgid "Delete List?"
+msgstr ""
+
+#: src/app/qml/ListDialog.qml:147
+msgctxt "@info"
+msgid ""
+"“%2” and its %1 task will be deleted here and on the server. This cannot be "
+"undone."
+msgid_plural ""
+"“%2” and its %1 tasks will be deleted here and on the server. This cannot be "
+"undone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/ListDialog.qml:149
+msgctxt "@info"
+msgid "“%2” and its %1 task will be deleted. This cannot be undone."
+msgid_plural "“%2” and its %1 tasks will be deleted. This cannot be undone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/Main.qml:172
+msgctxt "@action:button"
+msgid "About Summary"
+msgstr ""
+
+#: src/app/qml/Main.qml:248
+msgctxt "@title"
+msgid "How the Summary Screen Works"
+msgstr ""
+
+#: src/app/qml/Main.qml:257
+msgctxt "summary guide body"
+msgid ""
+"• Overview & KPIs: daily progress combines tasks finished today and your "
+"routine blocks. Click any KPI card to jump straight to that view.\n"
+"• Weather: updates automatically every hour with a 10-day scrollable strip. "
+"Configure your city inside Settings.\n"
+"• Priorities & Journal: finish top urgent/important tasks, launch Pomodoro "
+"execution, or open today's Markdown journal page.\n"
+"• Routine vs. External Agenda: Routine tracks your recurring daily habits "
+"(synced optionally with Nextcloud). External Agenda displays read-only "
+"appointments from KOrganizer (Google Calendar, Birthdays, local .ics files), "
+"highlights schedule conflicts, and lets you create a prep task or start "
+"Pomodoro for an appointment."
+msgstr ""
+
+#: src/app/qml/Main.qml:268
+msgctxt "@info:placeholder"
+msgid "Search tasks…"
+msgstr ""
+
+#: src/app/qml/Main.qml:345
+msgctxt "@action:button"
+msgid "Pause"
+msgstr ""
+
+#: src/app/qml/Main.qml:345
+msgctxt "@action:button"
+msgid "Resume"
+msgstr ""
+
+#: src/app/qml/Main.qml:353
+msgctxt "@action:button"
+msgid "Break"
+msgstr ""
+
+#: src/app/qml/Main.qml:361 src/app/qml/TasksPage.qml:246
+msgctxt "@action:button"
+msgid "Complete"
+msgstr ""
+
+#: src/app/qml/Main.qml:368
+msgctxt "@action:button"
+msgid "Stop & Save"
+msgstr ""
+
+#: src/app/qml/Main.qml:374
+msgctxt "@info:tooltip"
+msgid "Discard timer without saving"
+msgstr ""
+
+#: src/app/qml/Main.qml:521
+msgctxt "@title"
+msgid "Task"
+msgstr ""
+
+#: src/app/qml/Main.qml:561
+msgctxt "@title:window"
+msgid "Import Tasks"
+msgstr ""
+
+#: src/app/qml/Main.qml:563 src/app/qml/SettingsPage.qml:448
+msgctxt "file type"
+msgid "iCalendar files (*.ics *.ical)"
+msgstr ""
+
+#: src/app/qml/Main.qml:563 src/app/qml/SettingsPage.qml:84
+#: src/app/qml/SettingsPage.qml:448 src/app/qml/SettingsPage.qml:591
+msgctxt "file type"
+msgid "All files (*)"
+msgstr ""
+
+#: src/app/qml/Main.qml:568
+msgctxt "@title:window"
+msgid "Export Tasks"
+msgstr ""
+
+#: src/app/qml/Main.qml:571
+msgctxt "file type"
+msgid "iCalendar files (*.ics)"
+msgstr ""
+
+#: src/app/qml/Main.qml:669
+msgctxt "@info"
+msgid "Connected to %2: %1 task list found."
+msgid_plural "Connected to %2: %1 task lists found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/MarkdownEditor.qml:17
+msgctxt "@info:placeholder"
+msgid "Write in Markdown…"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:130
+msgctxt "markdown table header"
+msgid "Column %1"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:166
+msgctxt "@info:tooltip"
+msgid "Bold (Ctrl+B)"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:168 src/app/qml/MarkdownEditor.qml:401
+msgid "bold"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:174
+msgctxt "@info:tooltip"
+msgid "Italic (Ctrl+I)"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:176 src/app/qml/MarkdownEditor.qml:406
+msgid "italic"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:182
+msgctxt "@info:tooltip"
+msgid "Strikethrough"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:184
+msgid "text"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:190
+msgctxt "@info:tooltip"
+msgid "Headings"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:196
+msgid "Heading 1 (#)"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:197
+msgid "Heading 2 (##)"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:198
+msgid "Heading 3 (###)"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:206
+msgctxt "@info:tooltip"
+msgid "Bulleted list"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:214
+msgctxt "@info:tooltip"
+msgid "Numbered list"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:222
+msgctxt "@info:tooltip"
+msgid "Checklist item"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:230
+msgctxt "@info:tooltip"
+msgid "Quote"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:239
+msgctxt "@info:tooltip"
+msgid "Inline code"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:248
+msgctxt "@info:tooltip"
+msgid "Code block"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:256
+msgctxt "@info:tooltip"
+msgid "Insert link (Ctrl+K)"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:267
+msgctxt "@info:tooltip"
+msgid "Insert table"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:279
+msgctxt "@info:tooltip"
+msgid "Horizontal rule"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:288
+msgctxt "@info:tooltip"
+msgid "Insert date & time"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:304
+msgctxt "@info:tooltip"
+msgid "Edit Markdown"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:316
+msgctxt "@action:button"
+msgid "Preview"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:318
+msgctxt "@info:tooltip"
+msgid "Preview rendered Markdown"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:328
+msgctxt "@action:button"
+msgid "Split"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:330
+msgctxt "@info:tooltip"
+msgid "Side-by-side live preview"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:452
+msgid "Nothing to preview yet"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:469
+msgctxt "@title:window"
+msgid "Insert Markdown Table"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:477
+msgctxt "@label"
+msgid "Data rows:"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:484
+msgctxt "@label"
+msgid "Columns:"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:498
+msgctxt "@title:window"
+msgid "Insert Link"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:518
+msgctxt "@label"
+msgid "Text:"
+msgstr ""
+
+#: src/app/qml/MarkdownEditor.qml:523
+msgctxt "@label"
+msgid "URL:"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:37
+msgctxt "@title:window"
+msgid "Print & Export PDF"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:45
+msgctxt "@action:button"
+msgid "Preview…"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:54
+msgctxt "@action:button"
+msgid "Print…"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:76
+msgctxt "@label:listbox"
+msgid "Content:"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:79
+msgctxt "print scope"
+msgid "Today's Tasks"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:80
+msgctxt "print scope"
+msgid "Next 7 Days (Week)"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:81
+msgctxt "print scope"
+msgid "Overdue Tasks"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:82
+msgctxt "print scope"
+msgid "Current View / List"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:83
+msgctxt "print scope"
+msgid "Priority Matrix (Eisenhower)"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:84
+msgctxt "print scope"
+msgid "Daily Routine"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:85
+msgctxt "print scope"
+msgid "Current Journal Entry"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:96
+msgctxt "@option:check"
+msgid "Group tasks by day"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:101
+msgctxt "@option:check"
+msgid "Include completed tasks"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:107
+msgctxt "@option:check"
+msgid "Include subtasks"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:113
+msgctxt "@option:check"
+msgid "Include notes"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:120
+msgctxt "@title:window"
+msgid "Export PDF"
+msgstr ""
+
+#: src/app/qml/PrintDialog.qml:123
+msgctxt "file type"
+msgid "PDF files (*.pdf)"
+msgstr ""
+
+#: src/app/qml/QuickAddWindow.qml:24
+msgctxt "@title:window"
+msgid "New Task"
+msgstr ""
+
+#: src/app/qml/QuickAddWindow.qml:73
+msgctxt "@info"
+msgid ""
+"Dates, times, “every monday”, !high, #tag and @list are understood. Enter "
+"adds the task, Esc closes."
+msgstr ""
+
+#: src/app/qml/QuickEntry.qml:42
+msgctxt "@info:placeholder"
+msgid "Add a task… try “Pay rent tomorrow 9am !high #home”"
+msgstr ""
+
+#: src/app/qml/QuickEntry.qml:43
+msgctxt "@label"
+msgid "New task"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:17
+msgctxt "@title"
+msgid "Routine & Day Planner"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:21
+msgctxt "@action:button"
+msgid "New Block"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:26
+msgctxt "@action:button"
+msgid "Schedule Task"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:31
+msgctxt "@action:button"
+msgid "Routine Templates"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:36
+msgctxt "@action:button"
+msgid "Sync Routine"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:117
+msgctxt "@action:button"
+msgid "Previous"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:134
+msgctxt "@action:button"
+msgid "Next"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:143
+msgctxt "@action:button"
+msgid "Today"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:151
+msgctxt "@info"
+msgid "%1/%2 blocks done · %3h %4m planned"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:167
+msgctxt "@action:button calendar mode"
+msgid "Day"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:174
+msgctxt "@action:button calendar mode"
+msgid "Week"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:181
+msgctxt "@action:button calendar mode"
+msgid "Month"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:478
+msgctxt "@info:tooltip"
+msgid "Skip today"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:485
+msgctxt "@info:tooltip"
+msgid "Restore for today"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:491
+msgctxt "@info:tooltip"
+msgid "Edit block"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:497
+msgctxt "@info:tooltip"
+msgid "Delete block"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:767 src/app/qml/RoutinePage.qml:1028
+#: src/app/qml/TaskDetails.qml:367
+msgctxt "weekday short"
+msgid "Mon"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:767 src/app/qml/RoutinePage.qml:1028
+#: src/app/qml/TaskDetails.qml:368
+msgctxt "weekday short"
+msgid "Tue"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:767 src/app/qml/RoutinePage.qml:1028
+#: src/app/qml/TaskDetails.qml:369
+msgctxt "weekday short"
+msgid "Wed"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:768 src/app/qml/RoutinePage.qml:1029
+#: src/app/qml/TaskDetails.qml:370
+msgctxt "weekday short"
+msgid "Thu"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:768 src/app/qml/RoutinePage.qml:1029
+#: src/app/qml/TaskDetails.qml:371
+msgctxt "weekday short"
+msgid "Fri"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:768 src/app/qml/RoutinePage.qml:1029
+#: src/app/qml/TaskDetails.qml:372
+msgctxt "weekday short"
+msgid "Sat"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:768 src/app/qml/RoutinePage.qml:1029
+#: src/app/qml/TaskDetails.qml:373
+msgctxt "weekday short"
+msgid "Sun"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:877
+msgctxt "storage option"
+msgid "Offline only (local)"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:879
+msgctxt "storage option"
+msgid "Nextcloud Calendar (%1)"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:934
+msgctxt "@title:window"
+msgid "Edit Routine Block"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:934
+msgctxt "@title:window"
+msgid "New Routine Block"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:972
+msgctxt "@label"
+msgid "Activity:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:974
+msgctxt "@info:placeholder"
+msgid "e.g. Deep work, Gym, Study…"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:978
+msgctxt "@label"
+msgid "Category:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:980
+msgctxt "@info:placeholder"
+msgid "Optional (Work, Health, Study…)"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1015
+msgctxt "@label"
+msgid "Repeat:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1016
+msgctxt "@option:check"
+msgid "Recurring routine template"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1023
+msgctxt "@label"
+msgid "Days:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1068
+msgctxt "@label"
+msgid "Notification:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1069
+msgctxt "@option:check"
+msgid "Send system notification"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1075
+msgctxt "@label"
+msgid "Remind:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1077
+msgctxt "routine lead"
+msgid "At start time"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1078
+msgctxt "routine lead"
+msgid "5 minutes before"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1079
+msgctxt "routine lead"
+msgid "10 minutes before"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1080
+msgctxt "routine lead"
+msgid "15 minutes before"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1081
+msgctxt "routine lead"
+msgid "30 minutes before"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1086
+msgctxt "@label"
+msgid "Notes:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1095 src/app/qml/RoutinePage.qml:1189
+msgctxt "@label:listbox"
+msgid "Storage:"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1124
+msgctxt "@title:window"
+msgid "Schedule Task in Day Planner"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1217
+msgctxt "@title"
+msgid "Routine Templates"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1221
+msgctxt "@action:button"
+msgid "New"
+msgstr ""
+
+#: src/app/qml/RoutinePage.qml:1230
+msgctxt "@info"
+msgid ""
+"Recurring blocks automatically appear on the selected days of every week."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:24
+msgctxt "@title"
+msgid "Settings"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:28
+msgctxt "@title:group"
+msgid "Profile"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:33
+msgctxt "@info"
+msgid "Add your name, email, and profile picture"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:43
+msgctxt "@action:button"
+msgid "Choose Photo…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:48
+msgctxt "@option:check"
+msgid "Use system profile picture"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:49
+msgctxt "@info"
+msgid "Uses the user avatar configured in KDE System Settings."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:50
+msgctxt "@info"
+msgid "No system avatar detected; choose a custom image below if desired."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:63
+msgctxt "@label:textbox"
+msgid "Email:"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:64
+msgctxt "@info:placeholder"
+msgid "name@example.com"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:72
+msgctxt "@action:button"
+msgid "Save Profile"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:82
+msgctxt "@title:window"
+msgid "Choose Profile Picture"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:84
+msgctxt "file type"
+msgid "Images (*.png *.jpg *.jpeg *.webp *.svg)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:90
+msgctxt "@title:group"
+msgid "Appearance"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:94
+msgctxt "@label:listbox"
+msgid "Color scheme"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:95
+msgctxt "@info"
+msgid "“Default” follows the color scheme chosen in System Settings."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:104
+msgctxt "@title:group"
+msgid "Synchronization"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:109
+msgctxt "@info"
+msgid "Tasks are stored on this device only"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:110
+msgctxt "@info"
+msgid ""
+"Connect a Nextcloud account to see the same tasks on your phone and other "
+"computers. Everything keeps working without a connection."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:119
+msgctxt "@info"
+msgid "Synchronizing…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:120
+msgctxt "@info %1 is a date and time"
+msgid "Last synchronized %1"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:121
+msgctxt "@info"
+msgid "Not synchronized yet"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:132
+msgctxt "@action:button"
+msgid "Sign In Again"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:137
+msgctxt "@action:button"
+msgid "Remove account"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:153
+msgctxt "@action:button"
+msgid "Connect a Nextcloud or CalDAV Account…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:162
+msgctxt "@label:listbox"
+msgid "Check the server"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:163
+msgctxt "@info"
+msgid "Your own changes are always sent a few seconds after you make them."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:164
+msgctxt "sync interval"
+msgid "Only when I ask"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:164
+msgctxt "sync interval"
+msgid "Every 5 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:164
+msgctxt "sync interval"
+msgid "Every 15 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:165
+msgctxt "sync interval"
+msgid "Every 30 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:165
+msgctxt "sync interval"
+msgid "Every hour"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:171
+msgctxt "@option:check"
+msgid "Synchronize when the application starts"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:177
+msgctxt "@option:check"
+msgid "Synchronize journal notes with Nextcloud Notes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:178
+msgctxt "@info"
+msgid ""
+"Unprotected notes sync as Markdown files with Nextcloud Notes. Individual "
+"notebooks and pages can still be marked offline only."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:184
+msgctxt "@option:check"
+msgid "Synchronize routine & planner blocks with Nextcloud Calendar"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:185
+msgctxt "@info"
+msgid ""
+"Syncs routine templates and planned blocks as VEVENT items (compatible with "
+"Nextcloud Calendar and DAVx5 mobile apps). Individual blocks can still stay "
+"offline only."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:195
+msgctxt "routine calendar option"
+msgid "Auto (“Rotina” calendar)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:198
+msgctxt "@label:listbox"
+msgid "Routine calendar (%1)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:199
+msgctxt "@label:listbox"
+msgid "Routine calendar"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:222
+msgctxt "@title:group"
+msgid "Notifications"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:226
+msgctxt "@option:check"
+msgid "Show reminders"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:227
+msgctxt "@info"
+msgid "Desktop notifications with buttons to complete or snooze the task."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:233
+msgctxt "@option:check"
+msgid "Also notify when a task without a reminder becomes due"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:239
+msgctxt "@label:listbox"
+msgid "Remind about tasks without a time at"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:247
+msgctxt "@label:listbox"
+msgid "“Snooze” postpones a reminder by"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:248
+msgctxt "duration"
+msgid "5 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:248
+msgctxt "duration"
+msgid "10 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:248
+msgctxt "duration"
+msgid "15 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:248
+msgctxt "duration"
+msgid "30 minutes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:249
+msgctxt "duration"
+msgid "1 hour"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:249
+msgctxt "duration"
+msgid "2 hours"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:255
+msgctxt "@label:listbox"
+msgid "Reminder for new tasks with a date"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:256
+msgctxt "default reminder"
+msgid "None"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:256
+msgctxt "default reminder"
+msgid "When it is due"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:256
+msgctxt "default reminder"
+msgid "15 minutes before"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:257
+msgctxt "default reminder"
+msgid "1 hour before"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:257
+msgctxt "default reminder"
+msgid "1 day before"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:263
+msgctxt "@option:check"
+msgid "Daily summary"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:264
+msgctxt "@info"
+msgid "One notification a day with what is due today and what is overdue."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:270
+msgctxt "@label:listbox"
+msgid "Show the summary at"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:276
+msgctxt "@option:check"
+msgid "Notify about synchronization problems and conflicts"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:281
+msgctxt "@option:check"
+msgid "Notify about scheduled routine blocks"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:286
+msgctxt "@option:check"
+msgid "Notify when Pomodoro focus or break completes"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:293
+msgctxt "@action:button"
+msgid "Send a Test Notification"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:298
+msgctxt "@action:button"
+msgid "Sounds and Pop-ups in System Settings…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:299
+msgctxt "@info"
+msgid ""
+"Choose per kind of notification whether it shows a pop-up, plays a sound or "
+"stays in the history."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:306
+msgctxt "@title:group"
+msgid "Pomodoro & Focus Timer"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:311
+msgctxt "@label:listbox"
+msgid "Focus session duration"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:312 src/app/qml/SettingsPage.qml:319
+#: src/app/qml/SettingsPage.qml:326
+msgctxt "duration"
+msgid "%1 minute"
+msgid_plural "%1 minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/SettingsPage.qml:318
+msgctxt "@label:listbox"
+msgid "Short break duration"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:325
+msgctxt "@label:listbox"
+msgid "Long break duration (after 4 cycles)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:334
+msgctxt "@title:group"
+msgid "Summary, Weather & External Agenda"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:338
+msgctxt "@option:check"
+msgid "Show KOrganizer / desktop calendars on Summary (read-only)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:339
+msgctxt "@info"
+msgid ""
+"Reads active KOrganizer/Akonadi calendars (Google Agenda, Birthdays, "
+"personal) and local .ics files into External Agenda without mixing them into "
+"Nextcloud Routine sync."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:350
+msgctxt "@info:tooltip"
+msgid "Remove calendar file"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:358
+msgctxt "@action:button"
+msgid "Add Extra Local Calendar (.ics)…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:363
+msgctxt "@label"
+msgid "Weather city"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:366
+msgctxt "@info"
+msgid "Automatic (uses KDE KWeather city or approximate IP location)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:371
+msgctxt "@action:button"
+msgid "Choose City…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:377
+msgctxt "@action:button"
+msgid "Reset Auto"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:391
+msgctxt "@title:window"
+msgid "Weather Location"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:409
+msgctxt "@info:placeholder"
+msgid "Type city name (e.g. São Paulo)…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:414
+msgctxt "@action:button"
+msgid "Search"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:424
+msgctxt "city search hint"
+msgid "Enter at least 2 characters and click Search to select your city."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:446
+msgctxt "@title:window"
+msgid "Choose Local iCalendar File"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:454
+msgctxt "@title:group"
+msgid "General"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:458
+msgctxt "@option:check"
+msgid "Keep running when the window is closed"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:459
+msgctxt "@info"
+msgid "Needed for reminders to appear while the window is closed."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:464
+msgctxt "@option:check"
+msgid "Start with the session"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:465
+msgctxt "@info"
+msgid "Starts hidden in the system tray when you log in."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:470
+msgctxt "@option:check"
+msgid "Show an icon in the system tray"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:475
+msgctxt "@option:check"
+msgid "Show the number of tasks due on the task manager icon"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:482
+msgctxt "@label:listbox"
+msgid "List for new tasks"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:483
+msgctxt "@info"
+msgid "Used when a task is added outside of a list, e.g. in “Today”."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:484 src/app/qml/TasksPage.qml:518
+msgctxt "list name (account name)"
+msgid "%1 (%2)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:492
+msgctxt "@title:group"
+msgid "Keyboard"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:497
+msgctxt "@action:button"
+msgid "Configure Keyboard Shortcuts…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:502
+msgctxt "@action:button"
+msgid "Shortcut to Add a Task from Anywhere"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:503
+msgctxt "@info %1 is a keyboard shortcut"
+msgid "Currently %1. Change it in System Settings."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:504
+msgctxt "@info"
+msgid "Not set. Assign one in System Settings."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:511
+msgctxt "@title:group"
+msgid "Data & Local Backup"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:515
+msgctxt "@label"
+msgid "Backup folder"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:519
+msgctxt "@action:button"
+msgid "Choose…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:525
+msgctxt "@action:button"
+msgid "Create Local Backup Now"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:531
+msgctxt "@action:button"
+msgid "Restore from Backup File…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:532
+msgctxt "@info"
+msgid "Restores tasks, routines, and journal entries from a local .db backup."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:536
+msgctxt "@option:check"
+msgid "Automatic local backups"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:537
+msgctxt "@info"
+msgid "Keeps a local snapshot on your computer alongside Nextcloud sync."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:544
+msgctxt "@label:listbox"
+msgid "Backup frequency"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:545
+msgctxt "backup interval"
+msgid "Hourly"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:545
+msgctxt "backup interval"
+msgid "Daily"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:545
+msgctxt "backup interval"
+msgid "Weekly"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:551
+msgctxt "@label:listbox"
+msgid "Keep recent backups"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:552
+msgctxt "retention"
+msgid "Last 5 backups"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:552
+msgctxt "retention"
+msgid "Last 10 backups"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:552
+msgctxt "retention"
+msgid "Last 20 backups"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:552
+msgctxt "retention"
+msgid "Last 50 backups"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:559
+msgctxt "@action:button"
+msgid "Import from iCalendar File…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:564
+msgctxt "@action:button"
+msgid "Export All Tasks to iCalendar File…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:572 src/app/qml/TasksPage.qml:155
+msgctxt "@action:button"
+msgid "Print / Export PDF…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:577
+msgctxt "@action:button"
+msgid "About KTasks"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:584
+msgctxt "@title:window"
+msgid "Choose Backup Folder"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:589
+msgctxt "@title:window"
+msgid "Restore Local Backup"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:591
+msgctxt "file type"
+msgid "KTasks backup (*.db)"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:600
+msgctxt "@title:window"
+msgid "Restore Backup?"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:601
+msgctxt "@info"
+msgid ""
+"Current local data will be replaced by the selected backup (a safety copy of "
+"your current database will be saved first)."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:606
+msgctxt "@action:button"
+msgid "Restore"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:619
+msgctxt "@title:window"
+msgid "Remove Account?"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:620
+msgctxt "@info"
+msgid ""
+"The lists of “%1” are removed from this device. Nothing is deleted on the "
+"server. Changes that were not synchronized yet are lost."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:625
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:56
+msgctxt "@title application name"
+msgid "KTasks"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:61
+msgctxt "@action:button"
+msgid "Menu"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:72
+msgctxt "@action:inmenu"
+msgid "New List…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:77
+msgctxt "@action:inmenu"
+msgid "Synchronize Now"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:84
+msgctxt "@action:inmenu"
+msgid "Import from iCalendar File…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:89
+msgctxt "@action:inmenu"
+msgid "Export to iCalendar File…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:94
+msgctxt "@action:inmenu"
+msgid "Print / Export PDF…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:100
+msgctxt "@action:inmenu"
+msgid "Settings…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:105
+msgctxt "@action:inmenu"
+msgid "Configure Keyboard Shortcuts…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:110
+msgctxt "@action:inmenu"
+msgid "Find Action…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:115
+msgctxt "@action:inmenu"
+msgid "About KTasks"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:121
+msgctxt "@action:inmenu"
+msgid "Quit"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:137
+msgctxt "@action:inmenu workspace tab"
+msgid "Summary"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:138
+msgctxt "@action:inmenu workspace tab"
+msgid "Routine & Planner"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:139
+msgctxt "@action:inmenu workspace tab"
+msgid "Priority Matrix"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:140
+msgctxt "@action:inmenu workspace tab"
+msgid "Journal"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:141
+msgctxt "@action:inmenu workspace tab"
+msgid "Productivity & Insights"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:247
+msgctxt "@info:tooltip"
+msgid "Has changes waiting to be synchronized"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:270
+msgctxt "@action:inmenu"
+msgid "Edit List…"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:276
+msgctxt "@action:inmenu"
+msgid "Delete Completed Tasks"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:304
+msgctxt "@info:tooltip"
+msgid "Open profile and settings"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:349
+msgctxt "@info:tooltip"
+msgid "Click to synchronize now"
+msgstr ""
+
+#: src/app/qml/Sidebar.qml:350
+msgctxt "@info:tooltip"
+msgid ""
+"Tasks are stored on this device only. Click to connect a Nextcloud account."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:17
+msgctxt "@title"
+msgid "Summary"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:30
+msgctxt "@action:button"
+msgid "Sync & Refresh"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:184
+#, c-format
+msgctxt "streak chip"
+msgid "%1d streak"
+msgid_plural "%1d streak"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/SummaryPage.qml:217
+msgctxt "hero summary"
+msgid "%1 task due today · %2 overdue item needs attention."
+msgid_plural "%1 tasks due today · %2 overdue items need attention."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/SummaryPage.qml:220
+msgctxt "hero summary"
+msgid "%1 task due today · %2 open in total."
+msgid_plural "%1 tasks due today · %2 open in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/SummaryPage.qml:231
+msgctxt "daily progress pct"
+msgid "Day: %1%"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:264
+msgctxt "summary tile"
+msgid "Today"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:267
+msgctxt "summary sub done today"
+msgid "%1 completed today"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:268
+msgctxt "summary sub"
+msgid "due tasks"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:274
+msgctxt "summary tile"
+msgid "Overdue"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:276
+msgctxt "summary sub"
+msgid "needs review"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:282
+msgctxt "summary tile"
+msgid "Priorities"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:285
+msgctxt "summary sub triage"
+msgid "Q1: %1 · Q2: %2 · %3 to triage"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:286
+msgctxt "summary sub"
+msgid "Q1: %1 · Q2: %2"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:292
+msgctxt "summary tile"
+msgid "Routine"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:294
+msgctxt "summary sub"
+msgid "blocks today"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:300
+msgctxt "summary tile"
+msgid "Focus Today"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:302
+msgctxt "summary sub"
+msgid "%1 Pomodoro"
+msgid_plural "%1 Pomodoros"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/SummaryPage.qml:415
+msgctxt "weather compact header"
+msgid "Weather · %1"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:416
+msgctxt "weather compact header"
+msgid "Weather"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:423
+msgctxt "weather updated time"
+msgid "· updated %1 (auto 1h)"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:439
+msgctxt "@action:button"
+msgid "Update weather now"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:488
+msgctxt "weather metrics compact"
+msgid "Feels %1° · Humidity %2% · Wind %3 km/h"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:506
+msgctxt "weather status"
+msgid "Loading local forecast…"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:507
+msgctxt "weather status"
+msgid "Configure your weather city in Settings."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:513
+msgctxt "@action:button"
+msgid "Settings"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:528
+msgctxt "@action:button"
+msgid "Previous days"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:631
+msgctxt "@action:button"
+msgid "Next days"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:655
+msgctxt "@title:group"
+msgid "Priorities & Upcoming Tasks"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:657
+msgctxt "card sub triage"
+msgid "Ranked urgent/important tasks · %1 awaits Matrix triage"
+msgid_plural "Ranked urgent/important tasks · %1 await Matrix triage"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/SummaryPage.qml:658
+msgctxt "card sub"
+msgid "Overdue, due soon and Q1/Q2 tasks"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:659
+msgctxt "@action:button"
+msgid "Focus #1"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:660
+msgctxt "@action:button"
+msgid "Triage (%1)"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:676
+msgctxt "empty priorities"
+msgid "You are all caught up! No urgent or due tasks waiting."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:767
+msgctxt "@title:group"
+msgid "Journal & Quick Notes"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:768
+msgctxt "card sub journal"
+msgid "Latest entries from your notebooks"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:769
+msgctxt "@action:button"
+msgid "Today's Note"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:785
+msgctxt "empty journal summary"
+msgid ""
+"No journal notes yet. Click “Today's Note” to record ideas or reflect on "
+"your day."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:870
+msgctxt "@title:group"
+msgid "Insights Snapshot"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:877
+msgctxt "empty insights"
+msgid ""
+"Complete tasks or run Pomodoro sessions to generate productivity insights."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:938
+msgctxt "@title:group"
+msgid "Today's Routine"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:939
+msgctxt "card sub"
+msgid "Time-blocked habits & planned blocks"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:997
+msgctxt "schedule conflict note"
+msgid "Schedule overlap detected between Routine and External Agenda below."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1010
+msgctxt "empty routine"
+msgid "No routine blocks scheduled for today."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1048
+msgctxt "@info:tooltip"
+msgid "Overlaps external event: %1"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1058
+msgctxt "@title:group"
+msgid "External Agenda · Appointments"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1060
+msgctxt "@action:button"
+msgid "Configure"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1070
+msgctxt "empty external cal"
+msgid ""
+"No appointments found for the next 3 days across your enabled KOrganizer / "
+"desktop or .ics calendars."
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1134
+msgctxt "event routine overlap"
+msgid "Overlaps: %1"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1149
+msgctxt "@action:button"
+msgid "Create prep task"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1150
+msgctxt "@info:tooltip"
+msgid "Create preparation task for this appointment"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1162
+msgctxt "@action:button"
+msgid "Start Pomodoro for this appointment"
+msgstr ""
+
+#: src/app/qml/SummaryPage.qml:1163
+msgctxt "@info:tooltip"
+msgid "Start Pomodoro focus for this appointment"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:69
+msgctxt "@action:button"
+msgid "Show subtasks"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:69
+msgctxt "@action:button"
+msgid "Hide subtasks"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:76
+msgctxt "@action"
+msgid "Reopen task"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:76
+msgctxt "@action"
+msgid "Complete task"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:128
+msgctxt "@info"
+msgid "Repeats"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:134
+msgctxt "@info"
+msgid "Has a reminder"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:140
+msgctxt "@info"
+msgid "Has notes"
+msgstr ""
+
+#: src/app/qml/TaskDelegate.qml:145
+msgctxt "completed subtasks / all subtasks"
+msgid "%1/%2"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:102
+msgctxt "@option:check"
+msgid "Completed"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:111
+msgctxt "@info:placeholder"
+msgid "Title"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:112
+msgctxt "@label"
+msgid "Title"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:123
+msgctxt "@action:button"
+msgid "Copy details"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:131
+msgctxt "@action:button"
+msgid "Send by email…"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:139
+msgctxt "@action:button"
+msgid "Close details"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:152
+msgctxt "@info %1 is the title of the parent task"
+msgid "Subtask of <a href=\"#\">%1</a>"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:192
+msgctxt "@label"
+msgid "Due:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:199 src/app/qml/TaskDetails.qml:276
+msgctxt "@action:button"
+msgid "Set date"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:209
+msgctxt "@action:button"
+msgid "Remove due date"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:221
+msgctxt "@action:button due date shortcut"
+msgid "Today"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:226
+msgctxt "@action:button due date shortcut"
+msgid "+1 day"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:231
+msgctxt "@action:button due date shortcut"
+msgid "+1 week"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:236
+msgctxt "@label"
+msgid "Time:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:244
+msgctxt "@action:button"
+msgid "All day"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:259
+msgctxt "@action:button"
+msgid "Remove time"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:269
+msgctxt "@label"
+msgid "Start:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:285
+msgctxt "@action:button"
+msgid "Remove start date"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:295
+msgctxt "@label:listbox"
+msgid "Repeat:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:325
+msgctxt "recurrence"
+msgid "Does not repeat"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:326
+msgctxt "recurrence"
+msgid "Daily"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:327
+msgctxt "recurrence"
+msgid "Weekly"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:328
+msgctxt "recurrence"
+msgid "Monthly"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:329
+msgctxt "recurrence"
+msgid "Yearly"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:332
+msgctxt "recurrence set by another application"
+msgid "Custom"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:353
+msgctxt "recurrence interval, e.g. every 2 (weeks)"
+msgid "every %1"
+msgid_plural "every %1"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TaskDetails.qml:407
+msgctxt "recurrence end"
+msgid "Forever"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:408
+msgctxt "recurrence end"
+msgid "Fixed number of times"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:409
+msgctxt "recurrence end"
+msgid "Until date"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:430
+msgctxt "recurrence count"
+msgid "%1 time"
+msgid_plural "%1 times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TaskDetails.qml:438
+msgctxt "@action:button"
+msgid "Pick date"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:464
+msgctxt "@label"
+msgid "Reminders:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:481 src/app/qml/TaskDetails.qml:482
+msgctxt "@action:button"
+msgid "Add reminder"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:490
+msgctxt "reminder"
+msgid "5 minutes before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:491
+msgctxt "reminder"
+msgid "15 minutes before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:492
+msgctxt "reminder"
+msgid "30 minutes before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:493
+msgctxt "reminder"
+msgid "1 hour before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:494
+msgctxt "reminder"
+msgid "2 hours before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:495
+msgctxt "reminder"
+msgid "1 day before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:496
+msgctxt "reminder"
+msgid "2 days before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:497
+msgctxt "reminder"
+msgid "1 week before"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:511
+msgctxt "@label:listbox"
+msgid "Priority:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:513 src/app/qml/TasksPage.qml:478
+msgctxt "priority"
+msgid "None"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:520
+msgctxt "@label"
+msgid "Execution:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:535
+msgctxt "estimate"
+msgid "No estimate"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:535
+msgctxt "minutes est"
+msgid "%1 min est."
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:549
+msgctxt "execution stats"
+msgid "Spent: %1 · 🍅 ×%2"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:550
+msgctxt "execution stats"
+msgid "Spent: %1"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:569
+msgctxt "@action:button"
+msgid "Pomodoro"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:582
+msgctxt "@info:tooltip"
+msgid "Log 15 minutes manually"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:591
+msgctxt "@label"
+msgid "Tags:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:622
+msgctxt "@action:button"
+msgid "Choose an existing tag"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:644
+msgctxt "@label:slider"
+msgid "Progress:"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:663
+msgctxt "progress in percent"
+msgid "%1%"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:679
+msgctxt "@title:group"
+msgid "Subtasks"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:705
+msgctxt "@action:button"
+msgid "Open subtask"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:714
+msgctxt "@info:placeholder"
+msgid "Add subtask…"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:735
+msgctxt "@title:group"
+msgid "Notes"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:740
+msgctxt "@action:button"
+msgid "Expand"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:758 src/app/qml/TaskDetails.qml:788
+msgctxt "@info:placeholder"
+msgid "Notes (Markdown supported)"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:771
+msgctxt "@title:window"
+msgid "Notes"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:807
+msgctxt "@info"
+msgid "Created %1 · Changed %2"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:809
+msgctxt "@info"
+msgid "Completed %1"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:812
+msgctxt "@info"
+msgid "Waiting to be synchronized"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:815
+msgctxt "@info"
+msgid "Read-only list"
+msgstr ""
+
+#: src/app/qml/TaskDetails.qml:822
+msgctxt "@action:button"
+msgid "Delete Task"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:112
+msgctxt "@action:button"
+msgid "Sort"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:116
+msgctxt "@action:inmenu sort order"
+msgid "My order"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:116
+msgctxt "@action:inmenu sort order"
+msgid "Automatic"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:122
+msgctxt "@action:inmenu sort order"
+msgid "Due date"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:128
+msgctxt "@action:inmenu sort order"
+msgid "Priority"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:134
+msgctxt "@action:inmenu sort order"
+msgid "Title"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:140
+msgctxt "@action:inmenu sort order"
+msgid "Newest first"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:148
+msgctxt "@action:button"
+msgid "Hide Completed"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:148 src/app/qml/TasksPage.qml:393
+msgctxt "@action:button"
+msgid "Show Completed"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:161
+msgctxt "@action:button"
+msgid "Edit List…"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:168
+msgctxt "@action:button"
+msgid "Delete Completed Tasks"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:190
+msgctxt "@info"
+msgid "This list is shared with you as read-only. Changes cannot be saved."
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:201
+msgctxt "@action:button"
+msgid "Try Again"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:239
+msgid "%1 task selected"
+msgid_plural "%1 tasks selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:252
+msgctxt "@action:button"
+msgid "+1 Day"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:258
+msgctxt "@action:button"
+msgid "Copy Details"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:264
+msgctxt "@action:button"
+msgid "Send by Email…"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:281
+msgctxt "@info:tooltip"
+msgid "Clear selection (Esc)"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:373
+msgctxt "@action:button"
+msgid "Show %1 completed task"
+msgid_plural "Show %1 completed tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:383
+msgctxt "@info:placeholder"
+msgid "No task matches “%1”"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:384
+msgctxt "@info:placeholder"
+msgid "Nothing due today"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:385
+msgctxt "@info:placeholder"
+msgid "Nothing overdue"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:386
+msgctxt "@info:placeholder"
+msgid "No completed tasks yet"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:387
+msgctxt "@info:placeholder"
+msgid "No tasks here"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:388
+msgctxt "@info"
+msgid "%1 completed task is hidden."
+msgid_plural "%1 completed tasks are hidden."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:389
+msgctxt "@info"
+msgid "Type in the field above and press Enter to add one."
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:429
+msgctxt "@action:inmenu"
+msgid "Complete (%1)"
+msgid_plural "Complete (%1)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:437
+msgctxt "@action:inmenu"
+msgid "Reopen (%1)"
+msgid_plural "Reopen (%1)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:457
+msgctxt "@action:inmenu set due date"
+msgid "Due Today"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:463
+msgctxt "@action:inmenu move due date"
+msgid "Postpone One Day"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:469
+msgctxt "@action:inmenu move due date"
+msgid "Postpone One Week"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:474
+msgctxt "@title:menu"
+msgid "Priority"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:490
+msgctxt "@title:menu"
+msgid "Eisenhower Matrix"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:511
+msgctxt "@title:menu"
+msgid "Move to List"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:529
+msgctxt "@action:inmenu"
+msgid "Copy Details (%1)"
+msgid_plural "Copy Details (%1)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:535
+msgctxt "@action:inmenu"
+msgid "Send by Email (%1)…"
+msgid_plural "Send by Email (%1)…"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/qml/TasksPage.qml:536
+msgctxt "@action:inmenu"
+msgid "Send by Email…"
+msgstr ""
+
+#: src/app/qml/TasksPage.qml:542
+msgctxt "@action:inmenu"
+msgid "Delete (%1)"
+msgid_plural "Delete (%1)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/routinemanager.cpp:198
+msgctxt "routine date"
+msgid "Today — %1"
+msgstr ""
+
+#: src/app/routinemanager.cpp:201
+msgctxt "routine date"
+msgid "Tomorrow — %1"
+msgstr ""
+
+#: src/app/routinemanager.cpp:204
+msgctxt "routine date"
+msgid "Yesterday — %1"
+msgstr ""
+
+#: src/app/routinemanager.cpp:550
+msgctxt "routine category for scheduled task"
+msgid "Task"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:71
+msgctxt "sidebar section"
+msgid "Tasks"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:79 src/app/taskmodel.cpp:212
+msgctxt "smart view"
+msgid "Today"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:80 src/app/taskmodel.cpp:215
+msgctxt "smart view"
+msgid "Next 7 days"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:81 src/app/taskmodel.cpp:218
+msgctxt "smart view"
+msgid "Overdue"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:82 src/app/taskmodel.cpp:226
+msgctxt "smart view"
+msgid "All tasks"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:83 src/app/taskmodel.cpp:221
+msgctxt "smart view"
+msgid "No date"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:84 src/app/taskmodel.cpp:224
+msgctxt "smart view"
+msgid "Completed"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:113
+msgctxt "section for lists that are not synchronized"
+msgid "On this device"
+msgstr ""
+
+#: src/app/sidebarmodel.cpp:124
+msgctxt "sidebar section"
+msgid "Tags"
+msgstr ""
+
+#: src/app/summarymanager.cpp:202
+msgctxt "date label"
+msgid "Today"
+msgstr ""
+
+#: src/app/summarymanager.cpp:203
+msgctxt "date label"
+msgid "Tomorrow"
+msgstr ""
+
+#: src/app/summarymanager.cpp:204
+msgctxt "short day label"
+msgid "%1 %2"
+msgstr ""
+
+#: src/app/summarymanager.cpp:209
+msgctxt "all day event"
+msgid "All day"
+msgstr ""
+
+#: src/app/summarymanager.cpp:251
+msgctxt "event timing"
+msgid "Now"
+msgstr ""
+
+#: src/app/summarymanager.cpp:256
+msgctxt "event countdown minutes"
+msgid "In %1 min"
+msgstr ""
+
+#: src/app/summarymanager.cpp:260
+msgctxt "event countdown h+m"
+msgid "In %1h %2m"
+msgstr ""
+
+#: src/app/summarymanager.cpp:261
+msgctxt "event countdown h"
+msgid "In %1h"
+msgstr ""
+
+#: src/app/summarymanager.cpp:278
+msgctxt "greeting"
+msgid "Good morning"
+msgstr ""
+
+#: src/app/summarymanager.cpp:278
+msgctxt "greeting with name"
+msgid "Good morning, %1!"
+msgstr ""
+
+#: src/app/summarymanager.cpp:280
+msgctxt "greeting"
+msgid "Good afternoon"
+msgstr ""
+
+#: src/app/summarymanager.cpp:280
+msgctxt "greeting with name"
+msgid "Good afternoon, %1!"
+msgstr ""
+
+#: src/app/summarymanager.cpp:282
+msgctxt "greeting"
+msgid "Good evening"
+msgstr ""
+
+#: src/app/summarymanager.cpp:282
+msgctxt "greeting with name"
+msgid "Good evening, %1!"
+msgstr ""
+
+#: src/app/summarymanager.cpp:555
+msgctxt "calendar source"
+msgid "KOrganizer Local"
+msgstr ""
+
+#: src/app/summarymanager.cpp:649
+msgctxt "calendar source"
+msgid "Birthdays"
+msgstr ""
+
+#: src/app/summarymanager.cpp:651
+msgctxt "calendar source"
+msgid "KOrganizer"
+msgstr ""
+
+#: src/app/summarymanager.cpp:654
+msgctxt "calendar source google"
+msgid "Google (%1)"
+msgstr ""
+
+#: src/app/summarymanager.cpp:840
+msgctxt "now remaining"
+msgid "Now · %1 min left"
+msgstr ""
+
+#: src/app/summarymanager.cpp:848
+msgctxt "free gap h+m"
+msgid "Free window now: %1h %2m"
+msgstr ""
+
+#: src/app/summarymanager.cpp:849
+msgctxt "free gap min"
+msgid "Free window now: %1 min"
+msgstr ""
+
+#: src/app/summarymanager.cpp:882
+msgctxt "external calendar status"
+msgid "External agenda disabled in Settings."
+msgstr ""
+
+#: src/app/summarymanager.cpp:885
+msgctxt "external cal sources"
+msgid "Read-only from %2 (%1 calendar) — kept separate from Routine."
+msgid_plural "Read-only from %2 (%1 calendars) — kept separate from Routine."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/app/summarymanager.cpp:890
+msgctxt "external calendar status"
+msgid "Loading KOrganizer / desktop calendars…"
+msgstr ""
+
+#: src/app/summarymanager.cpp:892
+msgctxt "external calendar status"
+msgid ""
+"No external calendar with events found. Connect KOrganizer or add an .ics "
+"file in Settings."
+msgstr ""
+
+#: src/app/summarymanager.cpp:908
+msgctxt "prep task title"
+msgid "Prepare for: %1"
+msgstr ""
+
+#: src/app/summarymanager.cpp:926
+msgid "External Agenda"
+msgstr ""
+
+#: src/app/summarymanager.cpp:925
+msgctxt "prep task note"
+msgid "Created from external agenda (%1): %2 %3"
+msgstr ""
+
+#: src/app/summarymanager.cpp:932
+msgctxt "@info"
+msgid "Task created: “%1”"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1020
+msgid "Offline or location unavailable — choose your city to load forecast."
+msgstr ""
+
+#: src/app/summarymanager.cpp:1031
+msgid "Current location"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1068
+msgid "Could not update weather (%1)."
+msgstr ""
+
+#: src/app/summarymanager.cpp:1115
+msgctxt "forecast day"
+msgid "Today"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1225
+msgctxt "weather"
+msgid "Clear sky"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1226
+msgctxt "weather"
+msgid "Mainly clear"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1227
+msgctxt "weather"
+msgid "Partly cloudy"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1228
+msgctxt "weather"
+msgid "Overcast"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1229
+msgctxt "weather"
+msgid "Fog"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1230
+msgctxt "weather"
+msgid "Drizzle"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1231
+msgctxt "weather"
+msgid "Rain"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1232
+msgctxt "weather"
+msgid "Snow"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1233
+msgctxt "weather"
+msgid "Rain showers"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1234
+msgctxt "weather"
+msgid "Snow showers"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1235
+msgctxt "weather"
+msgid "Thunderstorm"
+msgstr ""
+
+#: src/app/summarymanager.cpp:1236
+msgctxt "weather"
+msgid "Variable conditions"
+msgstr ""
+
+#: src/app/syncmanager.cpp:117
+msgid "The password is not in the keyring. Sign in again."
+msgstr ""
+
+#: src/app/syncmanager.cpp:130
+msgctxt "sync status"
+msgid "Local only"
+msgstr ""
+
+#: src/app/syncmanager.cpp:133
+msgctxt "sync status"
+msgid "Synchronizing…"
+msgstr ""
+
+#: src/app/syncmanager.cpp:136
+msgctxt "sync status"
+msgid "Sync problem"
+msgstr ""
+
+#: src/app/syncmanager.cpp:139
+msgctxt "sync status"
+msgid "Offline – changes are saved and will be sent later"
+msgstr ""
+
+#: src/app/syncmanager.cpp:142
+msgctxt "sync status, %1 is a time"
+msgid "Synchronized at %1"
+msgstr ""
+
+#: src/app/syncmanager.cpp:144
+msgctxt "sync status"
+msgid "Not synchronized yet"
+msgstr ""
+
+#: src/app/syncmanager.cpp:152
+msgctxt "account: problem"
+msgid "%1: sign in again"
+msgstr ""
+
+#: src/app/syncmanager.cpp:154
+msgctxt "account: problem"
+msgid "%1: %2"
+msgstr ""
+
+#: src/app/syncmanager.cpp:164
+msgid "The server cannot be reached."
+msgstr ""
+
+#: src/app/syncmanager.cpp:166
+msgid "The server rejected the user name or password."
+msgstr ""
+
+#: src/app/syncmanager.cpp:168
+msgid "Cancelled."
+msgstr ""
+
+#: src/app/syncmanager.cpp:170
+msgctxt "%1 is a technical detail such as 'HTTP 503'"
+msgid "The server reported a problem (%1)."
+msgstr ""
+
+#: src/app/syncmanager.cpp:242
+msgid ""
+"The password could not be saved in the keyring (%1). You will have to sign "
+"in again next time."
+msgstr ""
+
+#: src/app/syncmanager.cpp:509
+msgid "That does not look like a server address."
+msgstr ""
+
+#: src/app/syncmanager.cpp:530
+msgid "Contacting the server…"
+msgstr ""
+
+#: src/app/syncmanager.cpp:546
+msgid "unexpected answer"
+msgstr ""
+
+#: src/app/syncmanager.cpp:545
+msgid ""
+"This server did not answer like a Nextcloud server (%1). Check the address, "
+"or use \"Other CalDAV server\"."
+msgstr ""
+
+#: src/app/syncmanager.cpp:553
+msgid ""
+"The server redirected the sign-in to another address. Aborted for safety."
+msgstr ""
+
+#: src/app/syncmanager.cpp:560
+msgid "Confirm the access in the browser window that just opened. Waiting…"
+msgstr ""
+
+#: src/app/syncmanager.cpp:572
+msgid "The sign-in was not confirmed in time."
+msgstr ""
+
+#: src/app/syncmanager.cpp:595
+msgid "Signed in. Looking for task lists…"
+msgstr ""
+
+#: src/app/syncmanager.cpp:608
+msgid "Fill in the address, the user name and the password."
+msgstr ""
+
+#: src/app/syncmanager.cpp:611
+msgid "Checking the account…"
+msgstr ""
+
+#: src/app/syncmanager.cpp:661
+msgid "The account could not be saved."
+msgstr ""
+
+#: src/app/taskmodel.cpp:98
+msgctxt "due date"
+msgid "Today"
+msgstr ""
+
+#: src/app/taskmodel.cpp:100
+msgctxt "due date"
+msgid "Tomorrow"
+msgstr ""
+
+#: src/app/taskmodel.cpp:102
+msgctxt "due date"
+msgid "Yesterday"
+msgstr ""
+
+#: src/app/taskmodel.cpp:202
+msgctxt "page title"
+msgid "Search results"
+msgstr ""
+
+#: src/app/taskmodel.cpp:206
+msgctxt "page title"
+msgid "Tasks"
+msgstr ""
+
+#: src/app/taskmodel.cpp:332
+msgctxt "section header"
+msgid "Completed"
+msgstr ""
+
+#: src/app/taskmodel.cpp:338
+msgctxt "section header"
+msgid "High priority"
+msgstr ""
+
+#: src/app/taskmodel.cpp:340
+msgctxt "section header"
+msgid "Medium priority"
+msgstr ""
+
+#: src/app/taskmodel.cpp:342
+msgctxt "section header"
+msgid "Low priority"
+msgstr ""
+
+#: src/app/taskmodel.cpp:344
+msgctxt "section header"
+msgid "No priority"
+msgstr ""
+
+#: src/app/taskmodel.cpp:352
+msgctxt "section header"
+msgid "No date"
+msgstr ""
+
+#: src/app/taskmodel.cpp:356
+msgctxt "section header"
+msgid "Overdue"
+msgstr ""
+
+#: src/app/taskmodel.cpp:359
+msgctxt "section header"
+msgid "Today"
+msgstr ""
+
+#: src/app/taskmodel.cpp:362
+msgctxt "section header"
+msgid "Tomorrow"
+msgstr ""
+
+#: src/app/taskmodel.cpp:371
+msgctxt "section header"
+msgid "Later"
+msgstr ""
+
+#: src/app/taskmodel.cpp:723
+msgctxt "undo step"
+msgid "Reorder tasks"
+msgstr ""
+
+#: src/app/taskstore.cpp:141
+msgctxt "name of the default task list"
+msgid "Tasks"
+msgstr ""
+
+#: src/app/taskstore.cpp:332
+msgctxt "undo step"
+msgid "Add task"
+msgstr ""
+
+#: src/app/taskstore.cpp:441
+msgctxt "undo step"
+msgid "Reopen tasks"
+msgstr ""
+
+#: src/app/taskstore.cpp:441
+msgctxt "undo step"
+msgid "Reopen task"
+msgstr ""
+
+#: src/app/taskstore.cpp:443
+msgctxt "undo step"
+msgid "Complete task (repeats)"
+msgstr ""
+
+#: src/app/taskstore.cpp:444
+msgctxt "undo step"
+msgid "Complete tasks"
+msgstr ""
+
+#: src/app/taskstore.cpp:444
+msgctxt "undo step"
+msgid "Complete task"
+msgstr ""
+
+#: src/app/taskstore.cpp:472
+msgctxt "undo step"
+msgid "Delete task"
+msgstr ""
+
+#: src/app/taskstore.cpp:536
+msgctxt "undo step"
+msgid "Move tasks"
+msgstr ""
+
+#: src/app/taskstore.cpp:536
+msgctxt "undo step"
+msgid "Move task"
+msgstr ""
+
+#: src/app/taskstore.cpp:549
+msgctxt "undo step"
+msgid "Delete completed tasks"
+msgstr ""
+
+#: src/app/taskstore.cpp:578
+msgctxt "undo step"
+msgid "Import tasks"
+msgstr ""

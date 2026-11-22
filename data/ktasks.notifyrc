@@ -1,0 +1,58 @@
+[Global]
+IconName=view-task
+Name=KTasks
+Name[pt_BR]=KTasks
+Comment=Task manager
+Comment[pt_BR]=Gerenciador de tarefas
+DesktopEntry=io.github.marleys439.ktasks
+
+[Event/reminder]
+Name=Task reminder
+Name[pt_BR]=Lembrete de tarefa
+Comment=A reminder of a task, or a task that became due
+Comment[pt_BR]=Lembrete de uma tarefa, ou uma tarefa que venceu
+Action=Popup|Sound
+Sound=message-new-instant
+Urgency=Normal
+
+[Event/dailySummary]
+Name=Daily summary
+Name[pt_BR]=Resumo diário
+Comment=What is due today and what is overdue
+Comment[pt_BR]=O que vence hoje e o que está atrasado
+Action=Popup
+Urgency=Low
+
+[Event/syncConflict]
+Name=Synchronization conflict
+Name[pt_BR]=Conflito de sincronização
+Comment=A task was changed in two places and both versions were kept
+Comment[pt_BR]=Uma tarefa foi alterada em dois lugares e as duas versões foram mantidas
+Action=Popup
+Urgency=Normal
+
+[Event/syncError]
+Name=Synchronization problem
+Name[pt_BR]=Problema de sincronização
+Comment=The server refused the connection or the account needs attention
+Comment[pt_BR]=O servidor recusou a conexão ou a conta precisa de atenção
+Action=Popup
+Urgency=Low
+
+[Event/routine]
+Name=Routine reminder
+Name[pt_BR]=Lembrete de rotina
+Comment=A scheduled routine block is about to start
+Comment[pt_BR]=Um bloco da rotina está prestes a começar
+Action=Popup|Sound
+Sound=message-new-instant
+Urgency=Normal
+
+[Event/focus]
+Name=Pomodoro & Focus
+Name[pt_BR]=Pomodoro e Foco
+Comment=A focus session or break timer has finished
+Comment[pt_BR]=Uma sessão de foco ou pausa foi concluída
+Action=Popup|Sound
+Sound=message-new-instant
+Urgency=Normal

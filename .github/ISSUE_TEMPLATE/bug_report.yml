@@ -1,0 +1,30 @@
+name: Bug Report
+description: Report a bug or crash in KTasks
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear description of the bug and what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Open Summary / Matrix / Tasks...
+        2. Click on ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: System & KDE Environment
+      description: Distro, Plasma version, Qt/KF6 version, Wayland/X11, and install method (source, AUR, Flatpak).
+      placeholder: "Arch Linux, Plasma 6, Wayland, built from main"
+    validations:
+      required: true

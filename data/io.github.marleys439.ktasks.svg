@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" version="1.1">
+ <defs>
+  <linearGradient id="blueGrad" y1="4" x1="4" y2="44" x2="44" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#3daee9"/>
+   <stop offset="1" stop-color="#18669e"/>
+  </linearGradient>
+  <linearGradient id="shadow45" y1="14" x1="14" y2="44" x2="44" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#000000" stop-opacity="0.35"/>
+   <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </linearGradient>
+  <clipPath id="cardClip">
+   <rect x="4" y="4" width="40" height="40" rx="1" ry="1"/>
+  </clipPath>
+ </defs>
+
+ <!-- Base square rect (KDE Plasma Breeze standard, rx=1 like Konsole/Dolphin) -->
+ <rect style="fill:url(#blueGrad)" height="40" rx="1" y="4" x="4" width="40" ry="1"/>
+
+ <!-- 45-degree shadow cast from checklist items -->
+ <g clip-path="url(#cardClip)">
+  <path d="M 20 23 L 41 44 L 44 44 L 44 36 L 37 29 L 37 16.5 L 34 16.5 L 34 20 L 20 20 Z 
+           M 20 35 L 29 44 L 34 44 L 20 30 Z" 
+        style="fill:url(#shadow45);fill-rule:evenodd"/>
+ </g>
+
+ <!-- Bottom edge shadow -->
+ <path style="fill:#000000;fill-opacity:1;opacity:0.3" d="M 4 42 L 4 43 C 4 43.554 4.446 44 5 44 L 43 44 C 43.554 44 44 43.554 44 43 L 44 42 C 44 42.554 43.554 43 43 43 L 5 43 C 4.446 43 4 42.554 4 42 z"/>
+
+ <!-- Top edge highlight -->
+ <path d="M 4,6 4,5 C 4,4.446 4.446,4 5,4 l 38,0 c 0.554,0 1,0.446 1,1 l 0,1 C 44,5.446 43.554,5 43,5 L 5,5 C 4.446,5 4,5.446 4,6 Z" style="opacity:0.3;fill:#ffffff;fill-opacity:1"/>
+
+ <!-- Row 1: Square Checked Box + Task Line -->
+ <rect x="11" y="14" width="9" height="9" rx="0.8" ry="0.8" fill="#ffffff"/>
+ <!-- Sharp Breeze checkmark -->
+ <path d="M 13 18.5 L 15 20.8 L 18.5 15.5" fill="none" stroke="#18669e" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+ <rect x="23" y="16.5" width="14" height="4" rx="0.5" ry="0.5" fill="#ffffff"/>
+
+ <!-- Row 2: Square Unchecked Box + Task Line -->
+ <rect x="11" y="26" width="9" height="9" rx="0.8" ry="0.8" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+ <rect x="23" y="28.5" width="10" height="4" rx="0.5" ry="0.5" fill="#ffffff" opacity="0.85"/>
+</svg>
