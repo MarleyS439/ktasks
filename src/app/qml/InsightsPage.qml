@@ -343,15 +343,40 @@ Item {
 
                         RowLayout {
                             Layout.fillWidth: true
+                            spacing: Kirigami.Units.smallSpacing
                             Kirigami.Heading {
                                 Layout.fillWidth: true
                                 level: 3
                                 text: i18nc("@title:group", "Daily Activity & Focus")
                             }
-                            QQC2.Label {
-                                font: Kirigami.Theme.smallFont
-                                color: Kirigami.Theme.disabledTextColor
-                                text: i18nc("chart legend", "Blue: focus time · Green: tasks")
+                            RowLayout {
+                                spacing: Kirigami.Units.largeSpacing
+                                RowLayout {
+                                    spacing: 5
+                                    Rectangle {
+                                        width: 10
+                                        height: 10
+                                        radius: 3
+                                        color: "#3daee9"
+                                    }
+                                    QQC2.Label {
+                                        font: Kirigami.Theme.smallFont
+                                        text: i18nc("chart legend blue bar", "Focus time (min)")
+                                    }
+                                }
+                                RowLayout {
+                                    spacing: 5
+                                    Rectangle {
+                                        width: 10
+                                        height: 10
+                                        radius: 3
+                                        color: "#27ae60"
+                                    }
+                                    QQC2.Label {
+                                        font: Kirigami.Theme.smallFont
+                                        text: i18nc("chart legend green bar", "Tasks completed")
+                                    }
+                                }
                             }
                         }
 
@@ -372,48 +397,73 @@ Item {
                                     readonly property int maxMin: Math.max(1, page.s.maxDailyMinutes ?? 1)
                                     readonly property int maxCmp: Math.max(1, page.s.maxDailyCompleted ?? 1)
                                     readonly property bool showLabel: page.seriesCount <= 14 || index === 0 || index === page.seriesCount - 1 || (index % 5 === 0) || !!modelData.isToday
+                                    readonly property bool showValues: page.seriesCount <= 14
 
                                     Layout.fillWidth: true
                                     Layout.fillHeight: true
                                     spacing: 3
 
-                                    QQC2.Label {
-                                        Layout.alignment: Qt.AlignHCenter
-                                        visible: modelData.completedCount > 0 && page.seriesCount <= 14
-                                        text: modelData.completedCount
-                                        font.pointSize: Kirigami.Theme.smallFont.pointSize
-                                        font.bold: true
-                                        color: "#27ae60"
-                                    }
-
                                     Item {
                                         id: barPlotArea
                                         Layout.fillWidth: true
                                         Layout.fillHeight: true
+                                        readonly property int maxBarH: Math.max(20, height - (showValues ? 20 : 4))
 
                                         Item {
-                                            width: chartRow.barW * 2 + 3
+                                            width: chartRow.barW * 2 + 4
                                             height: parent.height
                                             anchors.horizontalCenter: parent.horizontalCenter
 
                                             Rectangle {
+                                                id: blueBar
                                                 x: 0
                                                 anchors.bottom: parent.bottom
                                                 width: chartRow.barW
                                                 height: Math.max(modelData.focusMinutes > 0 ? 6 : 2,
-                                                                 Math.round((modelData.focusMinutes / maxMin) * Math.max(20, barPlotArea.height - 4)))
+                                                                 Math.round((modelData.focusMinutes / maxMin) * barPlotArea.maxBarH))
                                                 radius: Math.min(3, width / 2)
                                                 color: modelData.focusMinutes > 0 ? "#3daee9" : Qt.alpha(Kirigami.Theme.textColor, 0.14)
                                             }
+                                            QQC2.Label {
+                                                visible: showValues && modelData.focusMinutes > 0
+                                                anchors.horizontalCenter: blueBar.horizontalCenter
+                                                anchors.bottom: blueBar.top
+                                                anchors.bottomMargin: 2
+                                                text: modelData.focusMinutes >= 60
+                                                    ? Math.floor(modelData.focusMinutes / 60) + "h"
+                                                    : modelData.focusMinutes + "m"
+                                                font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.9
+                                                font.bold: true
+                                                color: "#3daee9"
+                                            }
                                             Rectangle {
-                                                x: chartRow.barW + 3
+                                                id: greenBar
+                                                x: chartRow.barW + 4
                                                 anchors.bottom: parent.bottom
                                                 width: chartRow.barW
                                                 height: Math.max(modelData.completedCount > 0 ? 6 : 2,
-                                                                 Math.round((modelData.completedCount / maxCmp) * Math.max(20, barPlotArea.height - 4)))
+                                                                 Math.round((modelData.completedCount / maxCmp) * barPlotArea.maxBarH))
                                                 radius: Math.min(3, width / 2)
                                                 color: modelData.completedCount > 0 ? "#27ae60" : Qt.alpha(Kirigami.Theme.textColor, 0.14)
                                             }
+                                            QQC2.Label {
+                                                visible: showValues && modelData.completedCount > 0
+                                                anchors.horizontalCenter: greenBar.horizontalCenter
+                                                anchors.bottom: greenBar.top
+                                                anchors.bottomMargin: 2
+                                                text: modelData.completedCount
+                                                font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.9
+                                                font.bold: true
+                                                color: "#27ae60"
+                                            }
+                                        }
+
+                                        Rectangle {
+                                            anchors.left: parent.left
+                                            anchors.right: parent.right
+                                            anchors.bottom: parent.bottom
+                                            height: 1
+                                            color: Qt.alpha(Kirigami.Theme.textColor, 0.12)
                                         }
                                     }
 

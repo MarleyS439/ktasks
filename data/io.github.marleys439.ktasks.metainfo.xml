@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.7" date="2026-11-22">
+      <description>
+        <p>Simplify Add-ons settings UI, unfocus inputs when clicking outside, prefer IPv4 for fast Open-Meteo weather search with busy indicator, keep only the latest pre-migration backup snapshot, and clarify Daily Activity &amp; Focus chart legend and per-bar values.</p>
+      </description>
+    </release>
     <release version="1.0.6" date="2026-11-22">
       <description>
         <p>Add Settings tabs with a new Add-ons section for privacy-first Discord Rich Presence during focus sessions, automatic PC Do Not Disturb mode while focusing, live remaining free time in Routine &amp; Day Planner, and v9 backfill for pre-existing routine templates.</p>

@@ -390,6 +390,13 @@ bool Database::backupBeforeMigration(int fromVersion)
         m_lastError = QStringLiteral("could not write backup %1").arg(target);
         return false;
     }
+    const QString keepName = QFileInfo(target).fileName();
+    const QFileInfoList oldBackups = QDir(dir).entryInfoList({QStringLiteral("*.db")}, QDir::Files);
+    for (const QFileInfo &old : oldBackups) {
+        if (old.fileName() != keepName) {
+            QFile::remove(old.absoluteFilePath());
+        }
+    }
     qCInfo(lcDb) << "database backed up to" << target;
     return true;
 }

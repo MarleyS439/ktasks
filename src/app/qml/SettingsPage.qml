@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Dialogs as Dialogs
 import QtQuick.Layouts
+import QtQuick.Window
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.components as Components
 import org.kde.kirigamiaddons.formcard as FormCard
@@ -25,11 +26,48 @@ Kirigami.Page {
     title: i18nc("@title", "Settings")
     padding: 0
 
+    Item {
+        id: focusSink
+        focus: true
+    }
+
+    function unfocusInputsOutside(scenePos) {
+        const focused = page.Window.activeFocusItem;
+        if (!focused || focused === focusSink) {
+            return;
+        }
+        const isText = typeof focused.cursorVisible === "boolean" || typeof focused.selectByMouse === "boolean";
+        if (!isText) {
+            return;
+        }
+        const p = focused.mapFromItem(null, scenePos.x, scenePos.y);
+        if (p.x < 0 || p.y < 0 || p.x > focused.width || p.y > focused.height) {
+            focusSink.forceActiveFocus();
+        }
+    }
+
+    MouseArea {
+        id: clickCatcher
+        parent: page
+        x: 0
+        y: 0
+        width: page.width
+        height: page.height
+        z: 999
+        acceptedButtons: Qt.LeftButton
+        onPressed: mouse => {
+            mouse.accepted = false;
+            const sp = clickCatcher.mapToItem(null, mouse.x, mouse.y);
+            page.unfocusInputsOutside(sp);
+        }
+    }
+
     header: QQC2.ToolBar {
         contentItem: RowLayout {
             Item { Layout.fillWidth: true }
             QQC2.TabBar {
                 id: settingsTabs
+                objectName: "settingsTabs"
                 Layout.maximumWidth: Kirigami.Units.gridUnit * 40
                 QQC2.TabButton {
                     icon.name: "configure"
@@ -51,9 +89,12 @@ Kirigami.Page {
         }
     }
 
-    StackLayout {
+    Item {
         anchors.fill: parent
-        currentIndex: settingsTabs.currentIndex
+
+        StackLayout {
+            anchors.fill: parent
+            currentIndex: settingsTabs.currentIndex
 
         // ==================== TAB 0: GENERAL & DATA ====================
         FormCard.FormCardPage {
@@ -510,53 +551,32 @@ Kirigami.Page {
             }
             FormCard.FormCard {
                 FormCard.FormSwitchDelegate {
-                    text: i18nc("@option:check", "Enable Discord Rich Presence during focus sessions")
-                    description: i18nc("@info", "Displays your active focus status and countdown timer in Discord desktop via local IPC without altering your account status.")
+                    text: i18nc("@option:check", "Enable Discord Rich Presence during focus")
                     checked: App.settings.discordPresenceEnabled
                     onToggled: App.settings.discordPresenceEnabled = checked
                 }
                 FormCard.FormSwitchDelegate {
                     enabled: App.settings.discordPresenceEnabled
-                    text: i18nc("@option:check", "Show active task title in Discord")
-                    description: i18nc("@info", "Disabled by default to protect your privacy. When off, only the generic focus mode (e.g. Pomodoro 1/4) and timer are shared.")
+                    text: i18nc("@option:check", "Show task title on Discord")
+                    description: i18nc("@info", "Off by default for privacy.")
                     checked: App.settings.discordShowTaskTitle
                     onToggled: App.settings.discordShowTaskTitle = checked
                 }
-                FormCard.FormDelegateSeparator {}
                 FormCard.FormTextFieldDelegate {
+                    id: discordIdField
+                    objectName: "discordIdField"
                     label: i18nc("@label:textbox", "Discord Application ID:")
-                    placeholderText: i18nc("@info:placeholder", "Numeric Application ID from Discord Developer Portal")
+                    placeholderText: "123456789012345678"
                     text: App.settings.discordClientId
                     onTextEdited: App.settings.discordClientId = text.trim()
                 }
-                FormCard.FormTextFieldDelegate {
-                    label: i18nc("@label:textbox", "Discord icon asset key or PNG URL:")
-                    placeholderText: "ktasks"
-                    text: App.settings.discordLargeImage
-                    onTextEdited: App.settings.discordLargeImage = text.trim()
-                }
                 FormCard.FormTextDelegate {
-                    text: i18nc("@label", "Discord IPC status")
-                    description: App.focus.discord.statusText
-                    trailing: RowLayout {
-                        spacing: Kirigami.Units.smallSpacing
-                        QQC2.Button {
-                            icon.name: "network-connect"
-                            text: i18nc("@action:button", "Test Connection")
-                            onClicked: App.focus.discord.testConnection()
-                        }
-                        QQC2.Button {
-                            icon.name: "document-export"
-                            text: i18nc("@action:button", "Export App Icon (PNG)…")
-                            onClicked: exportDiscordIconDialog.open()
-                        }
+                    text: App.focus.discord.statusText
+                    trailing: QQC2.Button {
+                        icon.name: "network-connect"
+                        text: i18nc("@action:button", "Test")
+                        onClicked: App.focus.discord.testConnection()
                     }
-                }
-                FormCard.FormButtonDelegate {
-                    icon.name: "internet-web-browser"
-                    text: i18nc("@action:button", "Open Discord Developer Portal…")
-                    description: i18nc("@info", "Create an application named “KTasks”, copy its Application ID above, and upload the exported 512×512 PNG as the App Icon and Rich Presence asset named “ktasks”.")
-                    onClicked: Qt.openUrlExternally("https://discord.com/developers/applications")
                 }
             }
 
@@ -567,15 +587,9 @@ Kirigami.Page {
             FormCard.FormCard {
                 FormCard.FormSwitchDelegate {
                     text: i18nc("@option:check", "Enable PC Do Not Disturb mode during focus")
-                    description: i18nc("@info", "Suppresses KDE/desktop notifications while Pomodoro or Stopwatch is active.")
+                    description: i18nc("@info", "Silences desktop notifications while Pomodoro or Stopwatch is active.")
                     checked: App.settings.focusDoNotDisturb
                     onToggled: App.settings.focusDoNotDisturb = checked
-                }
-                FormCard.FormTextDelegate {
-                    text: i18nc("@label", "Do Not Disturb inhibition")
-                    description: App.focus.dndActive
-                        ? i18nc("status", "Active now (notifications inhibited by focus session)")
-                        : i18nc("status", "Inactive")
                 }
             }
 
@@ -636,6 +650,7 @@ Kirigami.Page {
                 }
             }
         }
+        }
     }
 
     // ==================== SHARED DIALOGS ====================
@@ -645,16 +660,6 @@ Kirigami.Page {
         fileMode: Dialogs.FileDialog.OpenFile
         nameFilters: [i18nc("file type", "Images (*.png *.jpg *.jpeg *.webp *.svg)"), i18nc("file type", "All files (*)")]
         onAccepted: App.setProfileAvatarFromUrl(selectedFile)
-    }
-
-    Dialogs.FileDialog {
-        id: exportDiscordIconDialog
-        title: i18nc("@title:window", "Export KTasks PNG Icon")
-        fileMode: Dialogs.FileDialog.SaveFile
-        defaultSuffix: "png"
-        currentFile: "file://" + App.backup.defaultDirectory() + "/ktasks.png"
-        nameFilters: [i18nc("file type", "PNG image (*.png)")]
-        onAccepted: App.exportDiscordIconPng(selectedFile)
     }
 
     Kirigami.Dialog {
@@ -668,6 +673,12 @@ Kirigami.Page {
             citySearchField.forceActiveFocus();
         }
 
+        Timer {
+            id: citySearchDebounce
+            interval: 350
+            onTriggered: App.summary.searchWeatherCities(citySearchField.text)
+        }
+
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
 
@@ -678,21 +689,46 @@ Kirigami.Page {
                     id: citySearchField
                     Layout.fillWidth: true
                     placeholderText: i18nc("@info:placeholder", "Type city name (e.g. São Paulo)…")
-                    onAccepted: App.summary.searchWeatherCities(text)
+                    onTextEdited: citySearchDebounce.restart()
+                    onAccepted: {
+                        citySearchDebounce.stop();
+                        App.summary.searchWeatherCities(text);
+                    }
                 }
                 QQC2.Button {
                     icon.name: "search"
                     text: i18nc("@action:button", "Search")
-                    onClicked: App.summary.searchWeatherCities(citySearchField.text)
+                    onClicked: {
+                        citySearchDebounce.stop();
+                        App.summary.searchWeatherCities(citySearchField.text);
+                    }
+                }
+            }
+
+            RowLayout {
+                visible: App.summary.citySearching
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+                QQC2.BusyIndicator {
+                    running: App.summary.citySearching
+                    Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+                    Layout.preferredHeight: Layout.preferredWidth
+                }
+                QQC2.Label {
+                    font: Kirigami.Theme.smallFont
+                    color: Kirigami.Theme.disabledTextColor
+                    text: i18nc("@info", "Searching cities…")
                 }
             }
 
             QQC2.Label {
-                visible: App.summary.citySearchResults.length === 0
+                visible: !App.summary.citySearching && App.summary.citySearchResults.length === 0
                 Layout.fillWidth: true
                 font: Kirigami.Theme.smallFont
                 color: Kirigami.Theme.disabledTextColor
-                text: i18nc("city search hint", "Enter at least 2 characters and click Search to select your city.")
+                text: citySearchField.text.trim().length >= 2
+                    ? i18nc("city search empty", "Type a city name and click Search, or check your connection.")
+                    : i18nc("city search hint", "Enter at least 2 characters and click Search to select your city.")
                 wrapMode: Text.Wrap
             }
 

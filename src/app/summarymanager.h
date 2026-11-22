@@ -4,15 +4,18 @@
 #include <QDate>
 #include <QDateTime>
 #include <QObject>
+#include <QPointer>
 #include <QTimer>
 #include <QUrl>
 #include <QVariantList>
 #include <QVariantMap>
+#include <functional>
 
 class AnalyticsManager;
 class FocusManager;
 class JournalManager;
 class QNetworkAccessManager;
+class QNetworkReply;
 class RoutineManager;
 class Settings;
 class TaskStore;
@@ -42,6 +45,7 @@ class SummaryManager : public QObject
     Q_PROPERTY(QVariantMap weather READ weather NOTIFY weatherChanged)
     Q_PROPERTY(bool weatherLoading READ weatherLoading NOTIFY weatherChanged)
     Q_PROPERTY(QVariantList citySearchResults READ citySearchResults NOTIFY citySearchResultsChanged)
+    Q_PROPERTY(bool citySearching READ citySearching NOTIFY citySearchResultsChanged)
 
 public:
     struct ExternalEventRecord {
@@ -85,6 +89,7 @@ public:
     QVariantMap weather() const { return m_weather; }
     bool weatherLoading() const { return m_weatherLoading; }
     QVariantList citySearchResults() const { return m_citySearchResults; }
+    bool citySearching() const { return m_citySearching; }
 
     /** Discovers non-Nextcloud local KOrganizer / iCalendar (.ics) paths. */
     QStringList discoverExternalIcsPaths() const;
@@ -115,6 +120,9 @@ private:
     void ensureNetwork();
     void resolveWeatherLocationAndFetch(bool force);
     void fetchWeatherForCoords(const QString &cityName, double lat, double lon);
+    void getPreferringIpv4(const QUrl &url,
+                           std::function<void(QNetworkReply *)> onFinished,
+                           std::function<void(QNetworkReply *)> onStarted = {});
     void parseWeatherJson(const QByteArray &json, const QString &cityName, bool fromCache, const QDateTime &readingUtc = {});
     bool loadCachedWeather();
     static QString wmoDescription(int code);
@@ -133,7 +141,10 @@ private:
     bool m_active = false;
     bool m_dirty = true;
     bool m_weatherLoading = false;
+    bool m_citySearching = false;
     bool m_akonadiFetching = false;
+    int m_citySearchSeq = 0;
+    QPointer<QNetworkReply> m_cityReply;
 
     QString m_greetingText;
     QString m_weekdayText;

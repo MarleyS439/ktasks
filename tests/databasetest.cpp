@@ -207,6 +207,21 @@ private Q_SLOTS:
         const QStringList backups = QDir(dir.filePath("backups")).entryList({"*.db"});
         QCOMPARE(backups.size(), 1);
         QVERIFY(backups.first().contains(QString("-v%1-").arg(baseVersion)));
+
+        // A second migration later must retain ONLY the latest single pre-migration snapshot
+        Database::setExtraMigrationsForTesting({
+            "ALTER TABLE tasks ADD COLUMN extra TEXT NOT NULL DEFAULT 'x'",
+            "ALTER TABLE tasks ADD COLUMN extra2 TEXT NOT NULL DEFAULT 'y'",
+        });
+        {
+            Database db(path);
+            QString err;
+            QVERIFY2(db.open(&err), qPrintable(err));
+            QCOMPARE(db.schemaVersion(), baseVersion + 2);
+        }
+        const QStringList backupsAfterSecond = QDir(dir.filePath("backups")).entryList({"*.db"});
+        QCOMPARE(backupsAfterSecond.size(), 1);
+        QVERIFY(backupsAfterSecond.first().contains(QString("-v%1-").arg(baseVersion + 1)));
     }
 
     void failedMigrationLeavesDataIntact()

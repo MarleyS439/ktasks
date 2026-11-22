@@ -21,6 +21,8 @@
 #include <KUser>
 #include <QDir>
 #include <QFileInfo>
+#include <QHostAddress>
+#include <QHostInfo>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -971,6 +973,45 @@ void SummaryManager::refreshWeather(bool force)
     resolveWeatherLocationAndFetch(force);
 }
 
+void SummaryManager::getPreferringIpv4(const QUrl &url,
+                                       std::function<void(QNetworkReply *)> onFinished,
+                                       std::function<void(QNetworkReply *)> onStarted)
+{
+    ensureNetwork();
+    const QString host = url.host();
+    QHostInfo::lookupHost(host, this, [this, url, host, onFinished = std::move(onFinished), onStarted = std::move(onStarted)](const QHostInfo &info) mutable {
+        QUrl targetUrl(url);
+        bool usedIpv4Literal = false;
+        for (const QHostAddress &addr : info.addresses()) {
+            if (addr.protocol() == QAbstractSocket::IPv4Protocol) {
+                targetUrl.setHost(addr.toString());
+                usedIpv4Literal = true;
+                break;
+            }
+        }
+        QNetworkRequest req(usedIpv4Literal ? targetUrl : url);
+        req.setTransferTimeout(8000);
+        if (usedIpv4Literal) {
+            req.setRawHeader("Host", host.toUtf8());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+            req.setPeerVerifyName(host);
+#else
+            req = QNetworkRequest(url);
+            req.setTransferTimeout(8000);
+#endif
+        }
+        QNetworkReply *reply = m_nam->get(req);
+        if (onStarted) {
+            onStarted(reply);
+        }
+        if (onFinished) {
+            connect(reply, &QNetworkReply::finished, this, [reply, fn = std::move(onFinished)]() mutable {
+                fn(reply);
+            });
+        }
+    });
+}
+
 void SummaryManager::resolveWeatherLocationAndFetch(bool /*force*/)
 {
     double lat = m_settings->weatherLatitude();
@@ -1009,8 +1050,7 @@ void SummaryManager::resolveWeatherLocationAndFetch(bool /*force*/)
     ensureNetwork();
     m_weatherLoading = true;
     Q_EMIT weatherChanged();
-    QNetworkReply *reply = m_nam->get(QNetworkRequest(QUrl(QStringLiteral("https://get.geojs.io/v1/ip/geo.json"))));
-    connect(reply, &QNetworkReply::finished, this, [this, reply] {
+    getPreferringIpv4(QUrl(QStringLiteral("https://get.geojs.io/v1/ip/geo.json")), [this](QNetworkReply *reply) {
         reply->deleteLater();
         if (reply->error() != QNetworkReply::NoError) {
             m_weatherLoading = false;
@@ -1056,8 +1096,7 @@ void SummaryManager::fetchWeatherForCoords(const QString &cityName, double lat, 
     q.addQueryItem(QStringLiteral("forecast_days"), QStringLiteral("10"));
     url.setQuery(q);
 
-    QNetworkReply *reply = m_nam->get(QNetworkRequest(url));
-    connect(reply, &QNetworkReply::finished, this, [this, reply, cityName] {
+    getPreferringIpv4(url, [this, cityName](QNetworkReply *reply) {
         reply->deleteLater();
         m_weatherLoading = false;
         if (reply->error() != QNetworkReply::NoError) {
@@ -1147,7 +1186,14 @@ void SummaryManager::parseWeatherJson(const QByteArray &json, const QString &cit
 void SummaryManager::searchWeatherCities(const QString &query)
 {
     const QString trimmed = query.trimmed();
+    ++m_citySearchSeq;
+    const int seq = m_citySearchSeq;
+    if (m_cityReply) {
+        m_cityReply->abort();
+        m_cityReply = nullptr;
+    }
     if (trimmed.size() < 2) {
+        m_citySearching = false;
         m_citySearchResults.clear();
         Q_EMIT citySearchResultsChanged();
         return;
@@ -1155,7 +1201,9 @@ void SummaryManager::searchWeatherCities(const QString &query)
     if (QStandardPaths::isTestModeEnabled()) {
         return;
     }
-    ensureNetwork();
+    m_citySearching = true;
+    Q_EMIT citySearchResultsChanged();
+
     QUrl url(QStringLiteral("https://geocoding-api.open-meteo.com/v1/search"));
     QUrlQuery q;
     q.addQueryItem(QStringLiteral("name"), trimmed);
@@ -1164,29 +1212,44 @@ void SummaryManager::searchWeatherCities(const QString &query)
     q.addQueryItem(QStringLiteral("format"), QStringLiteral("json"));
     url.setQuery(q);
 
-    QNetworkReply *reply = m_nam->get(QNetworkRequest(url));
-    connect(reply, &QNetworkReply::finished, this, [this, reply] {
-        reply->deleteLater();
-        m_citySearchResults.clear();
-        if (reply->error() == QNetworkReply::NoError) {
-            const QJsonArray arr = QJsonDocument::fromJson(reply->readAll()).object().value(QStringLiteral("results")).toArray();
-            for (const QJsonValue &v : arr) {
-                const QJsonObject o = v.toObject();
-                const QString name = o.value(QStringLiteral("name")).toString();
-                const QString admin = o.value(QStringLiteral("admin1")).toString();
-                const QString country = o.value(QStringLiteral("country_code")).toString();
-                const QString label = admin.isEmpty() ? QStringLiteral("%1 (%2)").arg(name, country)
-                                                      : QStringLiteral("%1, %2 (%3)").arg(name, admin, country);
-                m_citySearchResults.append(QVariantMap{
-                    {QStringLiteral("name"), name},
-                    {QStringLiteral("label"), label},
-                    {QStringLiteral("latitude"), o.value(QStringLiteral("latitude")).toDouble()},
-                    {QStringLiteral("longitude"), o.value(QStringLiteral("longitude")).toDouble()},
-                });
+    getPreferringIpv4(
+        url,
+        [this, seq](QNetworkReply *reply) {
+            reply->deleteLater();
+            if (m_cityReply == reply) {
+                m_cityReply = nullptr;
             }
-        }
-        Q_EMIT citySearchResultsChanged();
-    });
+            if (seq != m_citySearchSeq) {
+                return;
+            }
+            m_citySearching = false;
+            m_citySearchResults.clear();
+            if (reply->error() == QNetworkReply::NoError) {
+                const QJsonArray arr = QJsonDocument::fromJson(reply->readAll()).object().value(QStringLiteral("results")).toArray();
+                for (const QJsonValue &v : arr) {
+                    const QJsonObject o = v.toObject();
+                    const QString name = o.value(QStringLiteral("name")).toString();
+                    const QString admin = o.value(QStringLiteral("admin1")).toString();
+                    const QString country = o.value(QStringLiteral("country_code")).toString();
+                    const QString label = admin.isEmpty() ? QStringLiteral("%1 (%2)").arg(name, country)
+                                                          : QStringLiteral("%1, %2 (%3)").arg(name, admin, country);
+                    m_citySearchResults.append(QVariantMap{
+                        {QStringLiteral("name"), name},
+                        {QStringLiteral("label"), label},
+                        {QStringLiteral("latitude"), o.value(QStringLiteral("latitude")).toDouble()},
+                        {QStringLiteral("longitude"), o.value(QStringLiteral("longitude")).toDouble()},
+                    });
+                }
+            }
+            Q_EMIT citySearchResultsChanged();
+        },
+        [this, seq](QNetworkReply *reply) {
+            if (seq != m_citySearchSeq) {
+                reply->abort();
+                return;
+            }
+            m_cityReply = reply;
+        });
 }
 
 void SummaryManager::selectWeatherCity(const QString &name, double latitude, double longitude)

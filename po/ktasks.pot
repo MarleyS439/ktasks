@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktasks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 18:19-0300\n"
+"POT-Creation-Date: 2026-11-22 19:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -476,25 +476,13 @@ msgstr ""
 msgid "Add a task, e.g. --add \"Buy milk tomorrow 9am #home\"."
 msgstr ""
 
-#: src/app/application.cpp:786
-#, kde-format
-msgctxt "@info"
-msgid "Could not export PNG icon to %1."
-msgstr ""
-
-#: src/app/application.cpp:789
-#, kde-format
-msgctxt "@info"
-msgid "Exported 512×512 PNG icon to %1."
-msgstr ""
-
-#: src/app/application.cpp:899
+#: src/app/application.cpp:876
 #, kde-format
 msgctxt "recurrence too complex to describe"
 msgid "Custom repetition"
 msgstr ""
 
-#: src/app/application.cpp:904
+#: src/app/application.cpp:881
 #, kde-format
 msgctxt "recurrence"
 msgid "Every day"
@@ -502,13 +490,13 @@ msgid_plural "Every %1 days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:909
+#: src/app/application.cpp:886
 #, kde-format
 msgctxt "recurrence"
 msgid "Every weekday"
 msgstr ""
 
-#: src/app/application.cpp:911
+#: src/app/application.cpp:888
 #, kde-format
 msgctxt "recurrence"
 msgid "Every week"
@@ -516,7 +504,7 @@ msgid_plural "Every %1 weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:927
+#: src/app/application.cpp:904
 #, kde-format
 msgctxt "recurrence"
 msgid "Every month"
@@ -524,7 +512,7 @@ msgid_plural "Every %1 months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:929
+#: src/app/application.cpp:906
 #, kde-format
 msgctxt "recurrence"
 msgid "Every year"
@@ -532,7 +520,7 @@ msgid_plural "Every %1 years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:933
+#: src/app/application.cpp:910
 #, kde-format
 msgctxt "recurrence limit"
 msgid "%1 time"
@@ -540,25 +528,25 @@ msgid_plural "%1 times"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:935
+#: src/app/application.cpp:912
 #, kde-format
 msgctxt "recurrence limit, %1 is date"
 msgid "until %1"
 msgstr ""
 
-#: src/app/application.cpp:948
+#: src/app/application.cpp:925
 #, kde-format
 msgctxt "reminder"
 msgid "When it starts"
 msgstr ""
 
-#: src/app/application.cpp:948 src/app/qml/TaskDetails.qml:489
+#: src/app/application.cpp:925 src/app/qml/TaskDetails.qml:489
 #, kde-format
 msgctxt "reminder"
 msgid "When it is due"
 msgstr ""
 
-#: src/app/application.cpp:951
+#: src/app/application.cpp:928
 #, kde-format
 msgctxt "reminder"
 msgid "%1 minute after"
@@ -566,7 +554,7 @@ msgid_plural "%1 minutes after"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:954
+#: src/app/application.cpp:931
 #, kde-format
 msgctxt "reminder"
 msgid "%1 day before"
@@ -574,7 +562,7 @@ msgid_plural "%1 days before"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:957
+#: src/app/application.cpp:934
 #, kde-format
 msgctxt "reminder"
 msgid "%1 hour before"
@@ -582,7 +570,7 @@ msgid_plural "%1 hours before"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:959
+#: src/app/application.cpp:936
 #, kde-format
 msgctxt "reminder"
 msgid "%1 minute before"
@@ -590,204 +578,204 @@ msgid_plural "%1 minutes before"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1099 src/app/application.cpp:1132
+#: src/app/application.cpp:1076 src/app/application.cpp:1109
 #, kde-format
 msgctxt "undo step"
 msgid "Edit task"
 msgstr ""
 
-#: src/app/application.cpp:1132
+#: src/app/application.cpp:1109
 #, kde-format
 msgctxt "undo step"
 msgid "Edit tasks"
 msgstr ""
 
-#: src/app/application.cpp:1150
+#: src/app/application.cpp:1127
 #, kde-format
 msgid "Done. Next time: %1"
 msgstr ""
 
-#: src/app/application.cpp:1152
+#: src/app/application.cpp:1129
 #, kde-format
 msgid "Task completed"
 msgstr ""
 
-#: src/app/application.cpp:1181
+#: src/app/application.cpp:1158
 #, kde-format
 msgid "%1 task completed"
 msgid_plural "%1 tasks completed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1182
+#: src/app/application.cpp:1159
 #, kde-format
 msgid "%1 task reopened"
 msgid_plural "%1 tasks reopened"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1194
+#: src/app/application.cpp:1171
 #, kde-format
 msgid "Task and %1 subtask deleted"
 msgid_plural "Task and %1 subtasks deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1194
+#: src/app/application.cpp:1171
 #, kde-format
 msgid "Task deleted"
 msgstr ""
 
-#: src/app/application.cpp:1217
+#: src/app/application.cpp:1194
 #, kde-format
 msgctxt "undo step"
 msgid "Delete tasks"
 msgstr ""
 
-#: src/app/application.cpp:1218
+#: src/app/application.cpp:1195
 #, kde-format
 msgid "%1 task deleted"
 msgid_plural "%1 tasks deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1233
+#: src/app/application.cpp:1210
 #, kde-format
 msgid "\"%1\" is read-only."
 msgstr ""
 
-#: src/app/application.cpp:1250
+#: src/app/application.cpp:1227
 #, kde-format
 msgid "Moved to \"%1\""
 msgstr ""
 
-#: src/app/application.cpp:1251
+#: src/app/application.cpp:1228
 #, kde-format
 msgid "Moved %1 task to \"%2\""
 msgid_plural "Moved %1 tasks to \"%2\""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1261
+#: src/app/application.cpp:1238
 #, kde-format
 msgctxt "undo step"
 msgid "Change due date"
 msgstr ""
 
-#: src/app/application.cpp:1275
+#: src/app/application.cpp:1252
 #, kde-format
 msgctxt "undo step"
 msgid "Remove due date"
 msgstr ""
 
-#: src/app/application.cpp:1290
+#: src/app/application.cpp:1267
 #, kde-format
 msgctxt "undo step"
 msgid "Change due time"
 msgstr ""
 
-#: src/app/application.cpp:1303
+#: src/app/application.cpp:1280
 #, kde-format
 msgctxt "undo step"
 msgid "Remove due time"
 msgstr ""
 
-#: src/app/application.cpp:1321
+#: src/app/application.cpp:1298
 #, kde-format
 msgctxt "undo step"
 msgid "Change start date"
 msgstr ""
 
-#: src/app/application.cpp:1331
+#: src/app/application.cpp:1308
 #, kde-format
 msgctxt "undo step"
 msgid "Remove start date"
 msgstr ""
 
-#: src/app/application.cpp:1372
+#: src/app/application.cpp:1349
 #, kde-format
 msgctxt "undo step"
 msgid "Postpone tasks"
 msgstr ""
 
-#: src/app/application.cpp:1372
+#: src/app/application.cpp:1349
 #, kde-format
 msgctxt "undo step"
 msgid "Postpone task"
 msgstr ""
 
-#: src/app/application.cpp:1385
+#: src/app/application.cpp:1362
 #, kde-format
 msgctxt "undo step"
 msgid "Add tag"
 msgstr ""
 
-#: src/app/application.cpp:1394
+#: src/app/application.cpp:1371
 #, kde-format
 msgctxt "undo step"
 msgid "Remove tag"
 msgstr ""
 
-#: src/app/application.cpp:1401
+#: src/app/application.cpp:1378
 #, kde-format
 msgctxt "undo step"
 msgid "Add reminder"
 msgstr ""
 
-#: src/app/application.cpp:1416
+#: src/app/application.cpp:1393
 #, kde-format
 msgctxt "undo step"
 msgid "Remove reminder"
 msgstr ""
 
-#: src/app/application.cpp:1425 src/app/application.cpp:1441
+#: src/app/application.cpp:1402 src/app/application.cpp:1418
 #, kde-format
 msgctxt "undo step"
 msgid "Change repetition"
 msgstr ""
 
-#: src/app/application.cpp:1471
+#: src/app/application.cpp:1448
 #, kde-format
 msgid "%1 completed task deleted"
 msgid_plural "%1 completed tasks deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1544
+#: src/app/application.cpp:1521
 #, kde-format
 msgctxt "%1 is the action that was undone"
 msgid "Undone: %1"
 msgstr ""
 
-#: src/app/application.cpp:1553
+#: src/app/application.cpp:1530
 #, kde-format
 msgctxt "%1 is the action that was redone"
 msgid "Redone: %1"
 msgstr ""
 
-#: src/app/application.cpp:1578
+#: src/app/application.cpp:1555
 #, kde-format
 msgid "Could not write %1: %2"
 msgstr ""
 
-#: src/app/application.cpp:1582
+#: src/app/application.cpp:1559
 #, kde-format
 msgid "%1 task exported"
 msgid_plural "%1 tasks exported"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/application.cpp:1590
+#: src/app/application.cpp:1567
 #, kde-format
 msgid "Could not read %1: %2"
 msgstr ""
 
-#: src/app/application.cpp:1595
+#: src/app/application.cpp:1572
 #, kde-format
 msgid "No tasks found in that file."
 msgstr ""
 
-#: src/app/application.cpp:1599
+#: src/app/application.cpp:1576
 #, kde-format
 msgid "%1 task imported"
 msgid_plural "%1 tasks imported"
@@ -2457,19 +2445,25 @@ msgctxt "@action:button"
 msgid "Open Tasks"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:349
+#: src/app/qml/InsightsPage.qml:350
 #, kde-format
 msgctxt "@title:group"
 msgid "Daily Activity & Focus"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:354
+#: src/app/qml/InsightsPage.qml:364
 #, kde-format
-msgctxt "chart legend"
-msgid "Blue: focus time · Green: tasks"
+msgctxt "chart legend blue bar"
+msgid "Focus time (min)"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:428
+#: src/app/qml/InsightsPage.qml:377
+#, kde-format
+msgctxt "chart legend green bar"
+msgid "Tasks completed"
+msgstr ""
+
+#: src/app/qml/InsightsPage.qml:478
 #, kde-format
 msgctxt "chart tooltip"
 msgid ""
@@ -2478,37 +2472,37 @@ msgid ""
 "Completed: %4 tasks · Routine: %5"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:461
+#: src/app/qml/InsightsPage.qml:511
 #, kde-format
 msgctxt "@title:group"
 msgid "Time & Effort by Quadrant"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:482
+#: src/app/qml/InsightsPage.qml:532
 #, kde-format
 msgctxt "quadrant stats"
 msgid "%1 open · %2 done · %3 (%4%)"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:511
+#: src/app/qml/InsightsPage.qml:561
 #, kde-format
 msgctxt "@title:group"
 msgid "Top Lists"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:537
+#: src/app/qml/InsightsPage.qml:587
 #, kde-format
 msgctxt "list breakdown"
 msgid "%1 done · %2"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:567
+#: src/app/qml/InsightsPage.qml:617
 #, kde-format
 msgctxt "@title:group"
 msgid "Recent Focus & Execution Log"
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:574
+#: src/app/qml/InsightsPage.qml:624
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -2516,7 +2510,7 @@ msgid ""
 "on any task to measure effort and calibrate estimates."
 msgstr ""
 
-#: src/app/qml/InsightsPage.qml:637
+#: src/app/qml/InsightsPage.qml:687
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove log entry"
@@ -3040,7 +3034,7 @@ msgctxt "@action:button"
 msgid "Delete List…"
 msgstr ""
 
-#: src/app/qml/ListDialog.qml:96 src/app/qml/SettingsPage.qml:92
+#: src/app/qml/ListDialog.qml:96 src/app/qml/SettingsPage.qml:133
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Name:"
@@ -3181,14 +3175,14 @@ msgctxt "@title:window"
 msgid "Import Tasks"
 msgstr ""
 
-#: src/app/qml/Main.qml:563 src/app/qml/SettingsPage.qml:719
+#: src/app/qml/Main.qml:563 src/app/qml/SettingsPage.qml:755
 #, kde-format
 msgctxt "file type"
 msgid "iCalendar files (*.ics *.ical)"
 msgstr ""
 
-#: src/app/qml/Main.qml:563 src/app/qml/SettingsPage.qml:646
-#: src/app/qml/SettingsPage.qml:719 src/app/qml/SettingsPage.qml:733
+#: src/app/qml/Main.qml:563 src/app/qml/SettingsPage.qml:661
+#: src/app/qml/SettingsPage.qml:755 src/app/qml/SettingsPage.qml:769
 #, kde-format
 msgctxt "file type"
 msgid "All files (*)"
@@ -3884,115 +3878,115 @@ msgctxt "template time and start date"
 msgid "%1 · From %2"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:25
+#: src/app/qml/SettingsPage.qml:26
 #, kde-format
 msgctxt "@title"
 msgid "Settings"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:36
+#: src/app/qml/SettingsPage.qml:74
 #, kde-format
 msgctxt "@title:tab settings"
 msgid "General"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:41
+#: src/app/qml/SettingsPage.qml:79
 #, kde-format
 msgctxt "@title:tab settings"
 msgid "Focus & Notifications"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:46
+#: src/app/qml/SettingsPage.qml:84
 #, kde-format
 msgctxt "@title:tab settings"
 msgid "Add-ons"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:64
+#: src/app/qml/SettingsPage.qml:105
 #, kde-format
 msgctxt "@title:group"
 msgid "Profile"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:69
+#: src/app/qml/SettingsPage.qml:110
 #, kde-format
 msgctxt "@info"
 msgid "Add your name, email, and profile picture"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:79
+#: src/app/qml/SettingsPage.qml:120
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose Photo…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:84
+#: src/app/qml/SettingsPage.qml:125
 #, kde-format
 msgctxt "@option:check"
 msgid "Use system profile picture"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:85
+#: src/app/qml/SettingsPage.qml:126
 #, kde-format
 msgctxt "@info"
 msgid "Uses the user avatar configured in KDE System Settings."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:86
+#: src/app/qml/SettingsPage.qml:127
 #, kde-format
 msgctxt "@info"
 msgid "No system avatar detected; choose a custom image below if desired."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:99
+#: src/app/qml/SettingsPage.qml:140
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email:"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:100
+#: src/app/qml/SettingsPage.qml:141
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "name@example.com"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:108
+#: src/app/qml/SettingsPage.qml:149
 #, kde-format
 msgctxt "@action:button"
 msgid "Save Profile"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:118
+#: src/app/qml/SettingsPage.qml:159
 #, kde-format
 msgctxt "@title:group"
 msgid "Appearance"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:122
+#: src/app/qml/SettingsPage.qml:163
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Color scheme"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:123
+#: src/app/qml/SettingsPage.qml:164
 #, kde-format
 msgctxt "@info"
 msgid "“Default” follows the color scheme chosen in System Settings."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:132
+#: src/app/qml/SettingsPage.qml:173
 #, kde-format
 msgctxt "@title:group"
 msgid "Synchronization"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:137
+#: src/app/qml/SettingsPage.qml:178
 #, kde-format
 msgctxt "@info"
 msgid "Tasks are stored on this device only"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:138
+#: src/app/qml/SettingsPage.qml:179
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4000,97 +3994,97 @@ msgid ""
 "computers. Everything keeps working without a connection."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:147
+#: src/app/qml/SettingsPage.qml:188
 #, kde-format
 msgctxt "@info"
 msgid "Synchronizing…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:148
+#: src/app/qml/SettingsPage.qml:189
 #, kde-format
 msgctxt "@info %1 is a date and time"
 msgid "Last synchronized %1"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:149
+#: src/app/qml/SettingsPage.qml:190
 #, kde-format
 msgctxt "@info"
 msgid "Not synchronized yet"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:160
+#: src/app/qml/SettingsPage.qml:201
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign In Again"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:165
+#: src/app/qml/SettingsPage.qml:206
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove account"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:181
+#: src/app/qml/SettingsPage.qml:222
 #, kde-format
 msgctxt "@action:button"
 msgid "Connect a Nextcloud or CalDAV Account…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:190
+#: src/app/qml/SettingsPage.qml:231
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Check the server"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:191
+#: src/app/qml/SettingsPage.qml:232
 #, kde-format
 msgctxt "@info"
 msgid "Your own changes are always sent a few seconds after you make them."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:192
+#: src/app/qml/SettingsPage.qml:233
 #, kde-format
 msgctxt "sync interval"
 msgid "Only when I ask"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:192
+#: src/app/qml/SettingsPage.qml:233
 #, kde-format
 msgctxt "sync interval"
 msgid "Every 5 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:192
+#: src/app/qml/SettingsPage.qml:233
 #, kde-format
 msgctxt "sync interval"
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:193
+#: src/app/qml/SettingsPage.qml:234
 #, kde-format
 msgctxt "sync interval"
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:193
+#: src/app/qml/SettingsPage.qml:234
 #, kde-format
 msgctxt "sync interval"
 msgid "Every hour"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:199
+#: src/app/qml/SettingsPage.qml:240
 #, kde-format
 msgctxt "@option:check"
 msgid "Synchronize when the application starts"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:205
+#: src/app/qml/SettingsPage.qml:246
 #, kde-format
 msgctxt "@option:check"
 msgid "Synchronize journal notes with Nextcloud Notes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:206
+#: src/app/qml/SettingsPage.qml:247
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4098,13 +4092,13 @@ msgid ""
 "notebooks and pages can still be marked offline only."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:212
+#: src/app/qml/SettingsPage.qml:253
 #, kde-format
 msgctxt "@option:check"
 msgid "Synchronize routine & planner blocks with Nextcloud Calendar"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:213
+#: src/app/qml/SettingsPage.qml:254
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4113,254 +4107,254 @@ msgid ""
 "offline only."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:223
+#: src/app/qml/SettingsPage.qml:264
 #, kde-format
 msgctxt "routine calendar option"
 msgid "Auto (“Rotina” calendar)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:226
+#: src/app/qml/SettingsPage.qml:267
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Routine calendar (%1)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:227
+#: src/app/qml/SettingsPage.qml:268
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Routine calendar"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:250
+#: src/app/qml/SettingsPage.qml:291
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:254
+#: src/app/qml/SettingsPage.qml:295
 #, kde-format
 msgctxt "@option:check"
 msgid "Keep running when the window is closed"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:255
+#: src/app/qml/SettingsPage.qml:296
 #, kde-format
 msgctxt "@info"
 msgid "Needed for reminders to appear while the window is closed."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:260
+#: src/app/qml/SettingsPage.qml:301
 #, kde-format
 msgctxt "@option:check"
 msgid "Start with the session"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:261
+#: src/app/qml/SettingsPage.qml:302
 #, kde-format
 msgctxt "@info"
 msgid "Starts hidden in the system tray when you log in."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:266
+#: src/app/qml/SettingsPage.qml:307
 #, kde-format
 msgctxt "@option:check"
 msgid "Show an icon in the system tray"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:271
+#: src/app/qml/SettingsPage.qml:312
 #, kde-format
 msgctxt "@option:check"
 msgid "Show the number of tasks due on the task manager icon"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:278
+#: src/app/qml/SettingsPage.qml:319
 #, kde-format
 msgctxt "@label:listbox"
 msgid "List for new tasks"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:279
+#: src/app/qml/SettingsPage.qml:320
 #, kde-format
 msgctxt "@info"
 msgid "Used when a task is added outside of a list, e.g. in “Today”."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:280 src/app/qml/TasksPage.qml:518
+#: src/app/qml/SettingsPage.qml:321 src/app/qml/TasksPage.qml:518
 #, kde-format
 msgctxt "list name (account name)"
 msgid "%1 (%2)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:288
+#: src/app/qml/SettingsPage.qml:329
 #, kde-format
 msgctxt "@title:group"
 msgid "Keyboard"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:293
+#: src/app/qml/SettingsPage.qml:334
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Keyboard Shortcuts…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:298
+#: src/app/qml/SettingsPage.qml:339
 #, kde-format
 msgctxt "@action:button"
 msgid "Shortcut to Add a Task from Anywhere"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:299
+#: src/app/qml/SettingsPage.qml:340
 #, kde-format
 msgctxt "@info %1 is a keyboard shortcut"
 msgid "Currently %1. Change it in System Settings."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:300
+#: src/app/qml/SettingsPage.qml:341
 #, kde-format
 msgctxt "@info"
 msgid "Not set. Assign one in System Settings."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:307
+#: src/app/qml/SettingsPage.qml:348
 #, kde-format
 msgctxt "@title:group"
 msgid "Data & Local Backup"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:311
+#: src/app/qml/SettingsPage.qml:352
 #, kde-format
 msgctxt "@label"
 msgid "Backup folder"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:315
+#: src/app/qml/SettingsPage.qml:356
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:321
+#: src/app/qml/SettingsPage.qml:362
 #, kde-format
 msgctxt "@action:button"
 msgid "Create Local Backup Now"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:327
+#: src/app/qml/SettingsPage.qml:368
 #, kde-format
 msgctxt "@action:button"
 msgid "Restore from Backup File…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:328
+#: src/app/qml/SettingsPage.qml:369
 #, kde-format
 msgctxt "@info"
 msgid "Restores tasks, routines, and journal entries from a local .db backup."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:332
+#: src/app/qml/SettingsPage.qml:373
 #, kde-format
 msgctxt "@option:check"
 msgid "Automatic local backups"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:333
+#: src/app/qml/SettingsPage.qml:374
 #, kde-format
 msgctxt "@info"
 msgid "Keeps a local snapshot on your computer alongside Nextcloud sync."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:340
+#: src/app/qml/SettingsPage.qml:381
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Backup frequency"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:341
+#: src/app/qml/SettingsPage.qml:382
 #, kde-format
 msgctxt "backup interval"
 msgid "Hourly"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:341
+#: src/app/qml/SettingsPage.qml:382
 #, kde-format
 msgctxt "backup interval"
 msgid "Daily"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:341
+#: src/app/qml/SettingsPage.qml:382
 #, kde-format
 msgctxt "backup interval"
 msgid "Weekly"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:347
+#: src/app/qml/SettingsPage.qml:388
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Keep recent backups"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:348
+#: src/app/qml/SettingsPage.qml:389
 #, kde-format
 msgctxt "retention"
 msgid "Last 5 backups"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:348
+#: src/app/qml/SettingsPage.qml:389
 #, kde-format
 msgctxt "retention"
 msgid "Last 10 backups"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:348
+#: src/app/qml/SettingsPage.qml:389
 #, kde-format
 msgctxt "retention"
 msgid "Last 20 backups"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:348
+#: src/app/qml/SettingsPage.qml:389
 #, kde-format
 msgctxt "retention"
 msgid "Last 50 backups"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:355
+#: src/app/qml/SettingsPage.qml:396
 #, kde-format
 msgctxt "@action:button"
 msgid "Import from iCalendar File…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:360
+#: src/app/qml/SettingsPage.qml:401
 #, kde-format
 msgctxt "@action:button"
 msgid "Export All Tasks to iCalendar File…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:368 src/app/qml/TasksPage.qml:155
+#: src/app/qml/SettingsPage.qml:409 src/app/qml/TasksPage.qml:155
 #, kde-format
 msgctxt "@action:button"
 msgid "Print / Export PDF…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:373
+#: src/app/qml/SettingsPage.qml:414
 #, kde-format
 msgctxt "@action:button"
 msgid "About KTasks"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:385
+#: src/app/qml/SettingsPage.qml:426
 #, kde-format
 msgctxt "@title:group"
 msgid "Pomodoro & Focus Timer"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:390
+#: src/app/qml/SettingsPage.qml:431
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Focus session duration"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:391 src/app/qml/SettingsPage.qml:398
-#: src/app/qml/SettingsPage.qml:405
+#: src/app/qml/SettingsPage.qml:432 src/app/qml/SettingsPage.qml:439
+#: src/app/qml/SettingsPage.qml:446
 #, kde-format
 msgctxt "duration"
 msgid "%1 minute"
@@ -4368,25 +4362,25 @@ msgid_plural "%1 minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/qml/SettingsPage.qml:397
+#: src/app/qml/SettingsPage.qml:438
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Short break duration"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:404
+#: src/app/qml/SettingsPage.qml:445
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Long break duration (after 4 cycles)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:411
+#: src/app/qml/SettingsPage.qml:452
 #, kde-format
 msgctxt "@option:check"
 msgid "Activate PC Do Not Disturb mode while focusing"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:412
+#: src/app/qml/SettingsPage.qml:453
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4394,163 +4388,163 @@ msgid ""
 "Stopwatch sessions and restores them on breaks or completion."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:420
+#: src/app/qml/SettingsPage.qml:461
 #, kde-format
 msgctxt "@title:group"
 msgid "Notifications"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:424
+#: src/app/qml/SettingsPage.qml:465
 #, kde-format
 msgctxt "@option:check"
 msgid "Show reminders"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:425
+#: src/app/qml/SettingsPage.qml:466
 #, kde-format
 msgctxt "@info"
 msgid "Desktop notifications with buttons to complete or snooze the task."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:431
+#: src/app/qml/SettingsPage.qml:472
 #, kde-format
 msgctxt "@option:check"
 msgid "Also notify when a task without a reminder becomes due"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:437
+#: src/app/qml/SettingsPage.qml:478
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Remind about tasks without a time at"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:445
+#: src/app/qml/SettingsPage.qml:486
 #, kde-format
 msgctxt "@label:listbox"
 msgid "“Snooze” postpones a reminder by"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:446
+#: src/app/qml/SettingsPage.qml:487
 #, kde-format
 msgctxt "duration"
 msgid "5 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:446
+#: src/app/qml/SettingsPage.qml:487
 #, kde-format
 msgctxt "duration"
 msgid "10 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:446
+#: src/app/qml/SettingsPage.qml:487
 #, kde-format
 msgctxt "duration"
 msgid "15 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:446
+#: src/app/qml/SettingsPage.qml:487
 #, kde-format
 msgctxt "duration"
 msgid "30 minutes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:447
+#: src/app/qml/SettingsPage.qml:488
 #, kde-format
 msgctxt "duration"
 msgid "1 hour"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:447
+#: src/app/qml/SettingsPage.qml:488
 #, kde-format
 msgctxt "duration"
 msgid "2 hours"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:453
+#: src/app/qml/SettingsPage.qml:494
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Reminder for new tasks with a date"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:454
+#: src/app/qml/SettingsPage.qml:495
 #, kde-format
 msgctxt "default reminder"
 msgid "None"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:454
+#: src/app/qml/SettingsPage.qml:495
 #, kde-format
 msgctxt "default reminder"
 msgid "When it is due"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:454
+#: src/app/qml/SettingsPage.qml:495
 #, kde-format
 msgctxt "default reminder"
 msgid "15 minutes before"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:455
+#: src/app/qml/SettingsPage.qml:496
 #, kde-format
 msgctxt "default reminder"
 msgid "1 hour before"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:455
+#: src/app/qml/SettingsPage.qml:496
 #, kde-format
 msgctxt "default reminder"
 msgid "1 day before"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:461
+#: src/app/qml/SettingsPage.qml:502
 #, kde-format
 msgctxt "@option:check"
 msgid "Daily summary"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:462
+#: src/app/qml/SettingsPage.qml:503
 #, kde-format
 msgctxt "@info"
 msgid "One notification a day with what is due today and what is overdue."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:468
+#: src/app/qml/SettingsPage.qml:509
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Show the summary at"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:474
+#: src/app/qml/SettingsPage.qml:515
 #, kde-format
 msgctxt "@option:check"
 msgid "Notify about synchronization problems and conflicts"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:479
+#: src/app/qml/SettingsPage.qml:520
 #, kde-format
 msgctxt "@option:check"
 msgid "Notify about scheduled routine blocks"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:484
+#: src/app/qml/SettingsPage.qml:525
 #, kde-format
 msgctxt "@option:check"
 msgid "Notify when Pomodoro focus or break completes"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:491
+#: src/app/qml/SettingsPage.qml:532
 #, kde-format
 msgctxt "@action:button"
 msgid "Send a Test Notification"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:496
+#: src/app/qml/SettingsPage.qml:537
 #, kde-format
 msgctxt "@action:button"
 msgid "Sounds and Pop-ups in System Settings…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:497
+#: src/app/qml/SettingsPage.qml:538
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4558,141 +4552,73 @@ msgid ""
 "stays in the history."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:509
+#: src/app/qml/SettingsPage.qml:550
 #, kde-format
 msgctxt "@title:group"
 msgid "Discord Rich Presence"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:513
+#: src/app/qml/SettingsPage.qml:554
 #, kde-format
 msgctxt "@option:check"
-msgid "Enable Discord Rich Presence during focus sessions"
+msgid "Enable Discord Rich Presence during focus"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:514
-#, kde-format
-msgctxt "@info"
-msgid ""
-"Displays your active focus status and countdown timer in Discord desktop via "
-"local IPC without altering your account status."
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:520
+#: src/app/qml/SettingsPage.qml:560
 #, kde-format
 msgctxt "@option:check"
-msgid "Show active task title in Discord"
+msgid "Show task title on Discord"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:521
+#: src/app/qml/SettingsPage.qml:561
 #, kde-format
 msgctxt "@info"
-msgid ""
-"Disabled by default to protect your privacy. When off, only the generic "
-"focus mode (e.g. Pomodoro 1/4) and timer are shared."
+msgid "Off by default for privacy."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:527
+#: src/app/qml/SettingsPage.qml:568
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Discord Application ID:"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:528
-#, kde-format
-msgctxt "@info:placeholder"
-msgid "Numeric Application ID from Discord Developer Portal"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:533
-#, kde-format
-msgctxt "@label:textbox"
-msgid "Discord icon asset key or PNG URL:"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:539
-#, kde-format
-msgctxt "@label"
-msgid "Discord IPC status"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:545
+#: src/app/qml/SettingsPage.qml:577
 #, kde-format
 msgctxt "@action:button"
-msgid "Test Connection"
+msgid "Test"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:550
-#, kde-format
-msgctxt "@action:button"
-msgid "Export App Icon (PNG)…"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:557
-#, kde-format
-msgctxt "@action:button"
-msgid "Open Discord Developer Portal…"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:558
-#, kde-format
-msgctxt "@info"
-msgid ""
-"Create an application named “KTasks”, copy its Application ID above, and "
-"upload the exported 512×512 PNG as the App Icon and Rich Presence asset "
-"named “ktasks”."
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:565
+#: src/app/qml/SettingsPage.qml:585
 #, kde-format
 msgctxt "@title:group"
 msgid "Desktop Integration"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:569
+#: src/app/qml/SettingsPage.qml:589
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable PC Do Not Disturb mode during focus"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:570
+#: src/app/qml/SettingsPage.qml:590
 #, kde-format
 msgctxt "@info"
-msgid ""
-"Suppresses KDE/desktop notifications while Pomodoro or Stopwatch is active."
+msgid "Silences desktop notifications while Pomodoro or Stopwatch is active."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:575
-#, kde-format
-msgctxt "@label"
-msgid "Do Not Disturb inhibition"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:577
-#, kde-format
-msgctxt "status"
-msgid "Active now (notifications inhibited by focus session)"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:578
-#, kde-format
-msgctxt "status"
-msgid "Inactive"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:584
+#: src/app/qml/SettingsPage.qml:598
 #, kde-format
 msgctxt "@title:group"
 msgid "Summary, Weather & External Agenda"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:588
+#: src/app/qml/SettingsPage.qml:602
 #, kde-format
 msgctxt "@option:check"
 msgid "Show KOrganizer / desktop calendars on Summary (read-only)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:589
+#: src/app/qml/SettingsPage.qml:603
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4701,121 +4627,121 @@ msgid ""
 "Nextcloud Routine sync."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:600
+#: src/app/qml/SettingsPage.qml:614
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove calendar file"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:608
+#: src/app/qml/SettingsPage.qml:622
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Extra Local Calendar (.ics)…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:613
+#: src/app/qml/SettingsPage.qml:627
 #, kde-format
 msgctxt "@label"
 msgid "Weather city"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:616
+#: src/app/qml/SettingsPage.qml:630
 #, kde-format
 msgctxt "@info"
 msgid "Automatic (uses KDE KWeather city or approximate IP location)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:621
+#: src/app/qml/SettingsPage.qml:635
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose City…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:627
+#: src/app/qml/SettingsPage.qml:641
 #, kde-format
 msgctxt "@action:button"
 msgid "Reset Auto"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:644
+#: src/app/qml/SettingsPage.qml:659
 #, kde-format
 msgctxt "@title:window"
 msgid "Choose Profile Picture"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:646
+#: src/app/qml/SettingsPage.qml:661
 #, kde-format
 msgctxt "file type"
 msgid "Images (*.png *.jpg *.jpeg *.webp *.svg)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:652
-#, kde-format
-msgctxt "@title:window"
-msgid "Export KTasks PNG Icon"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:656
-#, kde-format
-msgctxt "file type"
-msgid "PNG image (*.png)"
-msgstr ""
-
-#: src/app/qml/SettingsPage.qml:662
+#: src/app/qml/SettingsPage.qml:667
 #, kde-format
 msgctxt "@title:window"
 msgid "Weather Location"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:680
+#: src/app/qml/SettingsPage.qml:691
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Type city name (e.g. São Paulo)…"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:685
+#: src/app/qml/SettingsPage.qml:700
 #, kde-format
 msgctxt "@action:button"
 msgid "Search"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:695
+#: src/app/qml/SettingsPage.qml:720
+#, kde-format
+msgctxt "@info"
+msgid "Searching cities…"
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:730
+#, kde-format
+msgctxt "city search empty"
+msgid "Type a city name and click Search, or check your connection."
+msgstr ""
+
+#: src/app/qml/SettingsPage.qml:731
 #, kde-format
 msgctxt "city search hint"
 msgid "Enter at least 2 characters and click Search to select your city."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:717
+#: src/app/qml/SettingsPage.qml:753
 #, kde-format
 msgctxt "@title:window"
 msgid "Choose Local iCalendar File"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:725
+#: src/app/qml/SettingsPage.qml:761
 #, kde-format
 msgctxt "@title:window"
 msgid "Choose Backup Folder"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:731
+#: src/app/qml/SettingsPage.qml:767
 #, kde-format
 msgctxt "@title:window"
 msgid "Restore Local Backup"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:733
+#: src/app/qml/SettingsPage.qml:769
 #, kde-format
 msgctxt "file type"
 msgid "KTasks backup (*.db)"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:743
+#: src/app/qml/SettingsPage.qml:779
 #, kde-format
 msgctxt "@title:window"
 msgid "Restore Backup?"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:744
+#: src/app/qml/SettingsPage.qml:780
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4823,19 +4749,19 @@ msgid ""
 "your current database will be saved first)."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:749
+#: src/app/qml/SettingsPage.qml:785
 #, kde-format
 msgctxt "@action:button"
 msgid "Restore"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:762
+#: src/app/qml/SettingsPage.qml:798
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Account?"
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:763
+#: src/app/qml/SettingsPage.qml:799
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -4843,7 +4769,7 @@ msgid ""
 "server. Changes that were not synchronized yet are lost."
 msgstr ""
 
-#: src/app/qml/SettingsPage.qml:768
+#: src/app/qml/SettingsPage.qml:804
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove"
@@ -6096,139 +6022,139 @@ msgctxt "sidebar section"
 msgid "Tags"
 msgstr ""
 
-#: src/app/summarymanager.cpp:202
+#: src/app/summarymanager.cpp:204
 #, kde-format
 msgctxt "date label"
 msgid "Today"
 msgstr ""
 
-#: src/app/summarymanager.cpp:203
+#: src/app/summarymanager.cpp:205
 #, kde-format
 msgctxt "date label"
 msgid "Tomorrow"
 msgstr ""
 
-#: src/app/summarymanager.cpp:204
+#: src/app/summarymanager.cpp:206
 #, kde-format
 msgctxt "short day label"
 msgid "%1 %2"
 msgstr ""
 
-#: src/app/summarymanager.cpp:209
+#: src/app/summarymanager.cpp:211
 #, kde-format
 msgctxt "all day event"
 msgid "All day"
 msgstr ""
 
-#: src/app/summarymanager.cpp:251
+#: src/app/summarymanager.cpp:253
 #, kde-format
 msgctxt "event timing"
 msgid "Now"
 msgstr ""
 
-#: src/app/summarymanager.cpp:256
+#: src/app/summarymanager.cpp:258
 #, kde-format
 msgctxt "event countdown minutes"
 msgid "In %1 min"
 msgstr ""
 
-#: src/app/summarymanager.cpp:260
+#: src/app/summarymanager.cpp:262
 #, kde-format
 msgctxt "event countdown h+m"
 msgid "In %1h %2m"
 msgstr ""
 
-#: src/app/summarymanager.cpp:261
+#: src/app/summarymanager.cpp:263
 #, kde-format
 msgctxt "event countdown h"
 msgid "In %1h"
 msgstr ""
 
-#: src/app/summarymanager.cpp:278
+#: src/app/summarymanager.cpp:280
 #, kde-format
 msgctxt "greeting"
 msgid "Good morning"
 msgstr ""
 
-#: src/app/summarymanager.cpp:278
+#: src/app/summarymanager.cpp:280
 #, kde-format
 msgctxt "greeting with name"
 msgid "Good morning, %1!"
 msgstr ""
 
-#: src/app/summarymanager.cpp:280
+#: src/app/summarymanager.cpp:282
 #, kde-format
 msgctxt "greeting"
 msgid "Good afternoon"
 msgstr ""
 
-#: src/app/summarymanager.cpp:280
+#: src/app/summarymanager.cpp:282
 #, kde-format
 msgctxt "greeting with name"
 msgid "Good afternoon, %1!"
 msgstr ""
 
-#: src/app/summarymanager.cpp:282
+#: src/app/summarymanager.cpp:284
 #, kde-format
 msgctxt "greeting"
 msgid "Good evening"
 msgstr ""
 
-#: src/app/summarymanager.cpp:282
+#: src/app/summarymanager.cpp:284
 #, kde-format
 msgctxt "greeting with name"
 msgid "Good evening, %1!"
 msgstr ""
 
-#: src/app/summarymanager.cpp:555
+#: src/app/summarymanager.cpp:557
 #, kde-format
 msgctxt "calendar source"
 msgid "KOrganizer Local"
 msgstr ""
 
-#: src/app/summarymanager.cpp:649
+#: src/app/summarymanager.cpp:651
 #, kde-format
 msgctxt "calendar source"
 msgid "Birthdays"
 msgstr ""
 
-#: src/app/summarymanager.cpp:651
+#: src/app/summarymanager.cpp:653
 #, kde-format
 msgctxt "calendar source"
 msgid "KOrganizer"
 msgstr ""
 
-#: src/app/summarymanager.cpp:654
+#: src/app/summarymanager.cpp:656
 #, kde-format
 msgctxt "calendar source google"
 msgid "Google (%1)"
 msgstr ""
 
-#: src/app/summarymanager.cpp:840
+#: src/app/summarymanager.cpp:842
 #, kde-format
 msgctxt "now remaining"
 msgid "Now · %1 min left"
 msgstr ""
 
-#: src/app/summarymanager.cpp:848
+#: src/app/summarymanager.cpp:850
 #, kde-format
 msgctxt "free gap h+m"
 msgid "Free window now: %1h %2m"
 msgstr ""
 
-#: src/app/summarymanager.cpp:849
+#: src/app/summarymanager.cpp:851
 #, kde-format
 msgctxt "free gap min"
 msgid "Free window now: %1 min"
 msgstr ""
 
-#: src/app/summarymanager.cpp:882
+#: src/app/summarymanager.cpp:884
 #, kde-format
 msgctxt "external calendar status"
 msgid "External agenda disabled in Settings."
 msgstr ""
 
-#: src/app/summarymanager.cpp:885
+#: src/app/summarymanager.cpp:887
 #, kde-format
 msgctxt "external cal sources"
 msgid "Read-only from %2 (%1 calendar) — kept separate from Routine."
@@ -6236,13 +6162,13 @@ msgid_plural "Read-only from %2 (%1 calendars) — kept separate from Routine."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/app/summarymanager.cpp:890
+#: src/app/summarymanager.cpp:892
 #, kde-format
 msgctxt "external calendar status"
 msgid "Loading KOrganizer / desktop calendars…"
 msgstr ""
 
-#: src/app/summarymanager.cpp:892
+#: src/app/summarymanager.cpp:894
 #, kde-format
 msgctxt "external calendar status"
 msgid ""
@@ -6250,117 +6176,117 @@ msgid ""
 "file in Settings."
 msgstr ""
 
-#: src/app/summarymanager.cpp:908
+#: src/app/summarymanager.cpp:910
 #, kde-format
 msgctxt "prep task title"
 msgid "Prepare for: %1"
 msgstr ""
 
-#: src/app/summarymanager.cpp:926
+#: src/app/summarymanager.cpp:928
 #, kde-format
 msgid "External Agenda"
 msgstr ""
 
-#: src/app/summarymanager.cpp:925
+#: src/app/summarymanager.cpp:927
 #, kde-format
 msgctxt "prep task note"
 msgid "Created from external agenda (%1): %2 %3"
 msgstr ""
 
-#: src/app/summarymanager.cpp:932
+#: src/app/summarymanager.cpp:934
 #, kde-format
 msgctxt "@info"
 msgid "Task created: “%1”"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1020
+#: src/app/summarymanager.cpp:1060
 #, kde-format
 msgid "Offline or location unavailable — choose your city to load forecast."
 msgstr ""
 
-#: src/app/summarymanager.cpp:1031
+#: src/app/summarymanager.cpp:1071
 #, kde-format
 msgid "Current location"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1068
+#: src/app/summarymanager.cpp:1107
 #, kde-format
 msgid "Could not update weather (%1)."
 msgstr ""
 
-#: src/app/summarymanager.cpp:1115
+#: src/app/summarymanager.cpp:1154
 #, kde-format
 msgctxt "forecast day"
 msgid "Today"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1225
+#: src/app/summarymanager.cpp:1288
 #, kde-format
 msgctxt "weather"
 msgid "Clear sky"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1226
+#: src/app/summarymanager.cpp:1289
 #, kde-format
 msgctxt "weather"
 msgid "Mainly clear"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1227
+#: src/app/summarymanager.cpp:1290
 #, kde-format
 msgctxt "weather"
 msgid "Partly cloudy"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1228
+#: src/app/summarymanager.cpp:1291
 #, kde-format
 msgctxt "weather"
 msgid "Overcast"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1229
+#: src/app/summarymanager.cpp:1292
 #, kde-format
 msgctxt "weather"
 msgid "Fog"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1230
+#: src/app/summarymanager.cpp:1293
 #, kde-format
 msgctxt "weather"
 msgid "Drizzle"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1231
+#: src/app/summarymanager.cpp:1294
 #, kde-format
 msgctxt "weather"
 msgid "Rain"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1232
+#: src/app/summarymanager.cpp:1295
 #, kde-format
 msgctxt "weather"
 msgid "Snow"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1233
+#: src/app/summarymanager.cpp:1296
 #, kde-format
 msgctxt "weather"
 msgid "Rain showers"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1234
+#: src/app/summarymanager.cpp:1297
 #, kde-format
 msgctxt "weather"
 msgid "Snow showers"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1235
+#: src/app/summarymanager.cpp:1298
 #, kde-format
 msgctxt "weather"
 msgid "Thunderstorm"
 msgstr ""
 
-#: src/app/summarymanager.cpp:1236
+#: src/app/summarymanager.cpp:1299
 #, kde-format
 msgctxt "weather"
 msgid "Variable conditions"

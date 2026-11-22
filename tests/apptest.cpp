@@ -1167,13 +1167,51 @@ private Q_SLOTS:
 
         QQmlComponent settingsComp(&engine, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/SettingsPage.qml")));
         QVERIFY2(settingsComp.isReady(), qPrintable(settingsComp.errorString()));
-        std::unique_ptr<QObject> settingsObj(settingsComp.create());
-        QVERIFY(settingsObj != nullptr);
+        const QByteArray hostCode = QStringLiteral(
+            "import QtQuick\n"
+            "import org.kde.kirigami as Kirigami\n"
+            "import \"%1\"\n"
+            "Kirigami.ApplicationWindow {\n"
+            "    width: 800\n"
+            "    height: 600\n"
+            "    visible: true\n"
+            "    property alias settingsPage: sp\n"
+            "    SettingsPage { id: sp; anchors.fill: parent }\n"
+            "}\n")
+            .arg(QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml")).toString())
+            .toUtf8();
+        QQmlComponent hostComp(&engine);
+        hostComp.setData(hostCode, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/settings_test_host.qml")));
+        QVERIFY2(hostComp.isReady(), qPrintable(hostComp.errorString()));
+        std::unique_ptr<QObject> hostObj(hostComp.create());
+        auto *win = qobject_cast<QQuickWindow *>(hostObj.get());
+        QVERIFY(win != nullptr);
+        win->requestActivate();
+        QVERIFY(QTest::qWaitForWindowActive(win));
+        auto *sp = win->property("settingsPage").value<QObject *>();
+        QVERIFY(sp != nullptr);
+        auto *tabs = sp->findChild<QObject *>(QStringLiteral("settingsTabs"));
+        QVERIFY(tabs != nullptr);
+        tabs->setProperty("currentIndex", 2);
+        auto *discordField = sp->findChild<QQuickItem *>(QStringLiteral("discordIdField"));
+        QVERIFY(discordField != nullptr);
+        QTRY_VERIFY(discordField->isVisible() && discordField->width() > 20 && discordField->height() > 10);
+        const QPoint insideField = discordField->mapToScene(QPointF(discordField->width() * 0.5, discordField->height() * 0.7)).toPoint();
+        QTest::mouseClick(win, Qt::LeftButton, Qt::NoModifier, insideField);
+        QTRY_VERIFY(discordField->property("fieldActiveFocus").toBool());
+        // Clicking outside inputs removes focus from the text field
+        QTest::mouseClick(win, Qt::LeftButton, Qt::NoModifier, QPoint(10, 100));
+        QTRY_VERIFY(!discordField->property("fieldActiveFocus").toBool());
 
         QQmlComponent routineComp(&engine, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/RoutinePage.qml")));
         QVERIFY2(routineComp.isReady(), qPrintable(routineComp.errorString()));
         std::unique_ptr<QObject> routineObj(routineComp.create());
         QVERIFY(routineObj != nullptr);
+
+        QQmlComponent insightsComp(&engine, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/InsightsPage.qml")));
+        QVERIFY2(insightsComp.isReady(), qPrintable(insightsComp.errorString()));
+        std::unique_ptr<QObject> insightsObj(insightsComp.create());
+        QVERIFY(insightsObj != nullptr);
     }
 };
 
