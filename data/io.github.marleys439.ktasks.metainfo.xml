@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.4" date="2026-11-22">
+      <description>
+        <p>Fix PDF export stat pills spacing, routine block duration formatting, and HighResolution footer font scaling.</p>
+      </description>
+    </release>
     <release version="1.0.3" date="2026-11-22">
       <description>
         <p>Add separate hours and minutes duration picker across task execution estimates, routine blocks, and quick scheduling dialogs.</p>

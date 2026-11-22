@@ -874,6 +874,18 @@ private Q_SLOTS:
         fm.startPomodoroLabeled(QStringLiteral("Reunião Externa KOrganizer"));
         QCOMPARE(fm.activeTaskTitle(), QStringLiteral("Reunião Externa KOrganizer"));
         fm.discard();
+
+        // 5. PDF export separates stat pills and writes valid PDF output
+        TaskModel pdfTaskModel(store.get(), settings.get());
+        PdfExporter pdf(store.get(), &pdfTaskModel, &rm, &jmSummary);
+        const QString routineHtml = pdf.buildHtml({{QStringLiteral("scope"), QStringLiteral("routine")}});
+        QVERIFY(routineHtml.contains(QStringLiteral("<td class=\"stat-gap\"></td>")));
+        QVERIFY(!routineHtml.contains(QStringLiteral("</span><span class=\"stat-pill\">")));
+        const QString pdfPath = dir->filePath(QStringLiteral("routine_test.pdf"));
+        QVERIFY(pdf.exportPdf(QUrl::fromLocalFile(pdfPath), {{QStringLiteral("scope"), QStringLiteral("routine")}}));
+        QFile pdfFile(pdfPath);
+        QVERIFY(pdfFile.open(QIODevice::ReadOnly));
+        QVERIFY(pdfFile.read(5).startsWith("%PDF-"));
     }
 };
 

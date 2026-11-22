@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktasks 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/MarleyS439/ktasks/issues\n"
-"POT-Creation-Date: 2026-11-22 13:16-0300\n"
+"POT-Creation-Date: 2026-11-22 13:36-0300\n"
 "PO-Revision-Date: 2026-11-22 11:46-0300\n"
 "Last-Translator: MarleyS439 <128339760+MarleyS439@users.noreply.github.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -301,21 +301,21 @@ msgstr "Vencimento: %1"
 msgid "Start: %1"
 msgstr "Início: %1"
 
-#: src/app/application.cpp:397 src/app/pdfexporter.cpp:321
+#: src/app/application.cpp:397 src/app/pdfexporter.cpp:339
 #: src/app/qml/QuickEntry.qml:89 src/app/qml/TaskDetails.qml:513
 #: src/app/qml/TasksPage.qml:478
 msgctxt "priority"
 msgid "High"
 msgstr "Alta"
 
-#: src/app/application.cpp:398 src/app/pdfexporter.cpp:323
+#: src/app/application.cpp:398 src/app/pdfexporter.cpp:341
 #: src/app/qml/QuickEntry.qml:89 src/app/qml/TaskDetails.qml:513
 #: src/app/qml/TasksPage.qml:478
 msgctxt "priority"
 msgid "Medium"
 msgstr "Média"
 
-#: src/app/application.cpp:399 src/app/pdfexporter.cpp:325
+#: src/app/application.cpp:399 src/app/pdfexporter.cpp:343
 #: src/app/qml/QuickEntry.qml:89 src/app/qml/TaskDetails.qml:513
 #: src/app/qml/TasksPage.qml:478
 msgctxt "priority"
@@ -393,7 +393,7 @@ msgstr[0] "%1 tarefa vence hoje"
 msgstr[1] "%1 tarefas vencem hoje"
 
 #: src/app/application.cpp:614 src/app/notifier.cpp:459
-#: src/app/pdfexporter.cpp:383
+#: src/app/pdfexporter.cpp:402
 msgid "%1 overdue"
 msgid_plural "%1 overdue"
 msgstr[0] "%1 atrasada"
@@ -1063,204 +1063,224 @@ msgstr ""
 "Os lembretes mostram a tarefa, quando ela vence e botões para concluir ou "
 "adiar."
 
-#: src/app/pdfexporter.cpp:206
+#: src/app/pdfexporter.cpp:218
 msgid "Today's Tasks"
 msgstr "Tarefas de Hoje"
 
-#: src/app/pdfexporter.cpp:209
+#: src/app/pdfexporter.cpp:221
 msgid "Next 7 Days"
 msgstr "Próximos 7 Dias"
 
-#: src/app/pdfexporter.cpp:212
+#: src/app/pdfexporter.cpp:224
 msgid "Overdue Tasks"
 msgstr "Tarefas Atrasadas"
 
-#: src/app/pdfexporter.cpp:215
+#: src/app/pdfexporter.cpp:227
 msgid "All Tasks"
 msgstr "Todas as Tarefas"
 
-#: src/app/pdfexporter.cpp:218 src/app/pdfexporter.cpp:448
+#: src/app/pdfexporter.cpp:230 src/app/pdfexporter.cpp:468
 msgid "Priority Matrix (Eisenhower)"
 msgstr "Matriz de Prioridades (Eisenhower)"
 
-#: src/app/pdfexporter.cpp:228
+#: src/app/pdfexporter.cpp:233 src/app/pdfexporter.cpp:531
+msgid "Daily Routine"
+msgstr "Rotina Diária"
+
+#: src/app/pdfexporter.cpp:236 src/app/pdfexporter.cpp:594
+msgid "Journal"
+msgstr "Diário"
+
+#: src/app/pdfexporter.cpp:246
 msgid "Tasks"
 msgstr "Tarefas"
 
-#: src/app/pdfexporter.cpp:331
+#: src/app/pdfexporter.cpp:349
 msgid "Recurring"
 msgstr "Recorrente"
 
-#: src/app/pdfexporter.cpp:379 src/app/pdfexporter.cpp:449
-#: src/app/pdfexporter.cpp:512
+#: src/app/pdfexporter.cpp:398 src/app/pdfexporter.cpp:469
+#: src/app/pdfexporter.cpp:533
 msgid "Generated %1"
 msgstr "Gerado em %1"
 
-#: src/app/pdfexporter.cpp:380
+#: src/app/pdfexporter.cpp:399
 msgid "%1 pending"
 msgid_plural "%1 pending"
 msgstr[0] "%1 pendente"
 msgstr[1] "%1 pendentes"
 
-#: src/app/pdfexporter.cpp:381
+#: src/app/pdfexporter.cpp:400
 msgid "%1 completed"
 msgid_plural "%1 completed"
 msgstr[0] "%1 concluída"
 msgstr[1] "%1 concluídas"
 
-#: src/app/pdfexporter.cpp:387
+#: src/app/pdfexporter.cpp:406
 msgid "No tasks to print for this selection."
 msgstr "Nenhuma tarefa para imprimir nesta seleção."
 
-#: src/app/pdfexporter.cpp:394
+#: src/app/pdfexporter.cpp:413
 msgid "No Date"
 msgstr "Sem data"
 
-#: src/app/pdfexporter.cpp:396
+#: src/app/pdfexporter.cpp:415
 msgid "Overdue"
 msgstr "Atrasadas"
 
-#: src/app/pdfexporter.cpp:398
+#: src/app/pdfexporter.cpp:417
 msgid "Today — %1"
 msgstr "Hoje — %1"
 
-#: src/app/pdfexporter.cpp:400
+#: src/app/pdfexporter.cpp:419
 msgid "Tomorrow — %1"
 msgstr "Amanhã — %1"
 
-#: src/app/pdfexporter.cpp:447
+#: src/app/pdfexporter.cpp:467
 msgid "Priority Matrix"
 msgstr "Matriz de Prioridades"
 
-#: src/app/pdfexporter.cpp:450
+#: src/app/pdfexporter.cpp:470
 msgid "%1 open task"
 msgid_plural "%1 open tasks"
 msgstr[0] "%1 tarefa aberta"
 msgstr[1] "%1 tarefas abertas"
 
-#: src/app/pdfexporter.cpp:451
+#: src/app/pdfexporter.cpp:471
 msgid "Q1: %1 · Q2: %2 · Q3: %3 · Q4: %4"
 msgstr "Q1: %1 · Q2: %2 · Q3: %3 · Q4: %4"
 
-#: src/app/pdfexporter.cpp:461
+#: src/app/pdfexporter.cpp:481
 msgid "Empty"
 msgstr "Vazio"
 
-#: src/app/pdfexporter.cpp:475 src/app/qml/EisenhowerPage.qml:1060
+#: src/app/pdfexporter.cpp:495 src/app/qml/EisenhowerPage.qml:1060
 msgctxt "quadrant title"
 msgid "Do Now"
 msgstr "Fazer Agora"
 
-#: src/app/pdfexporter.cpp:475 src/app/qml/EisenhowerPage.qml:1061
+#: src/app/pdfexporter.cpp:495 src/app/qml/EisenhowerPage.qml:1061
 msgctxt "quadrant axis"
 msgid "Urgent & Important"
 msgstr "Urgente e Importante"
 
-#: src/app/pdfexporter.cpp:476 src/app/qml/EisenhowerPage.qml:1074
+#: src/app/pdfexporter.cpp:496 src/app/qml/EisenhowerPage.qml:1074
 msgctxt "quadrant title"
 msgid "Schedule & Focus"
 msgstr "Agendar e Focar"
 
-#: src/app/pdfexporter.cpp:476 src/app/qml/EisenhowerPage.qml:1075
+#: src/app/pdfexporter.cpp:496 src/app/qml/EisenhowerPage.qml:1075
 msgctxt "quadrant axis"
 msgid "Important · Not Urgent"
 msgstr "Importante · Não Urgente"
 
-#: src/app/pdfexporter.cpp:478 src/app/qml/EisenhowerPage.qml:1088
+#: src/app/pdfexporter.cpp:498 src/app/qml/EisenhowerPage.qml:1088
 msgctxt "quadrant title"
 msgid "Delegate / Quick Wins"
 msgstr "Delegar / Rápidas"
 
-#: src/app/pdfexporter.cpp:478 src/app/qml/EisenhowerPage.qml:1089
+#: src/app/pdfexporter.cpp:498 src/app/qml/EisenhowerPage.qml:1089
 msgctxt "quadrant axis"
 msgid "Urgent · Less Important"
 msgstr "Urgente · Menos Importante"
 
-#: src/app/pdfexporter.cpp:479 src/app/qml/EisenhowerPage.qml:1102
+#: src/app/pdfexporter.cpp:499 src/app/qml/EisenhowerPage.qml:1102
 msgctxt "quadrant title"
 msgid "Eliminate / Someday"
 msgstr "Eliminar / Depois"
 
-#: src/app/pdfexporter.cpp:479 src/app/qml/EisenhowerPage.qml:1103
+#: src/app/pdfexporter.cpp:499 src/app/qml/EisenhowerPage.qml:1103
 msgctxt "quadrant axis"
 msgid "Neither Urgent nor Important"
 msgstr "Nem Urgente nem Importante"
 
-#: src/app/pdfexporter.cpp:484
+#: src/app/pdfexporter.cpp:504
 msgid "Awaiting Classification"
 msgstr "Aguardando Classificação"
 
-#: src/app/pdfexporter.cpp:510
-msgid "Daily Routine"
-msgstr "Rotina Diária"
-
-#: src/app/pdfexporter.cpp:513
+#: src/app/pdfexporter.cpp:534
 msgid "%1/%2 completed"
 msgstr "%1/%2 concluídos"
 
-#: src/app/pdfexporter.cpp:514
+#: src/app/pdfexporter.cpp:536
+msgid "%1 h planned"
+msgstr "%1 h planejadas"
+
+#: src/app/pdfexporter.cpp:537
 msgid "%1 h %2 min planned"
 msgstr "%1 h %2 min planejados"
 
-#: src/app/pdfexporter.cpp:517
+#: src/app/pdfexporter.cpp:538
+msgid "%1 min planned"
+msgstr "%1 min planejados"
+
+#: src/app/pdfexporter.cpp:541
 msgid "No routine blocks scheduled for this day."
 msgstr "Nenhum bloco de rotina agendado para este dia."
 
-#: src/app/pdfexporter.cpp:520
+#: src/app/pdfexporter.cpp:544
 msgid "Time"
 msgstr "Horário"
 
-#: src/app/pdfexporter.cpp:520
+#: src/app/pdfexporter.cpp:544
 msgid "Activity"
 msgstr "Atividade"
 
-#: src/app/pdfexporter.cpp:520
+#: src/app/pdfexporter.cpp:544
 msgid "Category"
 msgstr "Categoria"
 
-#: src/app/pdfexporter.cpp:520
+#: src/app/pdfexporter.cpp:544
 msgid "Status"
 msgstr "Status"
 
-#: src/app/pdfexporter.cpp:523
+#: src/app/pdfexporter.cpp:547
 msgid "Done"
 msgstr "Concluído"
 
-#: src/app/pdfexporter.cpp:524
+#: src/app/pdfexporter.cpp:548
 msgid "Skipped"
 msgstr "Pulado"
 
-#: src/app/pdfexporter.cpp:525
+#: src/app/pdfexporter.cpp:549
 msgid "Planned"
 msgstr "Planejado"
 
-#: src/app/pdfexporter.cpp:550
+#: src/app/pdfexporter.cpp:553
+msgid "%1 h"
+msgstr "%1 h"
+
+#: src/app/pdfexporter.cpp:554
+msgid "%1 h %2 min"
+msgstr "%1 h %2 min"
+
+#: src/app/pdfexporter.cpp:555
+msgid "%1 min"
+msgstr "%1 min"
+
+#: src/app/pdfexporter.cpp:578
 msgid "Journal entry not found."
 msgstr "Entrada do diário não encontrada."
 
-#: src/app/pdfexporter.cpp:552
+#: src/app/pdfexporter.cpp:580
 msgid "Unlock the journal entry before exporting to PDF."
 msgstr "Desbloqueie a entrada do diário antes de exportar para PDF."
 
-#: src/app/pdfexporter.cpp:566
-msgid "Journal"
-msgstr "Diário"
-
-#: src/app/pdfexporter.cpp:632
+#: src/app/pdfexporter.cpp:663
 msgctxt "page X of Y"
 msgid "Page %1 of %2"
 msgstr "Página %1 de %2"
 
-#: src/app/pdfexporter.cpp:655
+#: src/app/pdfexporter.cpp:686
 msgid "PDF exported to %1"
 msgstr "PDF exportado para %1"
 
-#: src/app/pdfexporter.cpp:665
+#: src/app/pdfexporter.cpp:696
 msgctxt "@title:window"
 msgid "Print — KTasks"
 msgstr "Imprimir — KTasks"
 
-#: src/app/pdfexporter.cpp:684
+#: src/app/pdfexporter.cpp:715
 msgctxt "@title:window"
 msgid "Print Preview — KTasks"
 msgstr "Visualizar Impressão — KTasks"

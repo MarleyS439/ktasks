@@ -89,15 +89,27 @@ static QString baseCss()
         .stats-bar {
             margin-top: 8px;
         }
-        .stat-pill {
-            display: inline-block;
+        table.stats-table {
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        td.stat-pill {
             background: #eff0f1;
             border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            padding: 2px 8px;
+            padding: 3px 9px;
             font-size: 8.5pt;
             color: #232629;
-            margin-right: 6px;
+            white-space: nowrap;
+        }
+        td.stat-pill-overdue {
+            background: #fdecec;
+            border: 1px solid #e79c9c;
+            color: #b02a37;
+        }
+        td.stat-gap {
+            width: 8px;
+            padding: 0;
+            border: none;
         }
         .group-title {
             font-size: 11.5pt;
@@ -216,6 +228,12 @@ static QString viewDisplayTitle(const QString &scope, const TaskModel *model, co
     }
     if (scope == QLatin1String("matrix")) {
         return i18n("Priority Matrix (Eisenhower)");
+    }
+    if (scope == QLatin1String("routine")) {
+        return i18n("Daily Routine");
+    }
+    if (scope == QLatin1String("journal")) {
+        return i18n("Journal");
     }
     if (scope == QLatin1String("current") && model) {
         if (model->isListView()) {
@@ -369,17 +387,18 @@ QString PdfExporter::buildTasksHtml(const QString &scope, const QVariantMap &opt
                 "<div class=\"brand\">KTasks</div>"
                 "<h1>%1</h1>"
                 "<div class=\"subtitle\">%2 · %3</div>"
-                "<div class=\"stats-bar\">"
-                "<span class=\"stat-pill\">%4</span>"
-                "<span class=\"stat-pill\">%5</span>"
+                "<table class=\"stats-table\"><tr>"
+                "<td class=\"stat-pill\">%4</td>"
+                "<td class=\"stat-gap\"></td>"
+                "<td class=\"stat-pill\">%5</td>"
                 "%6"
-                "</div></div>")
+                "</tr></table></div>")
                 .arg(esc(title),
                      esc(rangeLabel),
                      esc(i18n("Generated %1", locale.toString(now, QLocale::ShortFormat))),
                      esc(i18np("%1 pending", "%1 pending", pendingCount)),
                      esc(i18np("%1 completed", "%1 completed", doneCount)),
-                     overdueCount > 0 ? QStringLiteral("<span class=\"stat-pill badge-overdue\">%1</span>")
+                     overdueCount > 0 ? QStringLiteral("<td class=\"stat-gap\"></td><td class=\"stat-pill stat-pill-overdue\">%1</td>")
                                             .arg(esc(i18np("%1 overdue", "%1 overdue", overdueCount)))
                                       : QString());
 
@@ -440,10 +459,11 @@ QString PdfExporter::buildMatrixHtml(const QVariantMap &options) const
                        "<div class=\"brand\">KTasks · %1</div>"
                        "<h1>%2</h1>"
                        "<div class=\"subtitle\">%3</div>"
-                       "<div class=\"stats-bar\">"
-                       "<span class=\"stat-pill\">%4</span>"
-                       "<span class=\"stat-pill\">%5</span>"
-                       "</div></div>")
+                       "<table class=\"stats-table\"><tr>"
+                       "<td class=\"stat-pill\">%4</td>"
+                       "<td class=\"stat-gap\"></td>"
+                       "<td class=\"stat-pill\">%5</td>"
+                       "</tr></table></div>")
                        .arg(esc(i18n("Priority Matrix")),
                             esc(i18n("Priority Matrix (Eisenhower)")),
                             esc(i18n("Generated %1", locale.toString(now, QLocale::ShortFormat))),
@@ -503,20 +523,24 @@ QString PdfExporter::buildRoutineHtml(const QVariantMap &options) const
                        "<div class=\"brand\">KTasks · %1</div>"
                        "<h1>%2</h1>"
                        "<div class=\"subtitle\">%3</div>"
-                       "<div class=\"stats-bar\">"
-                       "<span class=\"stat-pill\">%4</span>"
-                       "<span class=\"stat-pill\">%5</span>"
-                       "</div></div>")
+                       "<table class=\"stats-table\"><tr>"
+                       "<td class=\"stat-pill\">%4</td>"
+                       "<td class=\"stat-gap\"></td>"
+                       "<td class=\"stat-pill\">%5</td>"
+                       "</tr></table></div>")
                        .arg(esc(i18n("Daily Routine")),
                             esc(locale.toString(date, QStringLiteral("dddd, d MMMM yyyy"))),
                             esc(i18n("Generated %1", locale.toString(QDateTime::currentDateTime(), QLocale::ShortFormat))),
                             esc(i18n("%1/%2 completed", doneCount, blocks.size())),
-                            esc(i18n("%1 h %2 min planned", totalMins / 60, totalMins % 60)));
+                            esc(totalMins >= 60
+                                    ? (totalMins % 60 == 0 ? i18n("%1 h planned", totalMins / 60)
+                                                           : i18n("%1 h %2 min planned", totalMins / 60, totalMins % 60))
+                                    : i18n("%1 min planned", totalMins)));
 
     if (blocks.isEmpty()) {
         body += QStringLiteral("<div class=\"empty\">%1</div>").arg(esc(i18n("No routine blocks scheduled for this day.")));
     } else {
-        body += QStringLiteral("<table class=\"routine\"><thead><tr><th>%1</th><th>%2</th><th>%3</th><th>%4</th></tr></thead><tbody>")
+        body += QStringLiteral("<table class=\"routine\" width=\"100%\"><thead><tr><th>%1</th><th>%2</th><th>%3</th><th>%4</th></tr></thead><tbody>")
                     .arg(esc(i18n("Time")), esc(i18n("Activity")), esc(i18n("Category")), esc(i18n("Status")));
         for (const RoutineBlock &b : blocks) {
             const auto st = m_routine->statusForBlock(b.id, date);
@@ -525,11 +549,15 @@ QString PdfExporter::buildRoutineHtml(const QVariantMap &options) const
                                                               : QStringLiteral("☐ ") + i18n("Planned");
             const QString timeStr = QStringLiteral("%1 – %2").arg(RoutineManager::formatMinutes(b.startMinute),
                                                                   RoutineManager::formatMinutes(qMin(1440, b.startMinute + b.durationMinutes)));
-            body += QStringLiteral("<tr><td style=\"white-space:nowrap;border-left:4px solid %1;\"><b>%2</b><br/><span style=\"color:#7f8c8d;font-size:8pt;\">%3 min</span></td>"
+            const QString durText = b.durationMinutes >= 60
+                ? (b.durationMinutes % 60 == 0 ? i18n("%1 h", b.durationMinutes / 60)
+                                               : i18n("%1 h %2 min", b.durationMinutes / 60, b.durationMinutes % 60))
+                : i18n("%1 min", b.durationMinutes);
+            body += QStringLiteral("<tr><td style=\"white-space:nowrap;border-left:4px solid %1;\"><b>%2</b><br/><span style=\"color:#7f8c8d;font-size:8pt;\">%3</span></td>"
                                    "<td><b>%4</b>%5</td><td>%6</td><td>%7</td></tr>")
                         .arg(esc(b.color),
                              esc(timeStr),
-                             QString::number(b.durationMinutes),
+                             esc(durText),
                              esc(b.title),
                              b.notes.trimmed().isEmpty() ? QString() : QStringLiteral("<div style=\"color:#5d6770;font-size:8.5pt;margin-top:2px;\">%1</div>").arg(esc(b.notes)),
                              esc(b.category),
@@ -593,7 +621,7 @@ void PdfExporter::renderToPrinter(QPrinter &printer, const QString &html, const 
     doc.setHtml(html);
 
     const QRectF pageRect = printer.pageRect(QPrinter::Point);
-    const qreal footerHeight = 24.0;
+    const qreal footerHeight = 26.0;
     const QSizeF bodySize(pageRect.width(), qMax<qreal>(100.0, pageRect.height() - footerHeight));
     doc.setPageSize(bodySize);
 
@@ -606,7 +634,10 @@ void PdfExporter::renderToPrinter(QPrinter &printer, const QString &html, const 
     painter.scale(scale, scale);
 
     const int pageCount = qMax(1, doc.pageCount());
-    QFont footerFont(QStringLiteral("Noto Sans"), 8);
+    // Painter is already scaled to 1 logical unit = 1 Point (1/72 in); using pixelSize
+    // prevents Qt from applying the HighResolution printer DPI a second time.
+    QFont footerFont(QStringLiteral("Noto Sans"));
+    footerFont.setPixelSize(8);
     const QString footerLeft = QStringLiteral("KTasks · %1").arg(headerTitle);
 
     for (int page = 0; page < pageCount; ++page) {
@@ -625,9 +656,9 @@ void PdfExporter::renderToPrinter(QPrinter &printer, const QString &html, const 
         painter.save();
         painter.setFont(footerFont);
         painter.setPen(QColor(QStringLiteral("#7f8c8d")));
-        const qreal lineY = bodySize.height() + 4.0;
+        const qreal lineY = bodySize.height() + 5.0;
         painter.drawLine(QPointF(0, lineY), QPointF(bodySize.width(), lineY));
-        const QRectF footerRect(0, lineY + 3.0, bodySize.width(), footerHeight - 7.0);
+        const QRectF footerRect(0, lineY + 3.0, bodySize.width(), footerHeight - 8.0);
         painter.drawText(footerRect, Qt::AlignLeft | Qt::AlignVCenter, footerLeft);
         painter.drawText(footerRect, Qt::AlignRight | Qt::AlignVCenter, i18nc("page X of Y", "Page %1 of %2", page + 1, pageCount));
         painter.restore();
