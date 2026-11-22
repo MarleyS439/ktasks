@@ -254,6 +254,26 @@ private Q_SLOTS:
         QCOMPARE(singleBack->block.specificDate, QDate(2026, 11, 22));
         QCOMPARE(singleBack->block.startMinute, 14 * 60);
         QCOMPARE(singleBack->block.durationMinutes, 90);
+
+        // External CalDAV recurring VEVENT (no X-KTASKS-* metadata) infers startDate from DTSTART
+        const QString extIcs = QStringLiteral(
+            "BEGIN:VCALENDAR\r\n"
+            "VERSION:2.0\r\n"
+            "PRODID:-//Nextcloud Calendar//EN\r\n"
+            "BEGIN:VEVENT\r\n"
+            "UID:ext-rec-1\r\n"
+            "DTSTART:20261122T150000Z\r\n"
+            "DTEND:20261122T160000Z\r\n"
+            "SUMMARY:Curso externo\r\n"
+            "RRULE:FREQ=WEEKLY;BYDAY=MO,WE\r\n"
+            "END:VEVENT\r\n"
+            "END:VCALENDAR\r\n");
+        const auto extBack = IcsCodec::decodeEvent(extIcs);
+        QVERIFY(extBack.has_value());
+        QVERIFY(!extBack->block.specificDate.isValid());
+        QVERIFY(extBack->block.startDate.isValid());
+        const QDate expectedExtDate = QDateTime(QDate(2026, 11, 22), QTime(15, 0), QTimeZone::UTC).toTimeZone(QTimeZone::systemTimeZone()).date();
+        QCOMPARE(extBack->block.startDate, expectedExtDate);
     }
 
     void quadrantRoundTrips()

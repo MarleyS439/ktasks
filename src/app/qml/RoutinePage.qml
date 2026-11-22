@@ -148,12 +148,36 @@ Item {
                 Item { Layout.fillWidth: true }
 
                 QQC2.Label {
-                    visible: page.calendarMode === 0 && page.width > Kirigami.Units.gridUnit * 44
-                    text: i18nc("@info", "%1/%2 blocks done · %3h %4m planned",
+                    visible: page.calendarMode === 0 && page.width > Kirigami.Units.gridUnit * 40
+                    readonly property int freeMins: {
+                        App.routine.plannedMinutes;
+                        return App.routine.availableMinutesForMinute(page.currentMinutes);
+                    }
+                    readonly property int plannedH: Math.floor(App.routine.plannedMinutes / 60)
+                    readonly property int plannedM: App.routine.plannedMinutes % 60
+                    readonly property int freeH: Math.floor(freeMins / 60)
+                    readonly property int freeM: freeMins % 60
+                    text: App.routine.isPast
+                        ? i18nc("@info", "%1/%2 blocks done · %3h %4m planned",
                                 App.routine.completedBlocks,
                                 App.routine.totalBlocks,
-                                Math.floor(App.routine.plannedMinutes / 60),
-                                App.routine.plannedMinutes % 60)
+                                plannedH,
+                                plannedM)
+                        : App.routine.isToday
+                            ? i18nc("@info", "%1/%2 blocks done · %3h %4m planned · %5h %6m left today",
+                                    App.routine.completedBlocks,
+                                    App.routine.totalBlocks,
+                                    plannedH,
+                                    plannedM,
+                                    freeH,
+                                    freeM)
+                            : i18nc("@info", "%1/%2 blocks done · %3h %4m planned · %5h %6m free",
+                                    App.routine.completedBlocks,
+                                    App.routine.totalBlocks,
+                                    plannedH,
+                                    plannedM,
+                                    freeH,
+                                    freeM)
                     font: Kirigami.Theme.smallFont
                     color: Kirigami.Theme.disabledTextColor
                 }
@@ -980,7 +1004,7 @@ Item {
             editId = id;
             isTemplate = !!info.isTemplate;
             const infoStart = info.startDate ?? "";
-            restrictStartDate = infoStart !== "";
+            restrictStartDate = isTemplate ? (infoStart !== "") : true;
             startDate = infoStart !== "" ? infoStart : App.routine.selectedDate;
             bTitle.text = info.title;
             bCategory.text = info.category;

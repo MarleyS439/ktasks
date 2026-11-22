@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.6" date="2026-11-22">
+      <description>
+        <p>Add Settings tabs with a new Add-ons section for privacy-first Discord Rich Presence during focus sessions, automatic PC Do Not Disturb mode while focusing, live remaining free time in Routine &amp; Day Planner, and v9 backfill for pre-existing routine templates.</p>
+      </description>
+    </release>
     <release version="1.0.5" date="2026-11-22">
       <description>
         <p>Fix Routine month and week header navigation, add forward-only start dates for recurring routine templates, and prompt before discarding unsaved modal changes on Escape or outside click.</p>

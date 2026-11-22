@@ -4,6 +4,7 @@ add_library(ktasksapp STATIC
     taskstore.h taskstore.cpp
     taskmodel.h taskmodel.cpp
     eisenhowermanager.h eisenhowermanager.cpp
+    discordpresence.h discordpresence.cpp
     focusmanager.h focusmanager.cpp
     analyticsmanager.h analyticsmanager.cpp
     summarymanager.h summarymanager.cpp

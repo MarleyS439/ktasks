@@ -65,6 +65,12 @@ public:                                                                         
     KTASKS_SETTING(int, pomodoroFocusMinutes, setPomodoroFocusMinutes, "Focus", 25)
     KTASKS_SETTING(int, pomodoroShortBreakMinutes, setPomodoroShortBreakMinutes, "Focus", 5)
     KTASKS_SETTING(int, pomodoroLongBreakMinutes, setPomodoroLongBreakMinutes, "Focus", 15)
+    KTASKS_SETTING(bool, focusDoNotDisturb, setFocusDoNotDisturb, "Focus", true)
+    // Add-ons / Discord Rich Presence
+    KTASKS_SETTING(bool, discordPresenceEnabled, setDiscordPresenceEnabled, "Addons", false)
+    KTASKS_SETTING(bool, discordShowTaskTitle, setDiscordShowTaskTitle, "Addons", false)
+    KTASKS_SETTING(QString, discordClientId, setDiscordClientId, "Addons", QString())
+    KTASKS_SETTING(QString, discordLargeImage, setDiscordLargeImage, "Addons", QStringLiteral("ktasks"))
     // Routine
     KTASKS_SETTING(int, routineStartHour, setRoutineStartHour, "Routine", 6)
     KTASKS_SETTING(int, routineEndHour, setRoutineEndHour, "Routine", 23)

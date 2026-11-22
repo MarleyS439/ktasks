@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "analyticsmanager.h"
+#include "application.h"
 #include "backupmanager.h"
+#include "discordpresence.h"
 #include "eisenhowermanager.h"
 #include "focusmanager.h"
 #include "journalmanager.h"
@@ -15,6 +17,7 @@
 
 #include <KLocalizedQmlContext>
 #include <KLocalizedString>
+#include <QJsonDocument>
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 #include <QQmlContext>
@@ -1017,6 +1020,160 @@ private Q_SLOTS:
         QMetaObject::invokeMethod(prompt, "close");
         QMetaObject::invokeMethod(dlg, "forceClose");
         QTRY_VERIFY(!dlg->property("opened").toBool());
+    }
+
+    void routineAvailableMinutesAndOverlaps()
+    {
+        RoutineManager rm(db.get());
+        const QDate today = QDate::currentDate();
+        const QDate tomorrow = today.addDays(1);
+        const QDate yesterday = today.addDays(-1);
+
+        // Past block on today, ongoing overlapping blocks, and a skipped evening block
+        rm.setSelectedDateIso(today.toString(Qt::ISODate));
+        rm.addBlock({
+            {QStringLiteral("title"), QStringLiteral("Manhã passada")},
+            {QStringLiteral("startMinute"), 8 * 60},
+            {QStringLiteral("durationMinutes"), 120},
+            {QStringLiteral("isTemplate"), false},
+            {QStringLiteral("specificDate"), today.toString(Qt::ISODate)},
+        });
+        rm.addBlock({
+            {QStringLiteral("title"), QStringLiteral("Bloco em curso")},
+            {QStringLiteral("startMinute"), 11 * 60 + 30},
+            {QStringLiteral("durationMinutes"), 90}, // 11:30 - 13:00
+            {QStringLiteral("isTemplate"), false},
+            {QStringLiteral("specificDate"), today.toString(Qt::ISODate)},
+        });
+        rm.addBlock({
+            {QStringLiteral("title"), QStringLiteral("Sobreposto")},
+            {QStringLiteral("startMinute"), 12 * 60 + 30},
+            {QStringLiteral("durationMinutes"), 90}, // 12:30 - 14:00 (merged 12:00..14:00 = 120m left)
+            {QStringLiteral("isTemplate"), false},
+            {QStringLiteral("specificDate"), today.toString(Qt::ISODate)},
+        });
+        const qint64 skippedId = rm.addBlock({
+            {QStringLiteral("title"), QStringLiteral("Pulado")},
+            {QStringLiteral("startMinute"), 20 * 60},
+            {QStringLiteral("durationMinutes"), 60},
+            {QStringLiteral("isTemplate"), false},
+            {QStringLiteral("specificDate"), today.toString(Qt::ISODate)},
+        });
+        rm.setBlockStatusForDate(skippedId, today, int(RoutineLogStatus::Skipped));
+
+        // At 12:00 (min 720): 720m left in day minus 120m merged [12:00, 14:00] = 600m
+        QCOMPARE(rm.availableMinutesForDateAndMinute(today, 12 * 60), 600);
+
+        // Future date counts whole 1440m day minus planned non-skipped intervals
+        rm.setSelectedDateIso(tomorrow.toString(Qt::ISODate));
+        QCOMPARE(rm.availableMinutesForDateAndMinute(today, 12 * 60), 1440);
+        rm.addBlock({
+            {QStringLiteral("title"), QStringLiteral("Reunião amanhã")},
+            {QStringLiteral("startMinute"), 9 * 60},
+            {QStringLiteral("durationMinutes"), 120},
+            {QStringLiteral("isTemplate"), false},
+            {QStringLiteral("specificDate"), tomorrow.toString(Qt::ISODate)},
+        });
+        QCOMPARE(rm.availableMinutesForDateAndMinute(today, 12 * 60), 1320);
+
+        // Past date has 0 remaining available minutes
+        rm.setSelectedDateIso(yesterday.toString(Qt::ISODate));
+        QVERIFY(rm.isPast());
+        QCOMPARE(rm.availableMinutesForDateAndMinute(today, 12 * 60), 0);
+    }
+
+    void focusDndAndDiscordPrivacy()
+    {
+        settings->setNotifyFocus(false);
+        settings->setPomodoroFocusMinutes(25);
+        settings->setPomodoroShortBreakMinutes(5);
+        settings->setFocusDoNotDisturb(true);
+        settings->setDiscordPresenceEnabled(true);
+        settings->setDiscordShowTaskTitle(false);
+        settings->setDiscordLargeImage(QStringLiteral("ktasks"));
+
+        const qint64 privTaskId = add(QStringLiteral("Segredo Médico Confidencial"));
+        FocusManager fm(store.get(), settings.get());
+
+        // 1. Do Not Disturb toggles across Focus / Pause / Break / Complete / Setting off
+        QVERIFY(!fm.dndActive());
+        fm.startPomodoro(privTaskId);
+        QVERIFY(fm.dndActive());
+        fm.togglePause();
+        QVERIFY(!fm.dndActive());
+        fm.togglePause();
+        QVERIFY(fm.dndActive());
+        fm.startBreak(false);
+        QVERIFY(!fm.dndActive());
+        fm.startStopwatch(privTaskId);
+        QVERIFY(fm.dndActive());
+        settings->setFocusDoNotDisturb(false);
+        QVERIFY(!fm.dndActive());
+        settings->setFocusDoNotDisturb(true);
+        QVERIFY(fm.dndActive());
+        fm.discard();
+        QVERIFY(!fm.dndActive());
+
+        // 2. Completing a Pomodoro clears DND cleanly before completion notification
+        fm.startPomodoro(privTaskId);
+        QVERIFY(fm.dndActive());
+        fm.advanceSecondsForTesting(25 * 60);
+        QVERIFY(!fm.hasSession());
+        QVERIFY(!fm.dndActive());
+
+        // 3. Discord Rich Presence omits private task title when showTaskTitle == false
+        DiscordPresence::ActivityState act;
+        act.hasSession = true;
+        act.running = true;
+        act.mode = FocusMode::Pomodoro;
+        act.cycleNumber = 2;
+        act.elapsedSeconds = 300;
+        act.remainingSeconds = 1200;
+        act.taskTitle = QStringLiteral("Segredo Médico Confidencial");
+
+        const QJsonObject privPayload = DiscordPresence::buildSetActivityPayload(42, act, false, QStringLiteral("ktasks"), 1700000000, QStringLiteral("n1"));
+        const QByteArray privJson = QJsonDocument(privPayload).toJson(QJsonDocument::Compact);
+        QVERIFY(!privJson.contains("Segredo"));
+        QVERIFY(!privJson.contains("Confidencial"));
+        const QJsonObject activityObj = privPayload.value(QStringLiteral("args")).toObject().value(QStringLiteral("activity")).toObject();
+        QCOMPARE(activityObj.value(QStringLiteral("assets")).toObject().value(QStringLiteral("large_image")).toString(), QStringLiteral("ktasks"));
+        QCOMPARE(activityObj.value(QStringLiteral("assets")).toObject().value(QStringLiteral("large_text")).toString(), QStringLiteral("KTasks"));
+        QCOMPARE(activityObj.value(QStringLiteral("timestamps")).toObject().value(QStringLiteral("end")).toInteger(), qint64(1700001200));
+
+        // Explicit opt-in includes title when user enables it
+        const QJsonObject pubPayload = DiscordPresence::buildSetActivityPayload(42, act, true, QStringLiteral("ktasks"), 1700000000, QStringLiteral("n2"));
+        const QByteArray pubJson = QJsonDocument(pubPayload).toJson(QJsonDocument::Compact);
+        QVERIFY(pubJson.contains("Segredo Médico Confidencial"));
+
+        // Wire frame encode/decode & Client ID validation
+        const QByteArray frame = DiscordPresence::encodeFrame(1, QByteArrayLiteral("{\"ok\":true}"));
+        quint32 op = 99, len = 0;
+        QVERIFY(DiscordPresence::decodeFrameHeader(frame, op, len));
+        QCOMPARE(op, quint32(1));
+        QCOMPARE(len, quint32(11));
+        QVERIFY(DiscordPresence::isValidClientId(QStringLiteral("123456789012345678")));
+        QVERIFY(!DiscordPresence::isValidClientId(QStringLiteral("abc123")));
+        QVERIFY(!DiscordPresence::candidateSocketPaths().isEmpty());
+    }
+
+    void settingsAndRoutineQmlLoadCleanly()
+    {
+        KLocalizedString::setApplicationDomain("ktasks");
+        Application app(db.get());
+        QQmlApplicationEngine engine;
+        engine.rootContext()->setContextObject(new KLocalizedQmlContext(&engine));
+        qmlRegisterSingletonInstance("app.ktasks.backend", 1, 0, "App", &app);
+        qmlRegisterUncreatableType<TaskModel>("app.ktasks.backend", 1, 0, "TaskModel", QStringLiteral("enums only"));
+
+        QQmlComponent settingsComp(&engine, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/SettingsPage.qml")));
+        QVERIFY2(settingsComp.isReady(), qPrintable(settingsComp.errorString()));
+        std::unique_ptr<QObject> settingsObj(settingsComp.create());
+        QVERIFY(settingsObj != nullptr);
+
+        QQmlComponent routineComp(&engine, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/RoutinePage.qml")));
+        QVERIFY2(routineComp.isReady(), qPrintable(routineComp.errorString()));
+        std::unique_ptr<QObject> routineObj(routineComp.create());
+        QVERIFY(routineObj != nullptr);
     }
 };
 

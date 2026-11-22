@@ -409,6 +409,9 @@ std::optional<DecodedRoutine> decodeEvent(const QString &ics)
         const QString sdProp = ev->nonKDECustomProperty(kRoutineStartDateProp).trimmed();
         if (!sdProp.isEmpty()) {
             b.startDate = QDate::fromString(sdProp.trimmed(), Qt::ISODate);
+        } else if (customProp(ev, kRoutineActiveProp, QByteArrayLiteral("X-AFAZER-ACTIVE")).isEmpty() && startLocal.isValid()) {
+            // External recurring VEVENTs (e.g. Nextcloud Calendar / mobile) start on DTSTART instead of backfilling the past.
+            b.startDate = startLocal.date();
         }
     } else if (startLocal.isValid()) {
         b.specificDate = startLocal.date();

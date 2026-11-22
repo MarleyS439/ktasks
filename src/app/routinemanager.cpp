@@ -231,6 +231,68 @@ int RoutineManager::plannedMinutes() const
     return mins;
 }
 
+int RoutineManager::availableMinutes() const
+{
+    return availableMinutesAt(QDateTime::currentDateTime());
+}
+
+int RoutineManager::availableMinutesForMinute(int currentMinuteOfDay) const
+{
+    return availableMinutesForDateAndMinute(QDate::currentDate(), currentMinuteOfDay);
+}
+
+int RoutineManager::availableMinutesAt(const QDateTime &now) const
+{
+    const QTime t = now.time();
+    return availableMinutesForDateAndMinute(now.date(), t.hour() * 60 + t.minute());
+}
+
+int RoutineManager::availableMinutesForDateAndMinute(const QDate &today, int currentMinuteOfDay) const
+{
+    if (!m_selectedDate.isValid() || m_selectedDate < today) {
+        return 0;
+    }
+    const int winStart = (m_selectedDate == today) ? qBound(0, currentMinuteOfDay, 1440) : 0;
+    const int winEnd = 1440;
+    if (winStart >= winEnd) {
+        return 0;
+    }
+    QList<QPair<int, int>> intervals;
+    intervals.reserve(m_dayItems.size());
+    for (const DayItem &item : m_dayItems) {
+        if (item.status == RoutineLogStatus::Skipped) {
+            continue;
+        }
+        const int s = qMax(winStart, item.block.startMinute);
+        const int e = qMin(winEnd, item.block.startMinute + item.block.durationMinutes);
+        if (s < e) {
+            intervals.append({s, e});
+        }
+    }
+    std::sort(intervals.begin(), intervals.end(), [](const auto &a, const auto &b) {
+        return a.first != b.first ? a.first < b.first : a.second < b.second;
+    });
+    int occupied = 0;
+    int curStart = -1;
+    int curEnd = -1;
+    for (const auto &iv : intervals) {
+        if (curEnd < 0) {
+            curStart = iv.first;
+            curEnd = iv.second;
+        } else if (iv.first <= curEnd) {
+            curEnd = qMax(curEnd, iv.second);
+        } else {
+            occupied += curEnd - curStart;
+            curStart = iv.first;
+            curEnd = iv.second;
+        }
+    }
+    if (curEnd >= 0) {
+        occupied += curEnd - curStart;
+    }
+    return qMax(0, (winEnd - winStart) - occupied);
+}
+
 QVariantList RoutineManager::templates() const
 {
     QVariantList out;

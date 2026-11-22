@@ -22,9 +22,11 @@ class RoutineManager : public QAbstractListModel
     Q_PROPERTY(QString weekTitle READ weekTitle NOTIFY selectedDateChanged)
     Q_PROPERTY(QString monthTitle READ monthTitle NOTIFY selectedDateChanged)
     Q_PROPERTY(bool isToday READ isToday NOTIFY selectedDateChanged)
+    Q_PROPERTY(bool isPast READ isPast NOTIFY selectedDateChanged)
     Q_PROPERTY(int totalBlocks READ totalBlocks NOTIFY changed)
     Q_PROPERTY(int completedBlocks READ completedBlocks NOTIFY changed)
     Q_PROPERTY(int plannedMinutes READ plannedMinutes NOTIFY changed)
+    Q_PROPERTY(int availableMinutes READ availableMinutes NOTIFY changed)
     Q_PROPERTY(QVariantList templates READ templates NOTIFY changed)
 
 public:
@@ -72,12 +74,20 @@ public:
     {
         return m_selectedDate == QDate::currentDate();
     }
+    bool isPast() const
+    {
+        return m_selectedDate.isValid() && m_selectedDate < QDate::currentDate();
+    }
     int totalBlocks() const
     {
         return m_dayItems.size();
     }
     int completedBlocks() const;
     int plannedMinutes() const;
+    int availableMinutes() const;
+    Q_INVOKABLE int availableMinutesForMinute(int currentMinuteOfDay) const;
+    int availableMinutesAt(const QDateTime &now) const;
+    int availableMinutesForDateAndMinute(const QDate &today, int currentMinuteOfDay) const;
     QVariantList templates() const;
 
     const QList<KTasks::RoutineBlock> &allBlocks() const

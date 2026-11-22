@@ -214,6 +214,7 @@ public:
     Q_INVOKABLE void trigger(const QString &actionName);
     Q_INVOKABLE void openNotificationSettings();
     Q_INVOKABLE void openGlobalShortcutSettings();
+    Q_INVOKABLE bool exportDiscordIconPng(const QUrl &file);
     Q_INVOKABLE void showWindow(const QString &xdgToken = QString());
     Q_INVOKABLE void activateQuickAddWindow(QWindow *win);
     Q_INVOKABLE QColor adaptiveChipColor(const QColor &tint, const QColor &bg) const;

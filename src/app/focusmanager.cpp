@@ -6,6 +6,9 @@
 
 #include <KLocalizedString>
 #include <KNotification>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusReply>
 #include <QLocale>
 #include <QStandardPaths>
 
@@ -15,16 +18,35 @@ FocusManager::FocusManager(TaskStore *store, Settings *settings, QObject *parent
     : QObject(parent)
     , m_store(store)
     , m_settings(settings)
+    , m_discord(new DiscordPresence(settings, this))
 {
     m_timer.setInterval(1000);
     connect(&m_timer, &QTimer::timeout, this, &FocusManager::onTick);
     connect(m_store, &TaskStore::changed, this, [this] {
         if (m_hasSession && m_activeTaskId > 0) {
             refreshCachedTitle(true);
+            syncDiscordPresence();
         }
     });
+    connect(m_settings, &Settings::focusDoNotDisturbChanged, this, &FocusManager::syncDoNotDisturb);
     refreshCachedTitle(false);
     updateTimeText();
+}
+
+FocusManager::~FocusManager()
+{
+    if (m_dndActive) {
+        m_dndActive = false;
+        if (!QStandardPaths::isTestModeEnabled() && m_dndCookie != 0) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.Notifications"),
+                                                              QStringLiteral("/org/freedesktop/Notifications"),
+                                                              QStringLiteral("org.freedesktop.Notifications"),
+                                                              QStringLiteral("UnInhibit"));
+            msg << m_dndCookie;
+            QDBusConnection::sessionBus().call(msg, QDBus::NoBlock);
+            m_dndCookie = 0;
+        }
+    }
 }
 
 QString FocusManager::formatDuration(int totalSeconds)
@@ -135,6 +157,7 @@ void FocusManager::startPomodoro(qlonglong taskId)
     m_timer.start();
     refreshCachedTitle(false);
     updateTimeText();
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
     Q_EMIT tickChanged();
 }
@@ -157,6 +180,7 @@ void FocusManager::startPomodoroLabeled(const QString &label)
     m_timer.start();
     refreshCachedTitle(false);
     updateTimeText();
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
     Q_EMIT tickChanged();
 }
@@ -179,6 +203,7 @@ void FocusManager::startStopwatch(qlonglong taskId)
     m_timer.start();
     refreshCachedTitle(false);
     updateTimeText();
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
     Q_EMIT tickChanged();
 }
@@ -201,6 +226,7 @@ void FocusManager::startBreak(bool longBreak)
     m_timer.start();
     refreshCachedTitle(false);
     updateTimeText();
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
     Q_EMIT tickChanged();
 }
@@ -216,6 +242,7 @@ void FocusManager::togglePause()
     } else {
         m_timer.stop();
     }
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
 }
 
@@ -239,6 +266,7 @@ void FocusManager::stopAndSave()
         Q_EMIT message(i18nc("@info", "Recorded %1 on “%2”", formatDuration(savedSecs), activeTaskTitle()), false);
     }
     updateTimeText();
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
     Q_EMIT tickChanged();
 }
@@ -252,6 +280,7 @@ void FocusManager::discard()
     m_remainingSeconds = 0;
     m_targetSeconds = 0;
     updateTimeText();
+    syncDesktopIntegrations();
     Q_EMIT stateChanged();
     Q_EMIT tickChanged();
 }
@@ -356,6 +385,7 @@ void FocusManager::onTick()
             m_hasSession = false;
             m_elapsedSeconds = 0;
             updateTimeText();
+            syncDesktopIntegrations();
             Q_EMIT stateChanged();
             Q_EMIT tickChanged();
             Q_EMIT cycleCompleted(int(finished), finishedTaskId);
@@ -416,4 +446,60 @@ void FocusManager::notifyCycleFinished(FocusMode finishedMode, const QString &ta
         connect(cont, &KNotificationAction::activated, this, [this, taskId] { startPomodoro(taskId); });
     }
     n->sendEvent();
+}
+
+void FocusManager::syncDesktopIntegrations()
+{
+    syncDoNotDisturb();
+    syncDiscordPresence();
+}
+
+void FocusManager::syncDoNotDisturb()
+{
+    const bool wantDnd = m_settings->focusDoNotDisturb() && m_hasSession && m_running && (m_mode == FocusMode::Pomodoro || m_mode == FocusMode::Stopwatch);
+    if (wantDnd == m_dndActive) {
+        return;
+    }
+    if (wantDnd) {
+        if (!QStandardPaths::isTestModeEnabled()) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.Notifications"),
+                                                              QStringLiteral("/org/freedesktop/Notifications"),
+                                                              QStringLiteral("org.freedesktop.Notifications"),
+                                                              QStringLiteral("Inhibit"));
+            msg << QStringLiteral("io.github.marleys439.ktasks")
+                << i18nc("DND inhibition reason", "KTasks focus session active")
+                << QVariantMap();
+            const QDBusReply<quint32> reply = QDBusConnection::sessionBus().call(msg, QDBus::Block, 1500);
+            m_dndCookie = reply.isValid() ? reply.value() : 0;
+        }
+        m_dndActive = true;
+    } else {
+        if (!QStandardPaths::isTestModeEnabled() && m_dndCookie != 0) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.Notifications"),
+                                                              QStringLiteral("/org/freedesktop/Notifications"),
+                                                              QStringLiteral("org.freedesktop.Notifications"),
+                                                              QStringLiteral("UnInhibit"));
+            msg << m_dndCookie;
+            QDBusConnection::sessionBus().call(msg, QDBus::NoBlock);
+            m_dndCookie = 0;
+        }
+        m_dndActive = false;
+    }
+    Q_EMIT integrationsChanged();
+}
+
+void FocusManager::syncDiscordPresence()
+{
+    if (!m_discord) {
+        return;
+    }
+    DiscordPresence::ActivityState st;
+    st.hasSession = m_hasSession;
+    st.running = m_running;
+    st.mode = m_mode;
+    st.cycleNumber = m_cycleNumber;
+    st.elapsedSeconds = m_elapsedSeconds;
+    st.remainingSeconds = m_remainingSeconds;
+    st.taskTitle = m_cachedTaskTitle;
+    m_discord->updateFocusState(st);
 }

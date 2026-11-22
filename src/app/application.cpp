@@ -767,6 +767,29 @@ void Application::openNotificationSettings()
     QProcess::startDetached(QStringLiteral("systemsettings"), {QStringLiteral("kcm_notifications"), QStringLiteral("--args"), QStringLiteral("--notifyrc ktasks")});
 }
 
+bool Application::exportDiscordIconPng(const QUrl &file)
+{
+    const QString dest = file.isLocalFile() ? file.toLocalFile() : file.toString();
+    if (dest.isEmpty()) {
+        return false;
+    }
+    QIcon icon = QIcon::fromTheme(kAppIconId);
+    QPixmap pm = icon.pixmap(512, 512);
+    if (pm.isNull()) {
+        const QString svgPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                       QStringLiteral("icons/hicolor/scalable/apps/io.github.marleys439.ktasks.svg"));
+        if (!svgPath.isEmpty()) {
+            pm = QIcon(svgPath).pixmap(512, 512);
+        }
+    }
+    if (pm.isNull() || !pm.save(dest, "PNG")) {
+        Q_EMIT message(i18nc("@info", "Could not export PNG icon to %1.", dest), false);
+        return false;
+    }
+    Q_EMIT message(i18nc("@info", "Exported 512×512 PNG icon to %1.", dest), false);
+    return true;
+}
+
 // ---- tasks ----
 
 static QDateTime combine(const QDate &date, const QTime &time)

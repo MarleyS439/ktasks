@@ -219,6 +219,19 @@ CREATE INDEX focus_sessions_task ON focus_sessions(task_id);
         QStringLiteral(R"(
 ALTER TABLE routine_blocks ADD COLUMN start_date TEXT NOT NULL DEFAULT '';
 )"),
+        // v9: Backfill start_date on pre-existing recurring templates so they only apply forward
+        QStringLiteral(R"(
+UPDATE routine_blocks
+SET start_date = CASE
+        WHEN created_at != '' THEN date(created_at, 'localtime')
+        ELSE date('now', 'localtime')
+    END,
+    sync_state = CASE
+        WHEN sync_account_id > 0 AND sync_state = 0 THEN CASE WHEN href = '' THEN 1 ELSE 2 END
+        ELSE sync_state
+    END
+WHERE deleted = 0 AND specific_date = '' AND start_date = '';
+)"),
     };
 }
 

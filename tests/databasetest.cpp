@@ -3,6 +3,8 @@
 #include "crypto.h"
 
 #include <QDir>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QTemporaryDir>
 #include <QTest>
 
@@ -439,6 +441,59 @@ private Q_SLOTS:
         movedStart.startDate = QDate(2026, 12, 1);
         QVERIFY(db.updateRoutineBlockUser(movedStart));
         QCOMPARE(db.routineBlock(datedRb.id)->startDate, QDate(2026, 12, 1));
+    }
+
+    void migrationV9BackfillsTemplateStartDate()
+    {
+        QTemporaryDir dir;
+        const QString path = dir.filePath("v8.db");
+        {
+            QSqlDatabase raw = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"), QStringLiteral("raw_v8_conn"));
+            raw.setDatabaseName(path);
+            QVERIFY(raw.open());
+            QSqlQuery q(raw);
+            QVERIFY(q.exec(QStringLiteral("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)")));
+            QVERIFY(q.exec(QStringLiteral(
+                "CREATE TABLE routine_blocks ("
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, uid TEXT NOT NULL UNIQUE, title TEXT NOT NULL DEFAULT '', "
+                "notes TEXT NOT NULL DEFAULT '', start_minute INTEGER NOT NULL DEFAULT 540, "
+                "duration_minutes INTEGER NOT NULL DEFAULT 60, days_mask INTEGER NOT NULL DEFAULT 127, "
+                "specific_date TEXT NOT NULL DEFAULT '', start_date TEXT NOT NULL DEFAULT '', "
+                "linked_task_id INTEGER NOT NULL DEFAULT 0, color TEXT NOT NULL DEFAULT '#3daee9', "
+                "category TEXT NOT NULL DEFAULT '', notify_enabled INTEGER NOT NULL DEFAULT 1, "
+                "notify_minutes_before INTEGER NOT NULL DEFAULT 5, active INTEGER NOT NULL DEFAULT 1, "
+                "sort_order REAL NOT NULL DEFAULT 0, created_at TEXT NOT NULL DEFAULT '', modified_at TEXT NOT NULL DEFAULT '', "
+                "sync_account_id INTEGER NOT NULL DEFAULT 0, calendar_href TEXT NOT NULL DEFAULT '', "
+                "href TEXT NOT NULL DEFAULT '', etag TEXT NOT NULL DEFAULT '', base_ics TEXT NOT NULL DEFAULT '', "
+                "sync_state INTEGER NOT NULL DEFAULT 0, rev INTEGER NOT NULL DEFAULT 0, deleted INTEGER NOT NULL DEFAULT 0)")));
+            QVERIFY(q.exec(QStringLiteral("PRAGMA user_version = 8")));
+            QVERIFY(q.exec(QStringLiteral(
+                "INSERT INTO routine_blocks (uid, title, days_mask, specific_date, start_date, created_at, sync_account_id, href, sync_state) "
+                "VALUES ('tpl-1', 'Estagio', 31, '', '', '2026-11-22T16:25:45Z', 1, '/dav/rotina/tpl-1.ics', 0)")));
+            QVERIFY(q.exec(QStringLiteral(
+                "INSERT INTO routine_blocks (uid, title, days_mask, specific_date, start_date, created_at) "
+                "VALUES ('one-1', 'Dentista', 0, '2026-11-20', '', '2026-11-20T12:00:00Z')")));
+            raw.close();
+        }
+        QSqlDatabase::removeDatabase(QStringLiteral("raw_v8_conn"));
+
+        Database db(path);
+        QString err;
+        QVERIFY2(db.open(&err), qPrintable(err));
+        QCOMPARE(db.schemaVersion(), Database::latestSchemaVersion());
+
+        const auto blocks = db.routineBlocks(true, false, false);
+        QCOMPARE(blocks.size(), 2);
+        const auto &tpl = blocks.first();
+        QCOMPARE(tpl.uid, QStringLiteral("tpl-1"));
+        const QDate expectedTplStart = QDateTime::fromString(QStringLiteral("2026-11-22T16:25:45Z"), Qt::ISODate).toLocalTime().date();
+        QCOMPARE(tpl.startDate, expectedTplStart);
+        QCOMPARE(tpl.syncState, SyncState::Modified);
+
+        const auto &one = blocks.last();
+        QCOMPARE(one.uid, QStringLiteral("one-1"));
+        QCOMPARE(one.specificDate, QDate(2026, 11, 20));
+        QVERIFY(!one.startDate.isValid());
     }
 };
 

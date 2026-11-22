@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
 
+#include "discordpresence.h"
 #include "task.h"
 
 #include <QDateTime>
@@ -13,8 +14,9 @@ class TaskStore;
 
 /**
  * Pomodoro timer and task execution stopwatch. Tracks elapsed execution time
- * on individual tasks, stores focus session history in SQLite, and fires
- * desktop notifications when a cycle ends.
+ * on individual tasks, stores focus session history in SQLite, manages PC
+ * Do Not Disturb & Discord Rich Presence while focusing, and fires desktop
+ * notifications when a cycle ends.
  */
 class FocusManager : public QObject
 {
@@ -33,9 +35,12 @@ class FocusManager : public QObject
     Q_PROPERTY(QString timeText READ timeText NOTIFY tickChanged)
     Q_PROPERTY(QString statusLabel READ statusLabel NOTIFY stateChanged)
     Q_PROPERTY(double progress READ progress NOTIFY tickChanged)
+    Q_PROPERTY(bool dndActive READ dndActive NOTIFY integrationsChanged)
+    Q_PROPERTY(DiscordPresence *discord READ discord CONSTANT)
 
 public:
     FocusManager(TaskStore *store, Settings *settings, QObject *parent = nullptr);
+    ~FocusManager() override;
 
     bool hasSession() const { return m_hasSession; }
     bool running() const { return m_running; }
@@ -51,6 +56,8 @@ public:
     QString timeText() const;
     QString statusLabel() const;
     double progress() const;
+    bool dndActive() const { return m_dndActive; }
+    DiscordPresence *discord() const { return m_discord; }
 
     Q_INVOKABLE void startPomodoro(qlonglong taskId = 0);
     Q_INVOKABLE void startPomodoroLabeled(const QString &label);
@@ -73,6 +80,7 @@ Q_SIGNALS:
     void stateChanged();
     void tickChanged();
     void sessionsChanged();
+    void integrationsChanged();
     void message(const QString &text, bool withUndo);
     void cycleCompleted(int completedMode, qlonglong taskId);
 
@@ -82,13 +90,19 @@ private:
     void notifyCycleFinished(KTasks::FocusMode finishedMode, const QString &taskTitle, qint64 taskId);
     void refreshCachedTitle(bool emitIfChanged);
     void updateTimeText();
+    void syncDesktopIntegrations();
+    void syncDoNotDisturb();
+    void syncDiscordPresence();
 
     TaskStore *m_store;
     Settings *m_settings;
+    DiscordPresence *m_discord = nullptr;
     QTimer m_timer;
 
     bool m_hasSession = false;
     bool m_running = false;
+    bool m_dndActive = false;
+    quint32 m_dndCookie = 0;
     KTasks::FocusMode m_mode = KTasks::FocusMode::Pomodoro;
     qint64 m_activeTaskId = 0;
     QString m_fallbackTitle;
