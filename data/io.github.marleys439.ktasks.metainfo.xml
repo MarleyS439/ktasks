@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.2" date="2026-11-22">
+      <description>
+        <p>Fix QML Avatar import using org.kde.kirigamiaddons.components for full compatibility with KDE Application Platform 6.10 Flatpak runtime.</p>
+      </description>
+    </release>
     <release version="1.0.1" date="2026-11-22">
       <description>
         <p>Automated Arch Linux (.pkg.tar.zst) and universal Flatpak (.flatpak) release packaging targeting KDE Platform 6.10.</p>

@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.components as Components
 import app.ktasks.backend
 
 Item {
@@ -151,7 +152,7 @@ Item {
                         Layout.fillWidth: true
                         spacing: Kirigami.Units.largeSpacing
 
-                        Kirigami.Avatar {
+                        Components.Avatar {
                             source: App.effectiveAvatarPath !== "" ? ("file://" + App.effectiveAvatarPath) : ""
                             name: App.effectiveProfileName
                             implicitWidth: Kirigami.Units.iconSizes.large

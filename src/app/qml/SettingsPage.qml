@@ -4,6 +4,7 @@ import QtQuick.Controls as QQC2
 import QtQuick.Dialogs as Dialogs
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.components as Components
 import org.kde.kirigamiaddons.formcard as FormCard
 import app.ktasks.backend
 
@@ -31,7 +32,7 @@ FormCard.FormCardPage {
         FormCard.FormTextDelegate {
             text: App.effectiveProfileName
             description: App.effectiveProfileEmail !== "" ? App.effectiveProfileEmail : i18nc("@info", "Add your name, email, and profile picture")
-            leading: Kirigami.Avatar {
+            leading: Components.Avatar {
                 source: App.effectiveAvatarPath !== "" ? ("file://" + App.effectiveAvatarPath) : ""
                 name: App.effectiveProfileName
                 implicitWidth: Kirigami.Units.iconSizes.large
