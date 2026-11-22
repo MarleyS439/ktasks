@@ -1,0 +1,117 @@
+name: Release Packages (Arch + Flatpak)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package-archlinux:
+    name: Arch Linux Package (.pkg.tar.zst)
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    steps:
+      - name: Install build & runtime dependencies
+        run: |
+          pacman -Syu --noconfirm --needed base-devel git cmake extra-cmake-modules ninja \
+            qt6-base qt6-declarative kirigami kirigami-addons qqc2-desktop-style \
+            kcoreaddons kconfig ki18n kcalendarcore knotifications kdbusaddons \
+            kstatusnotifieritem kcolorscheme kglobalaccel kwindowsystem kcrash \
+            kiconthemes qtkeychain-qt6 breeze-icons openssl
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build & verify Arch package with makepkg
+        run: |
+          useradd -m builder
+          work=$(mktemp -d)
+          cp -a . "$work/repo"
+          cd "$work/repo"
+          pkgver=$(bash -c 'source packaging/PKGBUILD && printf "%s" "$pkgver"')
+          git config --global --add safe.directory "$work/repo"
+          git archive --format=tar.gz --prefix="ktasks-${pkgver}/" HEAD -o "packaging/ktasks-${pkgver}.tar.gz"
+          chown -R builder:builder "$work"
+          su - builder -c "cd '$work/repo/packaging' && makepkg -f --skipchecksums"
+          mkdir -p "$GITHUB_WORKSPACE/dist-arch"
+          cp -v "$work/repo/packaging/"*.pkg.tar.zst "$GITHUB_WORKSPACE/dist-arch/"
+          pkgfile=$(ls "$GITHUB_WORKSPACE/dist-arch/"*.pkg.tar.zst | head -n1)
+          tmpextract=$(mktemp -d)
+          bsdtar -xf "$pkgfile" -C "$tmpextract"
+          if ldd "$tmpextract/usr/bin/ktasks" | grep -q KPim6AkonadiCore; then
+            echo "ERROR: KPim6AkonadiCore must not be linked in portable package" >&2
+            exit 1
+          fi
+
+      - name: Upload Arch package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ktasks-arch-pkg
+          path: dist-arch/*.pkg.tar.zst
+
+  package-flatpak:
+    name: Flatpak Bundle (.flatpak)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Flatpak toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends flatpak flatpak-builder elfutils ca-certificates
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Flathub and KDE Runtime 6.10
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y --noninteractive flathub org.kde.Platform//6.10 org.kde.Sdk//6.10
+
+      - name: Build Flatpak bundle
+        run: |
+          mkdir -p dist-flatpak
+          flatpak-builder --user --repo=repo --force-clean --disable-rofiles-fuse \
+            build-flatpak packaging/io.github.marleys439.ktasks.yml
+          flatpak build-bundle repo dist-flatpak/io.github.marleys439.ktasks-x86_64.flatpak io.github.marleys439.ktasks
+
+      - name: Upload Flatpak bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ktasks-flatpak-bundle
+          path: dist-flatpak/io.github.marleys439.ktasks-x86_64.flatpak
+
+  publish-release:
+    name: Publish GitHub Release Assets
+    needs: [package-archlinux, package-flatpak]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Generate SHA256SUMS.txt
+        run: |
+          cd release-assets
+          sha256sum *.pkg.tar.zst *.flatpak > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Create or update GitHub Release with packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          if gh release view "$tag" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            gh release upload "$tag" release-assets/* --repo "${{ github.repository }}" --clobber
+          else
+            gh release create "$tag" release-assets/* \
+              --repo "${{ github.repository }}" \
+              --title "KTasks ${tag#v}" \
+              --generate-notes
+          fi

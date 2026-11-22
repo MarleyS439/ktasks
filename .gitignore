@@ -1,5 +1,7 @@
 build/
+build-flatpak/
 *.mo
+*.flatpak
 packaging/pkg/
 packaging/src/
 *.pkg.tar.*

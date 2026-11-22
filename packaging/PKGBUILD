@@ -1,26 +1,29 @@
 # Maintainer: MarleyS439 <https://github.com/MarleyS439>
 # AUR/Local Arch package for KTasks
 pkgname=ktasks
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Offline-first task, priority matrix, Pomodoro, routine, and journal manager for KDE Plasma (optional Nextcloud sync)"
 arch=('x86_64' 'aarch64')
 url="https://github.com/MarleyS439/ktasks"
 license=('GPL-3.0-or-later')
+options=('!debug')
 depends=('qt6-base' 'qt6-declarative' 'kirigami' 'kirigami-addons' 'qqc2-desktop-style'
          'kcoreaddons' 'kconfig' 'ki18n' 'kcalendarcore' 'knotifications' 'kdbusaddons'
          'kstatusnotifieritem' 'kcolorscheme' 'kglobalaccel' 'kwindowsystem' 'kcrash'
          'kiconthemes' 'qtkeychain-qt6' 'breeze-icons' 'openssl')
 makedepends=('cmake' 'extra-cmake-modules' 'ninja')
-optdepends=('akonadi: read KOrganizer, Google Calendar, and Birthdays events in External Agenda'
-            'kweather: automatically reuse KDE KWeather city for the forecast')
+optdepends=('kweather: automatically reuse KDE KWeather city for the forecast')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/MarleyS439/ktasks/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
 build() {
+    # Disable compile-time Akonadi linkage so binary packages remain portable across
+    # Arch systems without Akonadi/MariaDB; local .ics / KOrganizer files still work.
     cmake -S "$pkgname-$pkgver" -B build -G Ninja \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_DISABLE_FIND_PACKAGE_KPim6Akonadi=TRUE
     cmake --build build
 }
 

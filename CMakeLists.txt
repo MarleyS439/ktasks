@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(ktasks VERSION 1.0.0 LANGUAGES CXX)
+project(ktasks VERSION 1.0.1 LANGUAGES CXX)
 
 set(QT_MIN_VERSION "6.6.0")
 set(KF_MIN_VERSION "6.5.0")
@@ -16,7 +16,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 include(ECMInstallIcons)
 
-find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Widgets Qml Quick QuickControls2 Sql Network DBus PrintSupport Test)
+find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Widgets Qml Quick QuickControls2 Sql Network DBus PrintSupport)
 find_package(OpenSSL REQUIRED)
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     CoreAddons Config I18n CalendarCore Notifications DBusAddons
@@ -38,6 +38,7 @@ add_subdirectory(src/app)
 
 option(BUILD_TESTING "Build the tests" ON)
 if(BUILD_TESTING)
+    find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Test)
     enable_testing()
     add_subdirectory(tests)
 endif()

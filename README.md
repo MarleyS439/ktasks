@@ -65,8 +65,8 @@
   - Credentials are stored securely in the desktop keyring via **QtKeychain** (`KWallet` / `Secret Service`), and authentication supports **Nextcloud Login Flow v2**.
 - **KDE & Desktop Compatibility:**
   - Requires **Qt >= 6.6**, **KDE Frameworks >= 6.5**, and **Kirigami Addons >= 1.4**.
-  - Works on **Wayland** and **X11**. Built natively for **KDE Plasma 6** (`org.kde.desktop` style and `Breeze` icons), and portable to other Linux desktops via Flatpak (`packaging/io.github.marleys439.ktasks.yml`) using `org.kde.Platform//6.8`.
-  - **`KPim6::AkonadiCore` (KOrganizer integration) is optional** at build time (`find_package(KPim6Akonadi QUIET)`) and passive at runtime (never starts Akonadi unless the daemon is already active in your session).
+  - Works on **Wayland** and **X11**. Built natively for **KDE Plasma 6** (`org.kde.desktop` style and `Breeze` icons), and portable to other Linux desktops via Flatpak (`packaging/io.github.marleys439.ktasks.yml`) using `org.kde.Platform//6.10`.
+  - **`KPim6::AkonadiCore` (KOrganizer integration) is optional** at build time (`find_package(KPim6Akonadi QUIET)`) and passive at runtime (never starts Akonadi unless the daemon is already active in your session). Prebuilt `.flatpak` and `.pkg.tar.zst` release bundles disable compile-time Akonadi linkage for portability while keeping local `.ics` calendar reading active.
 
 ## Dependencies
 
@@ -114,7 +114,23 @@ sudo zypper install cmake extra-cmake-modules ninja gcc-c++ libopenssl-devel \
 
 </details>
 
-## Building & Installing
+## Installing Prebuilt Releases
+
+Prebuilt bundles are attached to every tagged [GitHub Release](https://github.com/MarleyS439/ktasks/releases):
+
+- **Universal Linux (Flatpak):**
+  Download `io.github.marleys439.ktasks-x86_64.flatpak` from Releases and install:
+  ```bash
+  flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak install --user io.github.marleys439.ktasks-x86_64.flatpak
+  flatpak run io.github.marleys439.ktasks
+  ```
+- **Arch Linux / CachyOS / EndeavourOS:**
+  ```bash
+  sudo pacman -U ktasks-*-x86_64.pkg.tar.zst
+  ```
+
+## Building from Source & Installing
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$HOME/.local"

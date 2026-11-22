@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.1" date="2026-11-22">
+      <description>
+        <p>Automated Arch Linux (.pkg.tar.zst) and universal Flatpak (.flatpak) release packaging targeting KDE Platform 6.10.</p>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-11-22">
       <description>
         <p>Initial community release featuring Summary dashboard, Nextcloud Tasks/Routine/Notes sync, Eisenhower Priority Matrix, Pomodoro &amp; Focus Timer, Productivity Insights, and KOrganizer/Akonadi read-only agenda.</p>
