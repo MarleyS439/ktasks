@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="auto" data-lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KTasks — Produtividade nativa para KDE Plasma 6</title>
+  <meta name="description" content="KTasks: gerenciador offline-first de tarefas, matriz de Eisenhower, Pomodoro, rotina e diário criptografado para KDE Plasma 6 com sincronização Nextcloud e CalDAV." />
+  <link rel="icon" type="image/svg+xml" href="assets/ktasks.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Plasma Top Panel -->
+  <header class="plasma-panel" role="banner">
+    <div class="container panel-inner">
+      <a href="#top" class="brand" aria-label="KTasks Home">
+        <img src="assets/ktasks.svg" alt="KTasks" width="28" height="28" class="brand-icon" />
+        <span class="brand-name">KTasks</span>
+        <span class="badge-plasma" data-i18n="panelBadge">KDE Plasma 6</span>
+      </a>
+
+      <nav class="panel-nav" aria-label="Primary navigation">
+        <a href="#features" data-i18n="navFeatures">Recursos</a>
+        <a href="#architecture" data-i18n="navArch">Privacidade</a>
+        <a href="#compatibility" data-i18n="navCompat">Compatibilidade</a>
+        <a href="#install" data-i18n="navInstall">Instalar</a>
+      </nav>
+
+      <div class="panel-actions">
+        <button id="langToggle" type="button" class="breeze-toolbtn" title="Switch language / Trocar idioma" aria-label="Trocar idioma">
+          <span class="toolbtn-label" id="langLabel">EN</span>
+        </button>
+        <button id="themeToggle" type="button" class="breeze-toolbtn" title="Alternar tema Breeze Claro/Escuro" aria-label="Alternar tema Breeze Claro/Escuro">
+          <svg id="themeIconSun" class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg id="themeIconMoon" class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span class="toolbtn-label" id="themeLabel">Escuro</span>
+        </button>
+        <a href="https://github.com/MarleyS439/ktasks" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-ghost">
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <img src="assets/ktasks-symbolic.svg" alt="" width="16" height="16" class="symbolic-tint" />
+            <span data-i18n="heroKicker">Aplicativo Comunitário KDE · v1.0.2</span>
+          </div>
+          <h1 data-i18n="heroTitle">Organize tarefas, foco e rotina em sintonia com o KDE Plasma</h1>
+          <p class="hero-lead" data-i18n="heroLead">
+            Um aplicativo de produtividade construído com C++20, Qt 6, Kirigami e SQLite.
+            Seus dados ficam seguros localmente e sincronizam de forma opcional com Nextcloud Tasks, CalDAV e Notes.
+          </p>
+
+          <div class="hero-cta">
+            <a href="#install" class="breeze-btn breeze-btn-primary">
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="ctaDownload">Baixar e Instalar</span>
+            </a>
+            <a href="https://github.com/MarleyS439/ktasks/releases/tag/v1.0.2" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-secondary">
+              <span data-i18n="ctaRelease">Release v1.0.2</span>
+            </a>
+          </div>
+
+          <ul class="tech-chips" aria-label="Destaques técnicos">
+            <li class="chip"><span class="dot dot-blue"></span> Qt 6 &amp; Kirigami</li>
+            <li class="chip"><span class="dot dot-green"></span> Offline-First (SQLite WAL)</li>
+            <li class="chip"><span class="dot dot-purple"></span> Nextcloud CalDAV &amp; Notes</li>
+            <li class="chip"><span class="dot dot-orange"></span> AES-256-GCM &amp; KWallet</li>
+          </ul>
+        </div>
+
+        <!-- Authentic KDE Breeze Window Frame -->
+        <div class="breeze-window" role="region" aria-label="Prévia da interface do KTasks">
+          <div class="breeze-titlebar">
+            <div class="titlebar-left">
+              <img src="assets/ktasks.svg" alt="" width="18" height="18" />
+              <span class="titlebar-text" id="windowTitle">KTasks — Resumo Inicial</span>
+            </div>
+            <div class="titlebar-tabs" role="tablist" aria-label="Telas do aplicativo">
+              <button type="button" role="tab" aria-selected="true" class="win-tab active" data-screen="summary" data-i18n="tabSummary">Resumo</button>
+              <button type="button" role="tab" aria-selected="false" class="win-tab" data-screen="matrix" data-i18n="tabMatrix">Matriz</button>
+            </div>
+            <div class="titlebar-buttons" aria-hidden="true">
+              <span class="win-ctl win-min"></span>
+              <span class="win-ctl win-max"></span>
+              <span class="win-ctl win-close"></span>
+            </div>
+          </div>
+
+          <div class="breeze-viewport">
+            <button type="button" id="screenshotZoomBtn" class="viewport-zoom" title="Ampliar captura" aria-label="Ampliar captura">
+              <img id="previewImage" src="assets/summary.png" alt="Captura de tela do painel Resumo do KTasks" />
+              <span class="zoom-pill" data-i18n="zoomHint">Clique para ampliar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-i18n="featEyebrow">Ecossistema Completo</span>
+          <h2 data-i18n="featTitle">Tudo do seu fluxo diário em uma interface Kirigami limpa</h2>
+          <p data-i18n="featSub">
+            Projetado para parecer parte nativa do Plasma 6, respeitando tema, esquema de cores Breeze, fontes e ícones do seu desktop.
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="breeze-card accent-blue">
+            <div class="card-header">
+              <span class="card-icon icon-blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </span>
+              <h3 data-i18n="f1Title">Painel de Resumo &amp; Clima</h3>
+            </div>
+            <p data-i18n="f1Desc">
+              Saudação personalizada, dia da semana, KPIs clicáveis, previsão compacta Open-Meteo para 10 dias (com atualização horária), rotina do dia e notas recentes.
+            </p>
+          </article>
+
+          <article class="breeze-card accent-purple">
+            <div class="card-header">
+              <span class="card-icon icon-purple" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </span>
+              <h3 data-i18n="f2Title">Matriz de Eisenhower &amp; Triagem</h3>
+            </div>
+            <p data-i18n="f2Desc">
+              Classifique tarefas nos quadrantes Q1–Q4 com arrastar e soltar, rolagem fluida, promoção automática por prazo e modo Triagem Guiada sem distrações.
+            </p>
+          </article>
+
+          <article class="breeze-card accent-orange">
+            <div class="card-header">
+              <span class="card-icon icon-orange" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v4l2.5 2.5M9.5 3h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <h3 data-i18n="f3Title">Pomodoro &amp; Insights</h3>
+            </div>
+            <p data-i18n="f3Desc">
+              Barra persistente de foco e cronômetro por tarefa, histórico de execução, precisão das estimativas e gráficos de atividade para 1, 7 e 30 dias.
+            </p>
+          </article>
+
+          <article class="breeze-card accent-green">
+            <div class="card-header">
+              <span class="card-icon icon-green" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6M5 18h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <h3 data-i18n="f4Title">Listas, Subtarefas &amp; Seleção em Lote</h3>
+            </div>
+            <p data-i18n="f4Desc">
+              Captura em linguagem natural (PT/EN), seleção múltipla estilo Dolphin com Ctrl e Shift, Desfazer/Refazer atômico, recorrência RRULE e exportação para PDF/.ics.
+            </p>
+          </article>
+
+          <article class="breeze-card accent-teal">
+            <div class="card-header">
+              <span class="card-icon icon-teal" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V7a4 4 0 118 0v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <h3 data-i18n="f5Title">Rotina &amp; Diário AES-256-GCM</h3>
+            </div>
+            <p data-i18n="f5Desc">
+              Blocos diários e semanais de rotina além de cadernos em Markdown com trava local por senha criptografada em AES-256-GCM antes de qualquer envio.
+            </p>
+          </article>
+
+          <article class="breeze-card accent-indigo">
+            <div class="card-header">
+              <span class="card-icon icon-indigo" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M17.5 19H7a4 4 0 01-.4-7.98A5.5 5.5 0 0117.3 9a3.5 3.5 0 01.2 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </span>
+              <h3 data-i18n="f6Title">Nextcloud &amp; Agenda Externa</h3>
+            </div>
+            <p data-i18n="f6Desc">
+              Sincronização incremental CalDAV (VTODO e VEVENT) + Nextcloud Notes API, com leitura passiva e separada de arquivos .ics / KOrganizer no Resumo.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture & Privacy Section -->
+    <section id="architecture" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-i18n="archEyebrow">Arquitetura &amp; Segurança</span>
+          <h2 data-i18n="archTitle">Local primeiro, criptografado e sem telemetria</h2>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <h3 data-i18n="p1Title">SQLite WAL + Backups Locais</h3>
+            <p data-i18n="p1Desc">
+              Seus dados vivem em <code>~/.local/share/ktasks/ktasks.db</code> com snapshots automáticos pré-migração. Funciona 100% offline, sem conta obrigatória.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <h3 data-i18n="p2Title">Credenciais no Cofre do Sistema</h3>
+            <p data-i18n="p2Desc">
+              Tokens Nextcloud (via Login Flow v2) e CalDAV ficam guardados no <strong>KWallet / Secret Service</strong> via QtKeychain — nunca em texto puro ou logs.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <h3 data-i18n="p3Title">Código Aberto Auditável</h3>
+            <p data-i18n="p3Desc">
+              Licença <strong>GPL-3.0-or-later</strong>, zero rastreamento e build contínuo no GitHub Actions com suíte de testes automatizados (C++ / CalDAV / Sync / UI).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compatibility Section -->
+    <section id="compatibility" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-i18n="compatEyebrow">Compatibilidade</span>
+          <h2 data-i18n="compatTitle">Feito para Plasma 6, pronto para qualquer Linux moderno</h2>
+        </div>
+
+        <div class="compat-table-wrap">
+          <table class="compat-table">
+            <thead>
+              <tr>
+                <th data-i18n="cColComponent">Camada / Integração</th>
+                <th data-i18n="cColDetails">Suporte Verificado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Desktop &amp; Display</strong></td>
+                <td data-i18n="cRowDesktop">KDE Plasma 6 nativo em Wayland e X11 (estilo <code>org.kde.desktop</code> e ícones <code>Breeze</code>) + bandeja e atalho global <code>Meta+Alt+N</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>Qt &amp; KDE Frameworks</strong></td>
+                <td>Qt &ge; 6.6 · KDE Frameworks &ge; 6.5 · Kirigami Addons &ge; 1.4 · C++20.</td>
+              </tr>
+              <tr>
+                <td><strong>Nextcloud &amp; Mobile</strong></td>
+                <td data-i18n="cRowNextcloud">Nextcloud Tasks (CalDAV <code>VTODO</code> compatível com Tasks.org / DAVx⁵), Calendário de Rotina (<code>VEVENT</code>) e Nextcloud Notes REST API.</td>
+              </tr>
+              <tr>
+                <td data-i18n="cRowAgendaLabel"><strong>Agenda Externa</strong></td>
+                <td data-i18n="cRowAgendaVal">Leitura somente-leitura de calendários locais <code>.ics</code> e integração opcional passiva com KOrganizer / Akonadi.</td>
+              </tr>
+              <tr>
+                <td data-i18n="cRowLangLabel"><strong>Idiomas</strong></td>
+                <td data-i18n="cRowLangVal">Inglês e Português do Brasil (<code>pt_BR</code>) 100% traduzidos via KDE <code>ki18n</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Install / Downloads Section -->
+    <section id="install" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-i18n="instEyebrow">Instalação</span>
+          <h2 data-i18n="instTitle">Baixe o pacote para sua distribuição</h2>
+          <p data-i18n="instSub">
+            Pacotes assinados por checksum SHA-256 gerados automaticamente no GitHub Actions a cada release.
+          </p>
+        </div>
+
+        <div class="install-box">
+          <div class="install-tabs" role="tablist" aria-label="Métodos de instalação">
+            <button type="button" role="tab" aria-selected="true" class="inst-tab active" data-install="flatpak">Flatpak (Universal)</button>
+            <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="arch">Arch Linux / CachyOS</button>
+            <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="source" data-i18n="tabSource">Código-fonte (CMake)</button>
+          </div>
+
+          <div class="install-pane active" id="pane-flatpak">
+            <div class="pane-head">
+              <div>
+                <h3>Flatpak Bundle (<code>org.kde.Platform//6.10</code>)</h3>
+                <p data-i18n="fpNote">Recomendado para Ubuntu, Fedora, Debian, Mint, openSUSE e desktops não-Arch.</p>
+              </div>
+              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.2/io.github.marleys439.ktasks-x86_64.flatpak" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadFlatpak">Baixar .flatpak (v1.0.2)</a>
+            </div>
+            <div class="code-wrap">
+              <pre><code id="cmd-flatpak">flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install --user io.github.marleys439.ktasks-x86_64.flatpak
+flatpak run io.github.marleys439.ktasks</code></pre>
+              <button type="button" class="copy-btn" data-copy="cmd-flatpak" data-i18n="btnCopy">Copiar</button>
+            </div>
+          </div>
+
+          <div class="install-pane" id="pane-arch">
+            <div class="pane-head">
+              <div>
+                <h3>Arch Linux / CachyOS / EndeavourOS (<code>.pkg.tar.zst</code>)</h3>
+                <p data-i18n="archNote">Instalação nativa via pacman ou compilação local usando o PKGBUILD incluído.</p>
+              </div>
+              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.2/ktasks-1.0.2-1-x86_64.pkg.tar.zst" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadArch">Baixar .pkg.tar.zst (v1.0.2)</a>
+            </div>
+            <div class="code-wrap">
+              <pre><code id="cmd-arch">sudo pacman -U ktasks-1.0.2-1-x86_64.pkg.tar.zst</code></pre>
+              <button type="button" class="copy-btn" data-copy="cmd-arch" data-i18n="btnCopy">Copiar</button>
+            </div>
+          </div>
+
+          <div class="install-pane" id="pane-source">
+            <div class="pane-head">
+              <div>
+                <h3>CMake + KDE Frameworks 6</h3>
+                <p data-i18n="srcNote">Compilação direta com suporte completo a KDE Plasma e testes unitários.</p>
+              </div>
+              <a href="https://github.com/MarleyS439/ktasks/releases/tag/v1.0.2" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-secondary">SHA256SUMS.txt</a>
+            </div>
+            <div class="code-wrap">
+              <pre><code id="cmd-source">git clone https://github.com/MarleyS439/ktasks.git
+cd ktasks
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$HOME/.local"
+cmake --build build -j"$(nproc)"
+QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure
+cmake --install build --strip</code></pre>
+              <button type="button" class="copy-btn" data-copy="cmd-source" data-i18n="btnCopy">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="plasma-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/ktasks.svg" alt="KTasks" width="24" height="24" />
+        <span><strong>KTasks</strong> · &copy; 2026 MarleyS439 · GPL-3.0-or-later</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/MarleyS439/ktasks" target="_blank" rel="noopener noreferrer">Repositório</a>
+        <a href="https://github.com/MarleyS439/ktasks/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+        <a href="https://github.com/MarleyS439/ktasks/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+        <a href="https://github.com/MarleyS439/ktasks/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" data-i18n="footContrib">Contribuir</a>
+        <a href="https://github.com/MarleyS439/ktasks/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" data-i18n="footSecurity">Segurança</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Visualização ampliada">
+    <button type="button" id="lightboxClose" class="lightbox-close" aria-label="Fechar">&times;</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
