@@ -798,11 +798,15 @@ private Q_SLOTS:
         settings->setProfileName(QStringLiteral("Alex Silva"));
         settings->setIntegrateKOrganizer(false);
         const QString icsPath = dir->filePath(QStringLiteral("external_cal.ics"));
+        const int nowMin = QTime::currentTime().hour() * 60 + QTime::currentTime().minute();
+        const int baseMin = qMax(0, qMin(nowMin, 23 * 60));
+        const int extStartMin = qMax(0, baseMin - 15);
+        const int extEndMin = qMin(23 * 60 + 59, baseMin + 45);
         {
             QFile f(icsPath);
             QVERIFY(f.open(QIODevice::WriteOnly | QIODevice::Truncate));
-            const QString dtStart = QDateTime(today, QTime(14, 0)).toString(QStringLiteral("yyyyMMdd'T'HHmmss"));
-            const QString dtEnd = QDateTime(today, QTime(15, 0)).toString(QStringLiteral("yyyyMMdd'T'HHmmss"));
+            const QString dtStart = QDateTime(today, QTime(extStartMin / 60, extStartMin % 60)).toString(QStringLiteral("yyyyMMdd'T'HHmmss"));
+            const QString dtEnd = QDateTime(today, QTime(extEndMin / 60, extEndMin % 60)).toString(QStringLiteral("yyyyMMdd'T'HHmmss"));
             const QByteArray body = QStringLiteral(
                 "BEGIN:VCALENDAR\r\n"
                 "VERSION:2.0\r\n"
@@ -843,7 +847,7 @@ private Q_SLOTS:
         RoutineBlock rb;
         rb.title = QStringLiteral("Foco Vespertino");
         rb.daysMask = (1 << (today.dayOfWeek() - 1));
-        rb.startMinute = 14 * 60 + 30;
+        rb.startMinute = baseMin;
         rb.durationMinutes = 60;
         rb.active = true;
         QVERIFY(rm.addBlock({
