@@ -422,6 +422,23 @@ private Q_SLOTS:
         QCOMPARE(db.focusSessions().first().durationSeconds, 1500);
         QVERIFY(db.removeFocusSession(fs.id));
         QVERIFY(db.focusSessions().isEmpty());
+
+        // Schema v8: RoutineBlock.startDate persists across insert and update
+        RoutineBlock datedRb;
+        datedRb.title = "Inglês diário";
+        datedRb.startMinute = 480;
+        datedRb.durationMinutes = 45;
+        datedRb.daysMask = 31;
+        datedRb.startDate = QDate(2026, 11, 22);
+        QVERIFY(db.insertRoutineBlock(datedRb));
+        const auto loadedRb = db.routineBlock(datedRb.id);
+        QVERIFY(loadedRb.has_value());
+        QCOMPARE(loadedRb->startDate, QDate(2026, 11, 22));
+
+        RoutineBlock movedStart = *loadedRb;
+        movedStart.startDate = QDate(2026, 12, 1);
+        QVERIFY(db.updateRoutineBlockUser(movedStart));
+        QCOMPARE(db.routineBlock(datedRb.id)->startDate, QDate(2026, 12, 1));
     }
 };
 

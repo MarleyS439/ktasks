@@ -16,8 +16,9 @@ ecm_add_test(synctest.cpp mockcaldavserver.cpp
 
 ecm_add_test(apptest.cpp
     TEST_NAME apptest
-    LINK_LIBRARIES ktasksapp Qt6::Test
+    LINK_LIBRARIES ktasksapp KF6::I18nQml Qt6::Test
 )
+target_compile_definitions(apptest PRIVATE KTASKS_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 # Manual end-to-end check against a real CalDAV server; see the README.
 add_executable(livesync livesync.cpp)

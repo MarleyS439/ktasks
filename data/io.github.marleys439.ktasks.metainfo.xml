@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.5" date="2026-11-22">
+      <description>
+        <p>Fix Routine month and week header navigation, add forward-only start dates for recurring routine templates, and prompt before discarding unsaved modal changes on Escape or outside click.</p>
+      </description>
+    </release>
     <release version="1.0.4" date="2026-11-22">
       <description>
         <p>Fix PDF export stat pills spacing, routine block duration formatting, and HighResolution footer font scaling.</p>

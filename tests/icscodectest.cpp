@@ -204,6 +204,7 @@ private Q_SLOTS:
         b.startMinute = 7 * 60 + 15;
         b.durationMinutes = 45;
         b.daysMask = (1 << 0) | (1 << 2) | (1 << 4); // Mon, Wed, Fri
+        b.startDate = QDate(2026, 11, 23);
         b.color = "#27ae60";
         b.category = "Saúde";
         b.notifyEnabled = true;
@@ -230,6 +231,7 @@ private Q_SLOTS:
         QCOMPARE(back->block.startMinute, b.startMinute);
         QCOMPARE(back->block.durationMinutes, b.durationMinutes);
         QCOMPARE(back->block.daysMask, b.daysMask);
+        QCOMPARE(back->block.startDate, QDate(2026, 11, 23));
         QVERIFY(!back->block.specificDate.isValid());
         QCOMPARE(back->block.color, b.color);
         QCOMPARE(back->block.category, b.category);

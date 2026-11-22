@@ -1383,14 +1383,44 @@ Item {
     }
 
     // ---------- New Task Directly in Matrix ----------
-    Kirigami.Dialog {
+    GuardedDialog {
         id: newTaskDialog
         property int chosenQ: 2
+        property string _initialState: ""
+
+        function currentState() {
+            return {
+                title: newTitle.text,
+                chosenQ: chosenQ,
+                dueToday: newDueToday.checked,
+                listIdx: newListCombo.currentIndex
+            };
+        }
+
+        dirty: opened && JSON.stringify(currentState()) !== _initialState
+        canSave: newTitle.text.trim() !== ""
+        saveActionText: i18nc("@action:button", "Add")
+        onSaveRequested: addTask()
+
+        function addTask() {
+            if (newTitle.text.trim() === "") {
+                return;
+            }
+            const lid = (newListCombo.currentIndex >= 0 && newListCombo.currentIndex < newListCombo.choices.length)
+                ? newListCombo.choices[newListCombo.currentIndex].id : 0;
+            const id = App.quickAdd(newTitle.text.trim(), lid, 0);
+            if (id > 0) {
+                App.eisenhower.classifyTask(id, newTaskDialog.chosenQ, newDueToday.checked);
+            }
+            newTaskDialog.forceClose();
+        }
+
         function openFresh() {
             newTitle.text = "";
             chosenQ = 2;
             newDueToday.checked = false;
             newListCombo.currentIndex = Math.max(0, newListCombo.choices.findIndex(c => c.id === App.eisenhower.filterListId));
+            _initialState = JSON.stringify(currentState());
             open();
             newTitle.forceActiveFocus();
         }
@@ -1403,15 +1433,7 @@ Item {
                 icon.name: "list-add"
                 text: i18nc("@action:button", "Add")
                 enabled: newTitle.text.trim() !== ""
-                onTriggered: {
-                    const lid = (newListCombo.currentIndex >= 0 && newListCombo.currentIndex < newListCombo.choices.length)
-                        ? newListCombo.choices[newListCombo.currentIndex].id : 0;
-                    const id = App.quickAdd(newTitle.text.trim(), lid, 0);
-                    if (id > 0) {
-                        App.eisenhower.classifyTask(id, newTaskDialog.chosenQ, newDueToday.checked);
-                    }
-                    newTaskDialog.close();
-                }
+                onTriggered: newTaskDialog.addTask()
             }
         ]
         Kirigami.FormLayout {
@@ -1452,14 +1474,42 @@ Item {
     }
 
     // ---------- Quick Schedule in Routine Dialog ----------
-    Kirigami.Dialog {
+    GuardedDialog {
         id: scheduleMatrixDialog
         property var targetTask: ({})
+        property string _initialState: ""
+
+        function currentState() {
+            return {
+                hour: msHour.value,
+                min: msMin.value,
+                dur: msDur.totalMinutes
+            };
+        }
+
+        dirty: opened && JSON.stringify(currentState()) !== _initialState
+        saveActionText: i18nc("@action:button", "Schedule")
+        onSaveRequested: scheduleTarget()
+
+        function scheduleTarget() {
+            const bid = App.routine.scheduleTask(scheduleMatrixDialog.targetTask.id,
+                                                 scheduleMatrixDialog.targetTask.title,
+                                                 msHour.value * 60 + msMin.value,
+                                                 msDur.totalMinutes,
+                                                 scheduleMatrixDialog.targetTask.listColor || "");
+            if (bid > 0 && App.sync.hasAccounts && App.settings.syncRoutines) {
+                App.routine.setBlockSyncAccount(bid, App.sync.accounts[0].id);
+            }
+            scheduleMatrixDialog.forceClose();
+            applicationWindow().showPassiveNotification(i18nc("@info", "Scheduled in Routine & Day Planner"), "short");
+        }
+
         function openFor(t) {
             targetTask = t;
             msHour.value = Math.min(22, Math.max(0, new Date().getHours() + 1));
             msMin.value = 0;
             msDur.totalMinutes = 60;
+            _initialState = JSON.stringify(currentState());
             open();
         }
         title: i18nc("@title:window", "Schedule in Day Planner")
@@ -1470,18 +1520,7 @@ Item {
             Kirigami.Action {
                 icon.name: "chronometer"
                 text: i18nc("@action:button", "Schedule")
-                onTriggered: {
-                    const bid = App.routine.scheduleTask(scheduleMatrixDialog.targetTask.id,
-                                                         scheduleMatrixDialog.targetTask.title,
-                                                         msHour.value * 60 + msMin.value,
-                                                         msDur.totalMinutes,
-                                                         scheduleMatrixDialog.targetTask.listColor || "");
-                    if (bid > 0 && App.sync.hasAccounts && App.settings.syncRoutines) {
-                        App.routine.setBlockSyncAccount(bid, App.sync.accounts[0].id);
-                    }
-                    scheduleMatrixDialog.close();
-                    applicationWindow().showPassiveNotification(i18nc("@info", "Scheduled in Routine & Day Planner"), "short");
-                }
+                onTriggered: scheduleMatrixDialog.scheduleTarget()
             }
         ]
         Kirigami.FormLayout {

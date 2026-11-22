@@ -136,6 +136,9 @@ bool RoutineManager::matchesDate(const RoutineBlock &b, const QDate &date)
     if (b.specificDate.isValid()) {
         return b.specificDate == date;
     }
+    if (b.startDate.isValid() && date < b.startDate) {
+        return false;
+    }
     const int bit = 1 << (date.dayOfWeek() - 1); // Qt dayOfWeek: 1=Mon..7=Sun
     return (b.daysMask & bit) != 0;
 }
@@ -243,6 +246,8 @@ QVariantList RoutineManager::templates() const
             {QStringLiteral("durationMinutes"), b.durationMinutes},
             {QStringLiteral("timeRange"), QStringLiteral("%1 – %2").arg(formatMinutes(b.startMinute), formatMinutes(qMin(1440, b.startMinute + b.durationMinutes)))},
             {QStringLiteral("daysMask"), b.daysMask},
+            {QStringLiteral("startDate"), b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString()},
+            {QStringLiteral("startDateText"), b.startDate.isValid() ? QLocale().toString(b.startDate, QLocale::ShortFormat) : QString()},
             {QStringLiteral("color"), b.color},
             {QStringLiteral("category"), b.category},
             {QStringLiteral("notifyEnabled"), b.notifyEnabled},
@@ -402,6 +407,7 @@ static void applyBlockFields(RoutineBlock &b, const QVariantMap &fields, const Q
         } else {
             const QDate sd = QDate::fromString(fields.value(QStringLiteral("specificDate")).toString(), Qt::ISODate);
             b.specificDate = sd.isValid() ? sd : fallbackDate;
+            b.startDate = QDate();
             b.daysMask = 0;
         }
     }
@@ -411,6 +417,13 @@ static void applyBlockFields(RoutineBlock &b, const QVariantMap &fields, const Q
     if (fields.contains(QStringLiteral("specificDate")) && !fields.contains(QStringLiteral("isTemplate"))) {
         const QString s = fields.value(QStringLiteral("specificDate")).toString();
         b.specificDate = s.isEmpty() ? QDate() : QDate::fromString(s, Qt::ISODate);
+    }
+    if (fields.contains(QStringLiteral("startDate"))) {
+        const QString s = fields.value(QStringLiteral("startDate")).toString().trimmed();
+        b.startDate = (b.specificDate.isValid() || s.isEmpty()) ? QDate() : QDate::fromString(s, Qt::ISODate);
+    }
+    if (b.specificDate.isValid()) {
+        b.startDate = QDate();
     }
     if (fields.contains(QStringLiteral("linkedTaskId"))) {
         b.linkedTaskId = fields.value(QStringLiteral("linkedTaskId")).toLongLong();
@@ -567,6 +580,8 @@ QVariantMap RoutineManager::blockInfo(qlonglong id) const
                 {QStringLiteral("isTemplate"), !b.specificDate.isValid()},
                 {QStringLiteral("daysMask"), b.daysMask},
                 {QStringLiteral("specificDate"), b.specificDate.isValid() ? b.specificDate.toString(Qt::ISODate) : QString()},
+                {QStringLiteral("startDate"), b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString()},
+                {QStringLiteral("startDateText"), b.startDate.isValid() ? QLocale().toString(b.startDate, QLocale::ShortFormat) : QString()},
                 {QStringLiteral("linkedTaskId"), b.linkedTaskId},
                 {QStringLiteral("color"), b.color},
                 {QStringLiteral("category"), b.category},

@@ -64,7 +64,9 @@ Item {
         if (!currentEntry.exists) {
             return;
         }
-        renameField.text = currentEntry.title ?? "";
+        const curTitle = currentEntry.title ?? "";
+        renameField.text = curTitle;
+        renameDialog.initialName = curTitle;
         renameDialog.open();
         renameField.forceActiveFocus();
         renameField.selectAll();
@@ -989,11 +991,40 @@ Item {
     }
 
     // Notebook Create / Rename Dialog
-    Kirigami.Dialog {
+    GuardedDialog {
         id: notebookDialog
         property var editId: 0
         property string nbColor: "#3daee9"
         property var syncAccountId: 0
+        property string _initialState: ""
+
+        function currentState() {
+            return {
+                name: nbNameField.text,
+                color: nbColor,
+                syncAccountId: syncAccountId,
+                applyExisting: applyExistingCheck.checked
+            };
+        }
+
+        dirty: opened && JSON.stringify(currentState()) !== _initialState
+        canSave: nbNameField.text.trim() !== ""
+        onSaveRequested: {
+            saveNotebook();
+            forceClose();
+        }
+
+        function saveNotebook() {
+            if (editId > 0) {
+                App.journal.renameNotebook(editId, nbNameField.text, nbColor);
+                App.journal.setNotebookSyncAccount(editId, syncAccountId, applyExistingCheck.checked);
+            } else {
+                const newId = App.journal.createNotebook(nbNameField.text, nbColor, syncAccountId);
+                if (newId > 0) {
+                    App.journal.selectedNotebookId = newId;
+                }
+            }
+        }
 
         function syncChoices() {
             const list = [{ id: 0, label: i18nc("storage option", "Offline Only (local)") }];
@@ -1009,6 +1040,7 @@ Item {
             nbColor = "#3daee9";
             syncAccountId = 0;
             applyExistingCheck.checked = true;
+            _initialState = JSON.stringify(currentState());
             open();
             nbNameField.forceActiveFocus();
         }
@@ -1019,6 +1051,7 @@ Item {
             nbColor = nb.color || "#3daee9";
             syncAccountId = nb.syncAccountId ?? 0;
             applyExistingCheck.checked = true;
+            _initialState = JSON.stringify(currentState());
             open();
             nbNameField.forceActiveFocus();
             nbNameField.selectAll();
@@ -1028,17 +1061,7 @@ Item {
         padding: Kirigami.Units.largeSpacing
         preferredWidth: Kirigami.Units.gridUnit * 24
         standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
-        onAccepted: {
-            if (editId > 0) {
-                App.journal.renameNotebook(editId, nbNameField.text, nbColor);
-                App.journal.setNotebookSyncAccount(editId, syncAccountId, applyExistingCheck.checked);
-            } else {
-                const newId = App.journal.createNotebook(nbNameField.text, nbColor, syncAccountId);
-                if (newId > 0) {
-                    App.journal.selectedNotebookId = newId;
-                }
-            }
-        }
+        onAccepted: saveNotebook()
 
         Kirigami.FormLayout {
             QQC2.TextField {
@@ -1221,8 +1244,15 @@ Item {
         onAccepted: App.journal.updateEntry(page.currentEntryId, { entryDate: Qt.formatDate(value, "yyyy-MM-dd") })
     }
 
-    Kirigami.Dialog {
+    GuardedDialog {
         id: renameDialog
+        property string initialName: ""
+        dirty: opened && renameField.text !== initialName
+        canSave: renameField.text.trim() !== ""
+        onSaveRequested: {
+            App.journal.renameEntry(page.currentEntryId, renameField.text);
+            forceClose();
+        }
         title: i18nc("@title:window", "Rename Entry")
         padding: Kirigami.Units.largeSpacing
         standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
@@ -1231,13 +1261,45 @@ Item {
         QQC2.TextField {
             id: renameField
             Layout.fillWidth: true
-            onAccepted: renameDialog.accept()
+            onAccepted: {
+                renameDialog._bypassGuard = true;
+                renameDialog.accept();
+            }
         }
     }
 
-    Kirigami.Dialog {
+    GuardedDialog {
         id: setPassDialog
         property string mode: "set"
+        dirty: opened && (curPass.text !== "" || newPass1.text !== "" || newPass2.text !== "")
+        saveActionText: i18nc("@action:button", "Confirm")
+        onSaveRequested: submitPassword()
+
+        function submitPassword() {
+            if (setPassDialog.mode !== "remove" && newPass1.text !== newPass2.text) {
+                passErr.text = i18n("Passwords do not match.");
+                return;
+            }
+            if (setPassDialog.mode === "set") {
+                page.flushContent();
+                if (!App.journal.lockWithPassword(page.currentEntryId, newPass1.text)) {
+                    passErr.text = App.journal.lastError();
+                    return;
+                }
+                page.editMode = false;
+            } else if (setPassDialog.mode === "change") {
+                if (!App.journal.changePassword(page.currentEntryId, curPass.text, newPass1.text)) {
+                    passErr.text = App.journal.lastError();
+                    return;
+                }
+            } else {
+                if (!App.journal.removePassword(page.currentEntryId, curPass.text)) {
+                    passErr.text = App.journal.lastError();
+                    return;
+                }
+            }
+            setPassDialog.forceClose();
+        }
 
         function openForMode(m) {
             mode = m;
@@ -1258,31 +1320,7 @@ Item {
             Kirigami.Action {
                 icon.name: "dialog-ok"
                 text: i18nc("@action:button", "Confirm")
-                onTriggered: {
-                    if (setPassDialog.mode !== "remove" && newPass1.text !== newPass2.text) {
-                        passErr.text = i18n("Passwords do not match.");
-                        return;
-                    }
-                    if (setPassDialog.mode === "set") {
-                        page.flushContent();
-                        if (!App.journal.lockWithPassword(page.currentEntryId, newPass1.text)) {
-                            passErr.text = App.journal.lastError();
-                            return;
-                        }
-                        page.editMode = false;
-                    } else if (setPassDialog.mode === "change") {
-                        if (!App.journal.changePassword(page.currentEntryId, curPass.text, newPass1.text)) {
-                            passErr.text = App.journal.lastError();
-                            return;
-                        }
-                    } else {
-                        if (!App.journal.removePassword(page.currentEntryId, curPass.text)) {
-                            passErr.text = App.journal.lastError();
-                            return;
-                        }
-                    }
-                    setPassDialog.close();
-                }
+                onTriggered: setPassDialog.submitPassword()
             }
         ]
 

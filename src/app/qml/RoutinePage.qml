@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.dateandtime as DateTime
 import app.ktasks.backend
 
 Item {
@@ -124,8 +125,8 @@ Item {
                 QQC2.Button {
                     flat: true
                     text: page.calendarMode === 0 ? App.routine.selectedDateText
-                        : page.calendarMode === 1 ? App.routine.weekTitle()
-                        : App.routine.monthTitle()
+                        : page.calendarMode === 1 ? App.routine.weekTitle
+                        : App.routine.monthTitle
                     font.bold: true
                     onClicked: App.routine.goToday()
                 }
@@ -864,14 +865,76 @@ Item {
         }
     }
 
+    DateTime.DatePopup {
+        id: routineStartPopup
+        onAccepted: blockDialog.startDate = Qt.formatDate(value, "yyyy-MM-dd")
+    }
+
     // Add / Edit Routine Block Dialog
-    Kirigami.Dialog {
+    GuardedDialog {
         id: blockDialog
         property var editId: 0
         property int daysMask: 127
         property string blockColor: "#3daee9"
         property bool isTemplate: false
+        property bool restrictStartDate: true
+        property string startDate: ""
         property var syncAccountId: 0
+        property string _initialState: ""
+
+        function currentState() {
+            return {
+                title: bTitle.text,
+                category: bCategory.text,
+                notes: bNotes.text,
+                startHour: bStartHour.value,
+                startMin: bStartMin.value,
+                duration: bDuration.totalMinutes,
+                isTemplate: isTemplate,
+                daysMask: daysMask,
+                restrictStartDate: restrictStartDate,
+                startDate: startDate,
+                color: blockColor,
+                notify: bNotify.checked,
+                lead: bLead.currentIndex,
+                syncAccountId: syncAccountId
+            };
+        }
+
+        dirty: opened && JSON.stringify(currentState()) !== _initialState
+        canSave: bTitle.text.trim() !== ""
+        saveActionText: blockDialog.editId > 0 ? i18nc("@action:button", "Save") : i18nc("@action:button", "Add")
+        onSaveRequested: saveBlock()
+
+        function saveBlock() {
+            if (bTitle.text.trim() === "") {
+                return;
+            }
+            const leads = [0, 5, 10, 15, 30];
+            const payload = {
+                title: bTitle.text.trim(),
+                category: bCategory.text.trim(),
+                notes: bNotes.text.trim(),
+                startMinute: bStartHour.value * 60 + bStartMin.value,
+                durationMinutes: bDuration.totalMinutes,
+                isTemplate: blockDialog.isTemplate,
+                daysMask: blockDialog.isTemplate ? blockDialog.daysMask : 0,
+                specificDate: blockDialog.isTemplate ? "" : App.routine.selectedDate,
+                startDate: (blockDialog.isTemplate && blockDialog.restrictStartDate)
+                    ? (blockDialog.startDate !== "" ? blockDialog.startDate : App.routine.selectedDate)
+                    : "",
+                color: blockDialog.blockColor,
+                notifyEnabled: bNotify.checked,
+                notifyMinutesBefore: leads[bLead.currentIndex],
+                syncAccountId: blockDialog.syncAccountId
+            };
+            if (blockDialog.editId > 0) {
+                App.routine.updateBlock(blockDialog.editId, payload);
+            } else {
+                App.routine.addBlock(payload);
+            }
+            blockDialog.forceClose();
+        }
 
         function syncChoices() {
             const list = [{ id: 0, name: i18nc("storage option", "Offline only (local)") }];
@@ -884,6 +947,8 @@ Item {
         function openNewWithRange(asTemplate, startMin, durationMins) {
             editId = 0;
             isTemplate = !!asTemplate;
+            restrictStartDate = true;
+            startDate = App.routine.selectedDate;
             bTitle.text = "";
             bCategory.text = "";
             bNotes.text = "";
@@ -898,6 +963,7 @@ Item {
             syncAccountId = (App.sync.hasAccounts && App.settings.syncRoutines) ? App.sync.accounts[0].id : 0;
             bStorage.choices = syncChoices();
             bStorage.currentIndex = Math.max(0, bStorage.choices.findIndex(c => c.id === syncAccountId));
+            _initialState = JSON.stringify(currentState());
             open();
             bTitle.forceActiveFocus();
         }
@@ -913,6 +979,9 @@ Item {
             }
             editId = id;
             isTemplate = !!info.isTemplate;
+            const infoStart = info.startDate ?? "";
+            restrictStartDate = infoStart !== "";
+            startDate = infoStart !== "" ? infoStart : App.routine.selectedDate;
             bTitle.text = info.title;
             bCategory.text = info.category;
             bNotes.text = info.notes;
@@ -927,6 +996,7 @@ Item {
             syncAccountId = info.syncAccountId ?? 0;
             bStorage.choices = syncChoices();
             bStorage.currentIndex = Math.max(0, bStorage.choices.findIndex(c => c.id === syncAccountId));
+            _initialState = JSON.stringify(currentState());
             open();
             bTitle.forceActiveFocus();
         }
@@ -940,29 +1010,7 @@ Item {
                 icon.name: "dialog-ok"
                 text: blockDialog.editId > 0 ? i18nc("@action:button", "Save") : i18nc("@action:button", "Add")
                 enabled: bTitle.text.trim() !== ""
-                onTriggered: {
-                    const leads = [0, 5, 10, 15, 30];
-                    const payload = {
-                        title: bTitle.text.trim(),
-                        category: bCategory.text.trim(),
-                        notes: bNotes.text.trim(),
-                        startMinute: bStartHour.value * 60 + bStartMin.value,
-                        durationMinutes: bDuration.totalMinutes,
-                        isTemplate: blockDialog.isTemplate,
-                        daysMask: blockDialog.isTemplate ? blockDialog.daysMask : 0,
-                        specificDate: blockDialog.isTemplate ? "" : App.routine.selectedDate,
-                        color: blockDialog.blockColor,
-                        notifyEnabled: bNotify.checked,
-                        notifyMinutesBefore: leads[bLead.currentIndex],
-                        syncAccountId: blockDialog.syncAccountId
-                    };
-                    if (blockDialog.editId > 0) {
-                        App.routine.updateBlock(blockDialog.editId, payload);
-                    } else {
-                        App.routine.addBlock(payload);
-                    }
-                    blockDialog.close();
-                }
+                onTriggered: blockDialog.saveBlock()
             }
         ]
 
@@ -1040,6 +1088,53 @@ Item {
                     }
                 }
             }
+            ColumnLayout {
+                visible: blockDialog.isTemplate
+                Kirigami.FormData.label: i18nc("@label", "Starts on:")
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Layout.fillWidth: true
+                    QQC2.CheckBox {
+                        text: i18nc("@option:check", "Only from start date forward")
+                        checked: blockDialog.restrictStartDate
+                        onToggled: {
+                            blockDialog.restrictStartDate = checked;
+                            if (checked && blockDialog.startDate === "") {
+                                blockDialog.startDate = App.routine.selectedDate;
+                            }
+                        }
+                    }
+                    QQC2.Button {
+                        visible: blockDialog.restrictStartDate
+                        icon.name: "view-calendar"
+                        text: {
+                            if (blockDialog.startDate === "") {
+                                return i18nc("@action:button", "Pick date");
+                            }
+                            const parts = blockDialog.startDate.split("-");
+                            if (parts.length !== 3) {
+                                return blockDialog.startDate;
+                            }
+                            return Qt.formatDate(new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])), Qt.DefaultLocaleShortDate);
+                        }
+                        onClicked: {
+                            const s = blockDialog.startDate !== "" ? blockDialog.startDate : App.routine.selectedDate;
+                            routineStartPopup.value = new Date(s + "T00:00:00");
+                            routineStartPopup.open();
+                        }
+                    }
+                }
+                QQC2.Label {
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                    font: Kirigami.Theme.smallFont
+                    color: Kirigami.Theme.disabledTextColor
+                    text: blockDialog.restrictStartDate
+                        ? i18nc("@info", "Repeats only from this date onward (does not backfill earlier months).")
+                        : i18nc("@info", "Appears across all past and future dates matching the selected weekdays.")
+                }
+            }
             Flow {
                 Kirigami.FormData.label: i18nc("@label", "Color:")
                 Layout.fillWidth: true
@@ -1102,18 +1197,48 @@ Item {
     }
 
     // Schedule an existing task into a time slot
-    Kirigami.Dialog {
+    GuardedDialog {
         id: scheduleTaskDialog
         property var openTasks: []
+        property string _initialState: ""
+
+        function currentState() {
+            return {
+                taskIdx: taskCombo.currentIndex,
+                hour: sHour.value,
+                min: sMin.value,
+                dur: sDur.totalMinutes,
+                syncAccId: sStorage.syncAccId
+            };
+        }
+
+        dirty: opened && JSON.stringify(currentState()) !== _initialState
+        canSave: scheduleTaskDialog.openTasks.length > 0 && taskCombo.currentIndex >= 0
+        saveActionText: i18nc("@action:button", "Schedule")
+        onSaveRequested: saveSchedule()
+
+        function saveSchedule() {
+            if (scheduleTaskDialog.openTasks.length === 0 || taskCombo.currentIndex < 0) {
+                return;
+            }
+            const t = scheduleTaskDialog.openTasks[taskCombo.currentIndex];
+            const bid = App.routine.scheduleTask(t.id, t.title, sHour.value * 60 + sMin.value, sDur.totalMinutes);
+            if (bid > 0 && sStorage.syncAccId > 0) {
+                App.routine.setBlockSyncAccount(bid, sStorage.syncAccId);
+            }
+            scheduleTaskDialog.forceClose();
+        }
 
         function openPicker() {
             openTasks = App.openTasks();
+            taskCombo.currentIndex = openTasks.length > 0 ? 0 : -1;
             sHour.value = Math.min(22, Math.max(0, new Date().getHours() + 1));
             sMin.value = 0;
             sDur.totalMinutes = 60;
             sStorage.syncAccId = (App.sync.hasAccounts && App.settings.syncRoutines) ? App.sync.accounts[0].id : 0;
             sStorage.choices = blockDialog.syncChoices();
             sStorage.currentIndex = Math.max(0, sStorage.choices.findIndex(c => c.id === sStorage.syncAccId));
+            _initialState = JSON.stringify(currentState());
             open();
         }
 
@@ -1126,14 +1251,7 @@ Item {
                 icon.name: "dialog-ok"
                 text: i18nc("@action:button", "Schedule")
                 enabled: scheduleTaskDialog.openTasks.length > 0 && taskCombo.currentIndex >= 0
-                onTriggered: {
-                    const t = scheduleTaskDialog.openTasks[taskCombo.currentIndex];
-                    const bid = App.routine.scheduleTask(t.id, t.title, sHour.value * 60 + sMin.value, sDur.totalMinutes);
-                    if (bid > 0 && sStorage.syncAccId > 0) {
-                        App.routine.setBlockSyncAccount(bid, sStorage.syncAccId);
-                    }
-                    scheduleTaskDialog.close();
-                }
+                onTriggered: scheduleTaskDialog.saveSchedule()
             }
         ]
 
@@ -1250,7 +1368,9 @@ Item {
                             }
                             QQC2.Label {
                                 Layout.fillWidth: true
-                                text: modelData.timeRange
+                                text: modelData.startDateText
+                                    ? i18nc("template time and start date", "%1 · From %2", modelData.timeRange, modelData.startDateText)
+                                    : modelData.timeRange
                                 font: Kirigami.Theme.smallFont
                                 color: Kirigami.Theme.disabledTextColor
                             }

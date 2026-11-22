@@ -61,6 +61,7 @@ qt_add_qml_module(ktasks
         qml/PrintDialog.qml
         qml/PaddedSpinBox.qml
         qml/DurationPicker.qml
+        qml/GuardedDialog.qml
 )
 
 target_link_libraries(ktasks PRIVATE

@@ -183,6 +183,7 @@ struct RoutineBlock {
     int durationMinutes = 60;
     int daysMask = 127; // bit 0 = Mon .. bit 6 = Sun; 0 = specificDate only
     QDate specificDate; // non-empty for single-day planned items
+    QDate startDate; // earliest active date for recurring templates; invalid = unrestricted
     qint64 linkedTaskId = 0;
     QString color = QStringLiteral("#3daee9");
     QString category;

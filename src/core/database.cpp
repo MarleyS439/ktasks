@@ -215,6 +215,10 @@ CREATE TABLE focus_sessions (
 CREATE INDEX focus_sessions_ended ON focus_sessions(ended_at);
 CREATE INDEX focus_sessions_task ON focus_sessions(task_id);
 )"),
+        // v8: Earliest active start date for recurring routine templates
+        QStringLiteral(R"(
+ALTER TABLE routine_blocks ADD COLUMN start_date TEXT NOT NULL DEFAULT '';
+)"),
     };
 }
 
@@ -1431,7 +1435,7 @@ bool Database::clearJournalRemoteDelete(qint64 accountId, qint64 remoteId)
 // ---- Routine ----
 
 static const QString kRoutineCols = QStringLiteral(
-    "id, uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, linked_task_id, color, category, "
+    "id, uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, start_date, linked_task_id, color, category, "
     "notify_enabled, notify_minutes_before, active, sort_order, created_at, modified_at, "
     "sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted");
 
@@ -1447,23 +1451,25 @@ RoutineBlock Database::routineBlockFromQuery(const QSqlQuery &q)
     b.daysMask = q.value(6).toInt();
     const QString sd = q.value(7).toString();
     b.specificDate = sd.isEmpty() ? QDate() : QDate::fromString(sd, Qt::ISODate);
-    b.linkedTaskId = q.value(8).toLongLong();
-    b.color = q.value(9).toString();
-    b.category = q.value(10).toString();
-    b.notifyEnabled = q.value(11).toBool();
-    b.notifyMinutesBefore = q.value(12).toInt();
-    b.active = q.value(13).toBool();
-    b.sortOrder = q.value(14).toDouble();
-    b.created = tsFromDb(q.value(15).toString());
-    b.modified = tsFromDb(q.value(16).toString());
-    b.syncAccountId = q.value(17).toLongLong();
-    b.calendarHref = q.value(18).toString();
-    b.href = q.value(19).toString();
-    b.etag = q.value(20).toString();
-    b.baseIcs = q.value(21).toString();
-    b.syncState = SyncState(q.value(22).toInt());
-    b.rev = q.value(23).toLongLong();
-    b.deleted = q.value(24).toBool();
+    const QString startD = q.value(8).toString();
+    b.startDate = startD.isEmpty() ? QDate() : QDate::fromString(startD, Qt::ISODate);
+    b.linkedTaskId = q.value(9).toLongLong();
+    b.color = q.value(10).toString();
+    b.category = q.value(11).toString();
+    b.notifyEnabled = q.value(12).toBool();
+    b.notifyMinutesBefore = q.value(13).toInt();
+    b.active = q.value(14).toBool();
+    b.sortOrder = q.value(15).toDouble();
+    b.created = tsFromDb(q.value(16).toString());
+    b.modified = tsFromDb(q.value(17).toString());
+    b.syncAccountId = q.value(18).toLongLong();
+    b.calendarHref = q.value(19).toString();
+    b.href = q.value(20).toString();
+    b.etag = q.value(21).toString();
+    b.baseIcs = q.value(22).toString();
+    b.syncState = SyncState(q.value(23).toInt());
+    b.rev = q.value(24).toLongLong();
+    b.deleted = q.value(25).toBool();
     return b;
 }
 
@@ -1546,8 +1552,8 @@ bool Database::insertRoutineBlock(RoutineBlock &b)
     }
     QSqlQuery q(handle());
     q.prepare(QStringLiteral(
-        "INSERT INTO routine_blocks (uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, linked_task_id, color, category, notify_enabled, notify_minutes_before, active, sort_order, created_at, modified_at, sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted) "
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"));
+        "INSERT INTO routine_blocks (uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, start_date, linked_task_id, color, category, notify_enabled, notify_minutes_before, active, sort_order, created_at, modified_at, sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"));
     q.addBindValue(b.uid);
     q.addBindValue(b.title);
     q.addBindValue(b.notes);
@@ -1555,6 +1561,7 @@ bool Database::insertRoutineBlock(RoutineBlock &b)
     q.addBindValue(qBound(5, b.durationMinutes, 1440));
     q.addBindValue(b.daysMask);
     q.addBindValue(b.specificDate.isValid() ? b.specificDate.toString(Qt::ISODate) : QString());
+    q.addBindValue(b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString());
     q.addBindValue(b.linkedTaskId);
     q.addBindValue(b.color);
     q.addBindValue(b.category);
@@ -1588,7 +1595,7 @@ bool Database::updateRoutineBlockUser(const RoutineBlock &b)
 {
     QSqlQuery q(handle());
     q.prepare(QStringLiteral(
-        "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, sync_account_id=?, "
+        "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, start_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, sync_account_id=?, "
         "calendar_href = CASE WHEN ? = 0 THEN '' ELSE calendar_href END, "
         "href = CASE WHEN ? = 0 THEN '' ELSE href END, "
         "etag = CASE WHEN ? = 0 THEN '' ELSE etag END, "
@@ -1602,6 +1609,7 @@ bool Database::updateRoutineBlockUser(const RoutineBlock &b)
     q.addBindValue(qBound(5, b.durationMinutes, 1440));
     q.addBindValue(b.daysMask);
     q.addBindValue(b.specificDate.isValid() ? b.specificDate.toString(Qt::ISODate) : QString());
+    q.addBindValue(b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString());
     q.addBindValue(b.linkedTaskId);
     q.addBindValue(b.color);
     q.addBindValue(b.category);
@@ -1624,7 +1632,7 @@ bool Database::updateRoutineBlockFull(const RoutineBlock &b)
 {
     QSqlQuery q(handle());
     q.prepare(QStringLiteral(
-        "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, "
+        "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, start_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, "
         "sync_account_id=?, calendar_href=?, href=?, etag=?, base_ics=?, sync_state=?, rev=?, deleted=? WHERE id=?"));
     q.addBindValue(b.title);
     q.addBindValue(b.notes);
@@ -1632,6 +1640,7 @@ bool Database::updateRoutineBlockFull(const RoutineBlock &b)
     q.addBindValue(qBound(5, b.durationMinutes, 1440));
     q.addBindValue(b.daysMask);
     q.addBindValue(b.specificDate.isValid() ? b.specificDate.toString(Qt::ISODate) : QString());
+    q.addBindValue(b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString());
     q.addBindValue(b.linkedTaskId);
     q.addBindValue(b.color);
     q.addBindValue(b.category);

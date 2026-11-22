@@ -5,13 +5,27 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import app.ktasks.backend
 
-Kirigami.Dialog {
+GuardedDialog {
     id: dialog
 
     property var listId: 0
     property var info: ({})
     property string color: ""
     property var accounts: []
+    property string _initialState: ""
+
+    function currentState() {
+        return {
+            name: nameField.text,
+            color: color,
+            accIdx: accountCombo.currentIndex
+        };
+    }
+
+    dirty: opened && JSON.stringify(currentState()) !== _initialState
+    canSave: nameField.text.trim() !== ""
+    saveActionText: listId > 0 ? i18nc("@action:button", "Save") : i18nc("@action:button", "Create")
+    onSaveRequested: save()
 
     function openFor(id) {
         listId = id;
@@ -21,6 +35,7 @@ Kirigami.Dialog {
         accounts = [{ id: 0, name: i18nc("where a list is stored", "On this device") }].concat(App.sync.accounts);
         const curAcc = info.accountId ?? 0;
         accountCombo.currentIndex = Math.max(0, accounts.findIndex(a => a.id === curAcc));
+        _initialState = JSON.stringify(currentState());
         open();
         nameField.forceActiveFocus();
     }
@@ -42,7 +57,7 @@ Kirigami.Dialog {
                 App.tasks.view = "list:" + id;
             }
         }
-        close();
+        forceClose();
     }
 
     title: listId > 0 ? i18nc("@title:window", "Edit List") : i18nc("@title:window", "New List")
@@ -60,7 +75,7 @@ Kirigami.Dialog {
         Kirigami.Action {
             icon.name: "dialog-cancel"
             text: i18nc("@action:button", "Cancel")
-            onTriggered: dialog.close()
+            onTriggered: dialog.reject()
         },
         Kirigami.Action {
             icon.name: "dialog-ok"
@@ -156,7 +171,7 @@ Kirigami.Dialog {
                 onTriggered: {
                     App.removeList(dialog.listId);
                     confirmDelete.close();
-                    dialog.close();
+                    dialog.forceClose();
                 }
             }
         ]

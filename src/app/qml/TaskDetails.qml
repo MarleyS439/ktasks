@@ -743,6 +743,7 @@ Item {
                         text: i18nc("@action:button", "Expand")
                         onClicked: {
                             expandedNotesEditor.text = notes.text;
+                            expandedNotesDialog.initialNotes = notes.text;
                             expandedNotesEditor.viewMode = notes.viewMode;
                             expandedNotesDialog.open();
                             if (expandedNotesEditor.viewMode !== 1) {
@@ -769,19 +770,33 @@ Item {
                 }
             }
 
-            Kirigami.Dialog {
+            GuardedDialog {
                 id: expandedNotesDialog
+                property string initialNotes: ""
+                dirty: opened && root.editable && expandedNotesEditor.text !== initialNotes
+                saveActionText: i18nc("@action:button", "Save")
+                function saveNotes() {
+                    if (root.editable && expandedNotesEditor.text !== notes.text) {
+                        notes.text = expandedNotesEditor.text;
+                        root.flushNotes();
+                    }
+                    forceClose();
+                }
+                onSaveRequested: saveNotes()
+
                 title: root.t.title ?? i18nc("@title:window", "Notes")
                 padding: Kirigami.Units.largeSpacing
                 preferredWidth: Math.max(Kirigami.Units.gridUnit * 38, applicationWindow() ? applicationWindow().width * 0.72 : 720)
                 preferredHeight: Math.max(Kirigami.Units.gridUnit * 26, applicationWindow() ? applicationWindow().height * 0.72 : 520)
                 standardButtons: Kirigami.Dialog.Close
-                onClosed: {
-                    if (root.editable && expandedNotesEditor.text !== notes.text) {
-                        notes.text = expandedNotesEditor.text;
-                        root.flushNotes();
+                customFooterActions: [
+                    Kirigami.Action {
+                        visible: root.editable && expandedNotesDialog.dirty
+                        icon.name: "dialog-ok"
+                        text: i18nc("@action:button", "Save")
+                        onTriggered: expandedNotesDialog.saveNotes()
                     }
-                }
+                ]
 
                 MarkdownEditor {
                     id: expandedNotesEditor

@@ -13,6 +13,13 @@
 #include "taskmodel.h"
 #include "taskstore.h"
 
+#include <KLocalizedQmlContext>
+#include <KLocalizedString>
+#include <QQmlApplicationEngine>
+#include <QQmlComponent>
+#include <QQmlContext>
+#include <QQuickItem>
+#include <QQuickWindow>
 #include <QSignalSpy>
 #include <QStandardPaths>
 #include <QTemporaryDir>
@@ -886,6 +893,130 @@ private Q_SLOTS:
         QFile pdfFile(pdfPath);
         QVERIFY(pdfFile.open(QIODevice::ReadOnly));
         QVERIFY(pdfFile.read(5).startsWith("%PDF-"));
+    }
+
+    void routineNavigationAndForwardOnlyRecurrence()
+    {
+        RoutineManager rm(db.get());
+        rm.setSelectedDateIso(QStringLiteral("2026-11-22"));
+        const QString novTitle = rm.monthTitle();
+        const QString novWeek = rm.weekTitle();
+
+        QSignalSpy dateSpy(&rm, &RoutineManager::selectedDateChanged);
+        rm.shiftMonths(-1);
+        QCOMPARE(dateSpy.count(), 1);
+        QCOMPARE(rm.selectedDateIso(), QStringLiteral("2026-10-22"));
+        QVERIFY(rm.monthTitle() != novTitle);
+
+        rm.shiftWeeks(-1);
+        QCOMPARE(dateSpy.count(), 2);
+        QVERIFY(rm.weekTitle() != novWeek);
+
+        // Forward-only recurring template anchored at 2026-11-22 must NOT backfill past months/days
+        rm.setSelectedDateIso(QStringLiteral("2026-11-22"));
+        const qint64 bid = rm.addBlock({
+            {QStringLiteral("title"), QStringLiteral("Leitura Matinal")},
+            {QStringLiteral("startMinute"), 420},
+            {QStringLiteral("durationMinutes"), 30},
+            {QStringLiteral("isTemplate"), true},
+            {QStringLiteral("daysMask"), 127},
+            {QStringLiteral("startDate"), QStringLiteral("2026-11-22")},
+        });
+        QVERIFY(bid > 0);
+        QCOMPARE(rm.blockInfo(bid).value(QStringLiteral("startDate")).toString(), QStringLiteral("2026-11-22"));
+
+        QVERIFY(rm.blocksForDate(QDate(2025, 11, 22)).isEmpty());
+        QVERIFY(rm.blocksForDate(QDate(2026, 10, 22)).isEmpty());
+        QVERIFY(rm.blocksForDate(QDate(2026, 11, 21)).isEmpty());
+        QCOMPARE(rm.blocksForDate(QDate(2026, 11, 22)).size(), 1);
+        QCOMPARE(rm.blocksForDate(QDate(2026, 12, 15)).size(), 1);
+
+        const QVariantList cells = rm.monthCells();
+        for (const QVariant &v : cells) {
+            const QVariantMap cell = v.toMap();
+            const QDate cd = QDate::fromString(cell.value(QStringLiteral("iso")).toString(), Qt::ISODate);
+            const QVariantList entries = cell.value(QStringLiteral("entries")).toList();
+            if (cd < QDate(2026, 11, 22)) {
+                QVERIFY(entries.isEmpty());
+            } else {
+                QCOMPARE(entries.size(), 1);
+            }
+        }
+    }
+
+    void guardedDialogOutsideClickAndEsc()
+    {
+        KLocalizedString::setApplicationDomain("ktasks");
+        QQmlApplicationEngine engine;
+        engine.rootContext()->setContextObject(new KLocalizedQmlContext(&engine));
+        const QString guardedPath = QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/GuardedDialog.qml");
+        QVERIFY(QFile::exists(guardedPath));
+
+        const QByteArray qmlCode = QStringLiteral(
+            "import QtQuick\n"
+            "import QtQuick.Controls as QQC2\n"
+            "import org.kde.kirigami as Kirigami\n"
+            "import \"%1\"\n"
+            "Kirigami.ApplicationWindow {\n"
+            "    id: win\n"
+            "    width: 800\n"
+            "    height: 600\n"
+            "    visible: true\n"
+            "    property alias dialog: dlg\n"
+            "    GuardedDialog {\n"
+            "        id: dlg\n"
+            "        dirty: false\n"
+            "        preferredWidth: 300\n"
+            "        preferredHeight: 200\n"
+            "        standardButtons: Kirigami.Dialog.Cancel\n"
+            "        QQC2.TextField { focus: true }\n"
+            "    }\n"
+            "}\n")
+            .arg(QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml")).toString())
+            .toUtf8();
+        QQmlComponent comp(&engine);
+        comp.setData(qmlCode, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/test_host.qml")));
+        QVERIFY2(comp.isReady(), qPrintable(comp.errorString()));
+        std::unique_ptr<QObject> rootObj(comp.create());
+        auto *win = qobject_cast<QQuickWindow *>(rootObj.get());
+        QVERIFY(win != nullptr);
+        auto *dlg = win->property("dialog").value<QObject *>();
+        QVERIFY(dlg != nullptr);
+
+        // 1. Clean dialog: Esc closes immediately with no prompt
+        QMetaObject::invokeMethod(dlg, "open");
+        QTRY_VERIFY(dlg->property("opened").toBool());
+        QTest::keyClick(win, Qt::Key_Escape);
+        QTRY_VERIFY(!dlg->property("opened").toBool());
+
+        // 2. Clean dialog: outside click closes immediately with no prompt
+        QMetaObject::invokeMethod(dlg, "open");
+        QTRY_VERIFY(dlg->property("opened").toBool());
+        QTest::mouseClick(win, Qt::LeftButton, Qt::NoModifier, QPoint(10, 10));
+        QTRY_VERIFY(!dlg->property("opened").toBool());
+
+        // 3. Dirty dialog: outside click keeps dialog open and opens confirmation prompt
+        dlg->setProperty("dirty", true);
+        QMetaObject::invokeMethod(dlg, "open");
+        QTRY_VERIFY(dlg->property("opened").toBool());
+        QTest::mouseClick(win, Qt::LeftButton, Qt::NoModifier, QPoint(10, 10));
+        QTRY_VERIFY(dlg->property("opened").toBool());
+        auto *prompt = dlg->findChild<QObject *>(QStringLiteral("unsavedPrompt"));
+        QVERIFY(prompt != nullptr);
+        QTRY_VERIFY(prompt->property("opened").toBool());
+
+        // 4. Dirty dialog: Escape closes prompt first, next Escape keeps dirty dialog open and reopens prompt
+        QTest::keyClick(win, Qt::Key_Escape);
+        QTRY_VERIFY(!prompt->property("visible").toBool());
+        QVERIFY(dlg->property("opened").toBool());
+        QTest::keyClick(win, Qt::Key_Escape);
+        QTRY_VERIFY(prompt->property("opened").toBool());
+        QVERIFY(dlg->property("opened").toBool());
+
+        // 5. Force close cleanly dismisses dirty dialog
+        QMetaObject::invokeMethod(prompt, "close");
+        QMetaObject::invokeMethod(dlg, "forceClose");
+        QTRY_VERIFY(!dlg->property("opened").toBool());
     }
 };
 

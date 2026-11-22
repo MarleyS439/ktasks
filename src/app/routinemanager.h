@@ -19,6 +19,8 @@ class RoutineManager : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(QString selectedDate READ selectedDateIso WRITE setSelectedDateIso NOTIFY selectedDateChanged)
     Q_PROPERTY(QString selectedDateText READ selectedDateText NOTIFY selectedDateChanged)
+    Q_PROPERTY(QString weekTitle READ weekTitle NOTIFY selectedDateChanged)
+    Q_PROPERTY(QString monthTitle READ monthTitle NOTIFY selectedDateChanged)
     Q_PROPERTY(bool isToday READ isToday NOTIFY selectedDateChanged)
     Q_PROPERTY(int totalBlocks READ totalBlocks NOTIFY changed)
     Q_PROPERTY(int completedBlocks READ completedBlocks NOTIFY changed)
@@ -99,8 +101,8 @@ public:
     Q_INVOKABLE QVariantMap blockInfo(qlonglong id) const;
     Q_INVOKABLE QVariantList weekDays() const;
     Q_INVOKABLE QVariantList monthCells() const;
-    Q_INVOKABLE QString monthTitle() const;
-    Q_INVOKABLE QString weekTitle() const;
+    QString monthTitle() const;
+    QString weekTitle() const;
 
     static QString formatMinutes(int minutes);
     static bool matchesDate(const KTasks::RoutineBlock &b, const QDate &date);

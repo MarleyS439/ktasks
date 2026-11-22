@@ -341,6 +341,7 @@ static const QByteArray kRoutineActiveProp = QByteArrayLiteral("X-KTASKS-ACTIVE"
 static const QByteArray kRoutineNotifyProp = QByteArrayLiteral("X-KTASKS-NOTIFY");
 static const QByteArray kRoutineNotifyMinProp = QByteArrayLiteral("X-KTASKS-NOTIFY-MIN");
 static const QByteArray kRoutineLogsProp = QByteArrayLiteral("X-KTASKS-LOGS");
+static const QByteArray kRoutineStartDateProp = QByteArrayLiteral("X-KTASKS-START-DATE");
 
 static Event::Ptr masterEvent(const QString &ics)
 {
@@ -405,9 +406,14 @@ std::optional<DecodedRoutine> decodeEvent(const QString &ics)
         if (b.daysMask == 0 && startLocal.isValid()) {
             b.daysMask = 1 << (startLocal.date().dayOfWeek() - 1);
         }
+        const QString sdProp = ev->nonKDECustomProperty(kRoutineStartDateProp).trimmed();
+        if (!sdProp.isEmpty()) {
+            b.startDate = QDate::fromString(sdProp.trimmed(), Qt::ISODate);
+        }
     } else if (startLocal.isValid()) {
         b.specificDate = startLocal.date();
         b.daysMask = 0;
+        b.startDate = QDate();
     }
 
     const QString customColor = customProp(ev, kRoutineColorProp, QByteArrayLiteral("X-AFAZER-COLOR"));
@@ -478,7 +484,8 @@ static QDate routineAnchorDate(const RoutineBlock &b)
     if (b.specificDate.isValid()) {
         return b.specificDate;
     }
-    QDate d = b.created.isValid() ? b.created.toLocalTime().date() : QDate::currentDate();
+    QDate d = b.startDate.isValid() ? b.startDate
+        : (b.created.isValid() ? b.created.toLocalTime().date() : QDate::currentDate());
     const int mask = b.daysMask > 0 ? b.daysMask : 127;
     for (int i = 0; i < 7; ++i) {
         if (mask & (1 << (d.dayOfWeek() - 1))) {
@@ -543,7 +550,7 @@ QString encodeEvent(const RoutineBlock &block, const QList<RoutineLog> &logs)
     }
 
     const bool scheduleChanged = fresh || block.startMinute != base.startMinute || block.durationMinutes != base.durationMinutes
-        || block.daysMask != base.daysMask || block.specificDate != base.specificDate;
+        || block.daysMask != base.daysMask || block.specificDate != base.specificDate || block.startDate != base.startDate;
     if (scheduleChanged) {
         const QDate anchor = routineAnchorDate(block);
         const QTime stTime(block.startMinute / 60, block.startMinute % 60);
@@ -560,6 +567,13 @@ QString encodeEvent(const RoutineBlock &block, const QList<RoutineLog> &logs)
                 days.setBit(i, (mask & (1 << i)) != 0);
             }
             ev->recurrence()->setWeekly(1, days, 1);
+            if (block.startDate.isValid()) {
+                ev->setNonKDECustomProperty(kRoutineStartDateProp, block.startDate.toString(Qt::ISODate));
+            } else {
+                ev->removeNonKDECustomProperty(kRoutineStartDateProp);
+            }
+        } else {
+            ev->removeNonKDECustomProperty(kRoutineStartDateProp);
         }
     }
 
