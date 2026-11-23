@@ -393,18 +393,34 @@ std::optional<DecodedRoutine> decodeEvent(const QString &ics)
     if (!rrules.isEmpty()) {
         b.specificDate = QDate();
         b.daysMask = 0;
-        if (rrules.first()->recurrenceType() == RecurrenceRule::rDaily) {
+        const RecurrenceRule *rr = rrules.first();
+        b.repeatInterval = qMax(1, int(rr->frequency()));
+        switch (rr->recurrenceType()) {
+        case RecurrenceRule::rDaily:
+            b.repeatFreq = QStringLiteral("DAILY");
             b.daysMask = 127;
-        } else {
+            break;
+        case RecurrenceRule::rMonthly:
+            b.repeatFreq = QStringLiteral("MONTHLY");
+            b.daysMask = 127;
+            break;
+        case RecurrenceRule::rYearly:
+            b.repeatFreq = QStringLiteral("YEARLY");
+            b.daysMask = 127;
+            break;
+        default: {
+            b.repeatFreq = QStringLiteral("WEEKLY");
             const QBitArray days = ev->recurrence()->days();
             for (int i = 0; i < 7 && i < days.size(); ++i) {
                 if (days.testBit(i)) {
                     b.daysMask |= (1 << i);
                 }
             }
+            if (b.daysMask == 0 && startLocal.isValid()) {
+                b.daysMask = 1 << (startLocal.date().dayOfWeek() - 1);
+            }
+            break;
         }
-        if (b.daysMask == 0 && startLocal.isValid()) {
-            b.daysMask = 1 << (startLocal.date().dayOfWeek() - 1);
         }
         const QString sdProp = ev->nonKDECustomProperty(kRoutineStartDateProp).trimmed();
         if (!sdProp.isEmpty()) {
@@ -417,6 +433,8 @@ std::optional<DecodedRoutine> decodeEvent(const QString &ics)
         b.specificDate = startLocal.date();
         b.daysMask = 0;
         b.startDate = QDate();
+        b.repeatFreq = QStringLiteral("WEEKLY");
+        b.repeatInterval = 1;
     }
 
     const QString customColor = customProp(ev, kRoutineColorProp, QByteArrayLiteral("X-AFAZER-COLOR"));
@@ -553,7 +571,8 @@ QString encodeEvent(const RoutineBlock &block, const QList<RoutineLog> &logs)
     }
 
     const bool scheduleChanged = fresh || block.startMinute != base.startMinute || block.durationMinutes != base.durationMinutes
-        || block.daysMask != base.daysMask || block.specificDate != base.specificDate || block.startDate != base.startDate;
+        || block.daysMask != base.daysMask || block.specificDate != base.specificDate || block.startDate != base.startDate
+        || block.repeatFreq != base.repeatFreq || block.repeatInterval != base.repeatInterval;
     if (scheduleChanged) {
         const QDate anchor = routineAnchorDate(block);
         const QTime stTime(block.startMinute / 60, block.startMinute % 60);
@@ -564,12 +583,22 @@ QString encodeEvent(const RoutineBlock &block, const QList<RoutineLog> &logs)
         ev->setDtEnd(dtEnd);
         ev->recurrence()->clear();
         if (!block.specificDate.isValid()) {
-            QBitArray days(7);
-            const int mask = block.daysMask > 0 ? block.daysMask : 127;
-            for (int i = 0; i < 7; ++i) {
-                days.setBit(i, (mask & (1 << i)) != 0);
+            const int interval = qMax(1, block.repeatInterval);
+            const QString freq = block.repeatFreq.trimmed().toUpper();
+            if (freq == QLatin1String("DAILY")) {
+                ev->recurrence()->setDaily(interval);
+            } else if (freq == QLatin1String("MONTHLY")) {
+                ev->recurrence()->setMonthly(interval);
+            } else if (freq == QLatin1String("YEARLY")) {
+                ev->recurrence()->setYearly(interval);
+            } else {
+                QBitArray days(7);
+                const int mask = block.daysMask > 0 ? block.daysMask : 127;
+                for (int i = 0; i < 7; ++i) {
+                    days.setBit(i, (mask & (1 << i)) != 0);
+                }
+                ev->recurrence()->setWeekly(interval, days, 1);
             }
-            ev->recurrence()->setWeekly(1, days, 1);
             if (block.startDate.isValid()) {
                 ev->setNonKDECustomProperty(kRoutineStartDateProp, block.startDate.toString(Qt::ISODate));
             } else {

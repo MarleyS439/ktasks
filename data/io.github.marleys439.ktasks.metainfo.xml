@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.8" date="2026-11-22">
+      <description>
+        <p>Add recurrence frequency (Daily, Weekly, Monthly, Yearly) and repeat interval selection for Routine &amp; Day Planner templates with SQLite v10 migration and CalDAV RRULE sync support.</p>
+      </description>
+    </release>
     <release version="1.0.7" date="2026-11-22">
       <description>
         <p>Simplify Add-ons settings UI, unfocus inputs when clicking outside, prefer IPv4 for fast Open-Meteo weather search with busy indicator, keep only the latest pre-migration backup snapshot, and clarify Daily Activity &amp; Focus chart legend and per-bar values.</p>

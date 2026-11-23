@@ -43,6 +43,8 @@ public:
         StatusRole, // 0 pending, 1 done, 2 skipped
         IsTemplateRole,
         DaysMaskRole,
+        RepeatFreqRole,
+        RepeatIntervalRole,
         LinkedTaskIdRole,
         NotifyEnabledRole,
         NotifyMinutesBeforeRole,

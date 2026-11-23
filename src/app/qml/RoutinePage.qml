@@ -899,6 +899,8 @@ Item {
         id: blockDialog
         property var editId: 0
         property int daysMask: 127
+        property string repeatFreq: "WEEKLY"
+        property int repeatInterval: 1
         property string blockColor: "#3daee9"
         property bool isTemplate: false
         property bool restrictStartDate: true
@@ -915,6 +917,8 @@ Item {
                 startMin: bStartMin.value,
                 duration: bDuration.totalMinutes,
                 isTemplate: isTemplate,
+                repeatFreq: repeatFreq,
+                repeatInterval: repeatInterval,
                 daysMask: daysMask,
                 restrictStartDate: restrictStartDate,
                 startDate: startDate,
@@ -942,6 +946,8 @@ Item {
                 startMinute: bStartHour.value * 60 + bStartMin.value,
                 durationMinutes: bDuration.totalMinutes,
                 isTemplate: blockDialog.isTemplate,
+                repeatFreq: blockDialog.isTemplate ? blockDialog.repeatFreq : "WEEKLY",
+                repeatInterval: blockDialog.isTemplate ? blockDialog.repeatInterval : 1,
                 daysMask: blockDialog.isTemplate ? blockDialog.daysMask : 0,
                 specificDate: blockDialog.isTemplate ? "" : App.routine.selectedDate,
                 startDate: (blockDialog.isTemplate && blockDialog.restrictStartDate)
@@ -980,6 +986,8 @@ Item {
             bStartHour.value = Math.floor(m / 60);
             bStartMin.value = m % 60;
             bDuration.totalMinutes = Math.max(15, Math.min(480, durationMins ?? 60));
+            repeatFreq = "WEEKLY";
+            repeatInterval = 1;
             daysMask = 127;
             blockColor = "#3daee9";
             bNotify.checked = true;
@@ -1012,6 +1020,8 @@ Item {
             bStartHour.value = Math.floor(info.startMinute / 60);
             bStartMin.value = info.startMinute % 60;
             bDuration.totalMinutes = info.durationMinutes;
+            repeatFreq = info.repeatFreq || "WEEKLY";
+            repeatInterval = Math.max(1, info.repeatInterval || 1);
             daysMask = info.daysMask || 127;
             blockColor = info.color || "#3daee9";
             bNotify.checked = !!info.notifyEnabled;
@@ -1085,9 +1095,56 @@ Item {
                 checked: blockDialog.isTemplate
                 onToggled: blockDialog.isTemplate = checked
             }
-            // All 7 weekday pills in a single non-wrapping row
             RowLayout {
                 visible: blockDialog.isTemplate
+                Kirigami.FormData.label: i18nc("@label", "Frequency:")
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+                QQC2.ComboBox {
+                    id: bFreqCombo
+                    readonly property var freqs: ["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]
+                    Layout.fillWidth: true
+                    model: [
+                        i18nc("recurrence", "Daily"),
+                        i18nc("recurrence", "Weekly"),
+                        i18nc("recurrence", "Monthly"),
+                        i18nc("recurrence", "Yearly")
+                    ]
+                    currentIndex: Math.max(0, freqs.indexOf(blockDialog.repeatFreq))
+                    onActivated: index => {
+                        blockDialog.repeatFreq = freqs[index];
+                    }
+                }
+                PaddedSpinBox {
+                    id: bRepeatInterval
+                    minWidthUnits: 7
+                    from: 1
+                    to: 365
+                    value: blockDialog.repeatInterval
+                    textFromValue: v => i18ncp("recurrence interval, e.g. every 2 (weeks)", "every %1", "every %1", v)
+                    valueFromText: text => Math.max(1, parseInt(text.replace(/\D/g, "")) || 1)
+                    onValueModified: blockDialog.repeatInterval = value
+                }
+                QQC2.Label {
+                    color: Kirigami.Theme.disabledTextColor
+                    text: {
+                        const n = blockDialog.repeatInterval;
+                        switch (blockDialog.repeatFreq) {
+                        case "DAILY":
+                            return i18ncp("recurrence unit", "day", "days", n);
+                        case "MONTHLY":
+                            return i18ncp("recurrence unit", "month", "months", n);
+                        case "YEARLY":
+                            return i18ncp("recurrence unit", "year", "years", n);
+                        default:
+                            return i18ncp("recurrence unit", "week", "weeks", n);
+                        }
+                    }
+                }
+            }
+            // All 7 weekday pills in a single non-wrapping row
+            RowLayout {
+                visible: blockDialog.isTemplate && blockDialog.repeatFreq === "WEEKLY"
                 Kirigami.FormData.label: i18nc("@label", "Days:")
                 Layout.fillWidth: true
                 spacing: 4
@@ -1361,7 +1418,7 @@ Item {
                 wrapMode: Text.Wrap
                 font: Kirigami.Theme.smallFont
                 color: Kirigami.Theme.disabledTextColor
-                text: i18nc("@info", "Recurring blocks automatically appear on the selected days of every week.")
+                text: i18nc("@info", "Recurring blocks repeat automatically according to their frequency and start date.")
             }
             Kirigami.Separator { Layout.fillWidth: true }
 
@@ -1392,11 +1449,17 @@ Item {
                             }
                             QQC2.Label {
                                 Layout.fillWidth: true
-                                text: modelData.startDateText
-                                    ? i18nc("template time and start date", "%1 · From %2", modelData.timeRange, modelData.startDateText)
-                                    : modelData.timeRange
+                                text: {
+                                    const base = modelData.repeatSummary
+                                        ? i18nc("template time and repeat summary", "%1 · %2", modelData.timeRange, modelData.repeatSummary)
+                                        : modelData.timeRange;
+                                    return modelData.startDateText
+                                        ? i18nc("template summary and start date", "%1 · From %2", base, modelData.startDateText)
+                                        : base;
+                                }
                                 font: Kirigami.Theme.smallFont
                                 color: Kirigami.Theme.disabledTextColor
+                                elide: Text.ElideRight
                             }
                         }
                         Kirigami.Icon {

@@ -51,6 +51,8 @@ QHash<int, QByteArray> RoutineManager::roleNames() const
         {StatusRole, "status"},
         {IsTemplateRole, "isTemplate"},
         {DaysMaskRole, "daysMask"},
+        {RepeatFreqRole, "repeatFreq"},
+        {RepeatIntervalRole, "repeatInterval"},
         {LinkedTaskIdRole, "linkedTaskId"},
         {NotifyEnabledRole, "notifyEnabled"},
         {NotifyMinutesBeforeRole, "notifyMinutesBefore"},
@@ -99,6 +101,10 @@ QVariant RoutineManager::data(const QModelIndex &index, int role) const
         return !b.specificDate.isValid();
     case DaysMaskRole:
         return b.daysMask;
+    case RepeatFreqRole:
+        return b.repeatFreq;
+    case RepeatIntervalRole:
+        return b.repeatInterval;
     case LinkedTaskIdRole:
         return b.linkedTaskId;
     case NotifyEnabledRole:
@@ -139,8 +145,47 @@ bool RoutineManager::matchesDate(const RoutineBlock &b, const QDate &date)
     if (b.startDate.isValid() && date < b.startDate) {
         return false;
     }
+    const QString freq = b.repeatFreq.isEmpty() ? QStringLiteral("WEEKLY") : b.repeatFreq;
+    const int interval = qMax(1, b.repeatInterval);
+    const QDate anchor = b.startDate.isValid()
+        ? b.startDate
+        : (b.created.isValid() ? b.created.toLocalTime().date() : QDate(2000, 1, 3));
+    auto modZero = [](qint64 diff, int iv) {
+        return ((diff % iv) + iv) % iv == 0;
+    };
+
+    if (freq == QLatin1String("DAILY")) {
+        return modZero(anchor.daysTo(date), interval);
+    }
+    if (freq == QLatin1String("MONTHLY")) {
+        const int targetDay = qMin(anchor.day(), date.daysInMonth());
+        if (date.day() != targetDay) {
+            return false;
+        }
+        const qint64 months = qint64(date.year() - anchor.year()) * 12 + (date.month() - anchor.month());
+        return modZero(months, interval);
+    }
+    if (freq == QLatin1String("YEARLY")) {
+        if (date.month() != anchor.month()) {
+            return false;
+        }
+        const int targetDay = qMin(anchor.day(), date.daysInMonth());
+        if (date.day() != targetDay) {
+            return false;
+        }
+        return modZero(date.year() - anchor.year(), interval);
+    }
+
     const int bit = 1 << (date.dayOfWeek() - 1); // Qt dayOfWeek: 1=Mon..7=Sun
-    return (b.daysMask & bit) != 0;
+    if ((b.daysMask & bit) == 0) {
+        return false;
+    }
+    if (interval == 1) {
+        return true;
+    }
+    const QDate anchorMon = anchor.addDays(-(anchor.dayOfWeek() - 1));
+    const QDate dateMon = date.addDays(-(date.dayOfWeek() - 1));
+    return modZero(anchorMon.daysTo(dateMon) / 7, interval);
 }
 
 QList<RoutineBlock> RoutineManager::blocksForDate(const QDate &date) const
@@ -293,6 +338,41 @@ int RoutineManager::availableMinutesForDateAndMinute(const QDate &today, int cur
     return qMax(0, (winEnd - winStart) - occupied);
 }
 
+static QString repeatSummaryText(const RoutineBlock &b)
+{
+    const QString freq = b.repeatFreq.isEmpty() ? QStringLiteral("WEEKLY") : b.repeatFreq;
+    const int interval = qMax(1, b.repeatInterval);
+    if (freq == QLatin1String("DAILY")) {
+        return interval == 1
+            ? i18nc("routine recurrence summary", "Every day")
+            : i18ncp("routine recurrence summary", "Every %1 day", "Every %1 days", interval);
+    }
+    if (freq == QLatin1String("MONTHLY")) {
+        return interval == 1
+            ? i18nc("routine recurrence summary", "Every month")
+            : i18ncp("routine recurrence summary", "Every %1 month", "Every %1 months", interval);
+    }
+    if (freq == QLatin1String("YEARLY")) {
+        return interval == 1
+            ? i18nc("routine recurrence summary", "Every year")
+            : i18ncp("routine recurrence summary", "Every %1 year", "Every %1 years", interval);
+    }
+    QStringList days;
+    const QLocale loc;
+    for (int i = 0; i < 7; ++i) {
+        if (b.daysMask & (1 << i)) {
+            days << loc.dayName(i + 1, QLocale::ShortFormat);
+        }
+    }
+    const QString base = interval == 1
+        ? i18nc("routine recurrence summary", "Every week")
+        : i18ncp("routine recurrence summary", "Every %1 week", "Every %1 weeks", interval);
+    if (days.isEmpty() || b.daysMask == 127) {
+        return base;
+    }
+    return QStringLiteral("%1 (%2)").arg(base, days.join(QStringLiteral(", ")));
+}
+
 QVariantList RoutineManager::templates() const
 {
     QVariantList out;
@@ -308,6 +388,9 @@ QVariantList RoutineManager::templates() const
             {QStringLiteral("durationMinutes"), b.durationMinutes},
             {QStringLiteral("timeRange"), QStringLiteral("%1 – %2").arg(formatMinutes(b.startMinute), formatMinutes(qMin(1440, b.startMinute + b.durationMinutes)))},
             {QStringLiteral("daysMask"), b.daysMask},
+            {QStringLiteral("repeatFreq"), b.repeatFreq},
+            {QStringLiteral("repeatInterval"), b.repeatInterval},
+            {QStringLiteral("repeatSummary"), repeatSummaryText(b)},
             {QStringLiteral("startDate"), b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString()},
             {QStringLiteral("startDateText"), b.startDate.isValid() ? QLocale().toString(b.startDate, QLocale::ShortFormat) : QString()},
             {QStringLiteral("color"), b.color},
@@ -471,10 +554,23 @@ static void applyBlockFields(RoutineBlock &b, const QVariantMap &fields, const Q
             b.specificDate = sd.isValid() ? sd : fallbackDate;
             b.startDate = QDate();
             b.daysMask = 0;
+            b.repeatFreq = QStringLiteral("WEEKLY");
+            b.repeatInterval = 1;
         }
     }
     if (fields.contains(QStringLiteral("daysMask"))) {
         b.daysMask = fields.value(QStringLiteral("daysMask")).toInt();
+    }
+    if (fields.contains(QStringLiteral("repeatFreq"))) {
+        const QString f = fields.value(QStringLiteral("repeatFreq")).toString().trimmed().toUpper();
+        if (f == QLatin1String("DAILY") || f == QLatin1String("WEEKLY") || f == QLatin1String("MONTHLY") || f == QLatin1String("YEARLY")) {
+            b.repeatFreq = f;
+        } else {
+            b.repeatFreq = QStringLiteral("WEEKLY");
+        }
+    }
+    if (fields.contains(QStringLiteral("repeatInterval"))) {
+        b.repeatInterval = qBound(1, fields.value(QStringLiteral("repeatInterval")).toInt(), 365);
     }
     if (fields.contains(QStringLiteral("specificDate")) && !fields.contains(QStringLiteral("isTemplate"))) {
         const QString s = fields.value(QStringLiteral("specificDate")).toString();
@@ -641,6 +737,8 @@ QVariantMap RoutineManager::blockInfo(qlonglong id) const
                 {QStringLiteral("durationMinutes"), b.durationMinutes},
                 {QStringLiteral("isTemplate"), !b.specificDate.isValid()},
                 {QStringLiteral("daysMask"), b.daysMask},
+                {QStringLiteral("repeatFreq"), b.repeatFreq},
+                {QStringLiteral("repeatInterval"), b.repeatInterval},
                 {QStringLiteral("specificDate"), b.specificDate.isValid() ? b.specificDate.toString(Qt::ISODate) : QString()},
                 {QStringLiteral("startDate"), b.startDate.isValid() ? b.startDate.toString(Qt::ISODate) : QString()},
                 {QStringLiteral("startDateText"), b.startDate.isValid() ? QLocale().toString(b.startDate, QLocale::ShortFormat) : QString()},

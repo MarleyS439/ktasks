@@ -1213,6 +1213,55 @@ private Q_SLOTS:
         std::unique_ptr<QObject> insightsObj(insightsComp.create());
         QVERIFY(insightsObj != nullptr);
     }
+
+    void routineRepeatFrequenciesAndIntervals()
+    {
+        RoutineBlock daily;
+        daily.active = true;
+        daily.repeatFreq = QStringLiteral("DAILY");
+        daily.repeatInterval = 3;
+        daily.startDate = QDate(2026, 11, 1);
+        QVERIFY(!RoutineManager::matchesDate(daily, QDate(2026, 10, 29)));
+        QVERIFY(RoutineManager::matchesDate(daily, QDate(2026, 11, 1)));
+        QVERIFY(!RoutineManager::matchesDate(daily, QDate(2026, 11, 2)));
+        QVERIFY(!RoutineManager::matchesDate(daily, QDate(2026, 11, 3)));
+        QVERIFY(RoutineManager::matchesDate(daily, QDate(2026, 11, 4)));
+
+        // Weekly every 2 weeks on Mon (bit 0) and Wed (bit 2), anchored on 2026-11-02 (Monday)
+        RoutineBlock biweekly;
+        biweekly.active = true;
+        biweekly.repeatFreq = QStringLiteral("WEEKLY");
+        biweekly.repeatInterval = 2;
+        biweekly.daysMask = (1 << 0) | (1 << 2);
+        biweekly.startDate = QDate(2026, 11, 2);
+        QVERIFY(RoutineManager::matchesDate(biweekly, QDate(2026, 11, 2)));  // week 0 Mon
+        QVERIFY(RoutineManager::matchesDate(biweekly, QDate(2026, 11, 4)));  // week 0 Wed
+        QVERIFY(!RoutineManager::matchesDate(biweekly, QDate(2026, 11, 9))); // week 1 Mon
+        QVERIFY(RoutineManager::matchesDate(biweekly, QDate(2026, 11, 16))); // week 2 Mon
+        QVERIFY(!RoutineManager::matchesDate(biweekly, QDate(2026, 11, 17))); // week 2 Tue
+
+        // Monthly every 2 months with month-end clamping (Jan 31 -> Mar 31; or 1 month -> Feb 28)
+        RoutineBlock monthly;
+        monthly.active = true;
+        monthly.repeatFreq = QStringLiteral("MONTHLY");
+        monthly.repeatInterval = 2;
+        monthly.startDate = QDate(2026, 1, 31);
+        QVERIFY(RoutineManager::matchesDate(monthly, QDate(2026, 1, 31)));
+        QVERIFY(!RoutineManager::matchesDate(monthly, QDate(2026, 2, 28)));
+        QVERIFY(RoutineManager::matchesDate(monthly, QDate(2026, 3, 31)));
+        QVERIFY(!RoutineManager::matchesDate(monthly, QDate(2026, 5, 30)));
+        QVERIFY(RoutineManager::matchesDate(monthly, QDate(2026, 5, 31)));
+
+        // Yearly every 2 years
+        RoutineBlock yearly;
+        yearly.active = true;
+        yearly.repeatFreq = QStringLiteral("YEARLY");
+        yearly.repeatInterval = 2;
+        yearly.startDate = QDate(2026, 6, 15);
+        QVERIFY(RoutineManager::matchesDate(yearly, QDate(2026, 6, 15)));
+        QVERIFY(!RoutineManager::matchesDate(yearly, QDate(2027, 6, 15)));
+        QVERIFY(RoutineManager::matchesDate(yearly, QDate(2028, 6, 15)));
+    }
 };
 
 QTEST_MAIN(AppTest)

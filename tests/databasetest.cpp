@@ -509,6 +509,35 @@ private Q_SLOTS:
         QCOMPARE(one.uid, QStringLiteral("one-1"));
         QCOMPARE(one.specificDate, QDate(2026, 11, 20));
         QVERIFY(!one.startDate.isValid());
+        QCOMPARE(tpl.repeatFreq, QStringLiteral("WEEKLY"));
+        QCOMPARE(tpl.repeatInterval, 1);
+    }
+
+    void routineRepeatFreqAndIntervalPersist()
+    {
+        QTemporaryDir dir;
+        Database db(dir.filePath(QStringLiteral("r.db")));
+        QVERIFY(db.open());
+
+        RoutineBlock b;
+        b.title = QStringLiteral("Revisao");
+        b.repeatFreq = QStringLiteral("DAILY");
+        b.repeatInterval = 3;
+        b.startDate = QDate(2026, 11, 1);
+        QVERIFY(db.insertRoutineBlock(b));
+
+        auto loaded = db.routineBlock(b.id);
+        QVERIFY(loaded.has_value());
+        QCOMPARE(loaded->repeatFreq, QStringLiteral("DAILY"));
+        QCOMPARE(loaded->repeatInterval, 3);
+
+        loaded->repeatFreq = QStringLiteral("MONTHLY");
+        loaded->repeatInterval = 2;
+        QVERIFY(db.updateRoutineBlockUser(*loaded));
+        const auto updated = db.routineBlock(b.id);
+        QVERIFY(updated.has_value());
+        QCOMPARE(updated->repeatFreq, QStringLiteral("MONTHLY"));
+        QCOMPARE(updated->repeatInterval, 2);
     }
 };
 

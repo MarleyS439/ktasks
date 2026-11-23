@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktasks 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 19:46-0300\n"
+"POT-Creation-Date: 2026-11-22 22:25-0300\n"
 "PO-Revision-Date: 2026-11-22 11:46-0300\n"
 "Last-Translator: MarleyS439 <128339760+MarleyS439@users.noreply.github.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2220,8 +2220,8 @@ msgid "Not Urgent or Important → None"
 msgstr "Não Urgente ou Importante → Nenhuma"
 
 #: src/app/qml/EisenhowerPage.qml:1402 src/app/qml/EisenhowerPage.qml:1434
-#: src/app/qml/QuickEntry.qml:55 src/app/qml/RoutinePage.qml:930
-#: src/app/qml/RoutinePage.qml:1035
+#: src/app/qml/QuickEntry.qml:55 src/app/qml/RoutinePage.qml:934
+#: src/app/qml/RoutinePage.qml:1045
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
@@ -2234,7 +2234,7 @@ msgid "New Task in Priority Matrix"
 msgstr "Nova Tarefa na Matriz de Prioridades"
 
 #: src/app/qml/EisenhowerPage.qml:1442 src/app/qml/EisenhowerPage.qml:1528
-#: src/app/qml/RoutinePage.qml:1285
+#: src/app/qml/RoutinePage.qml:1342
 #, kde-format
 msgctxt "@label"
 msgid "Task:"
@@ -2266,7 +2266,7 @@ msgid "Set due date to today"
 msgstr "Definir vencimento para hoje"
 
 #: src/app/qml/EisenhowerPage.qml:1491 src/app/qml/EisenhowerPage.qml:1522
-#: src/app/qml/RoutinePage.qml:1241 src/app/qml/RoutinePage.qml:1276
+#: src/app/qml/RoutinePage.qml:1298 src/app/qml/RoutinePage.qml:1333
 #, kde-format
 msgctxt "@action:button"
 msgid "Schedule"
@@ -2284,15 +2284,15 @@ msgctxt "@title:window"
 msgid "Schedule in Day Planner"
 msgstr "Agendar no Planejador do Dia"
 
-#: src/app/qml/EisenhowerPage.qml:1535 src/app/qml/RoutinePage.qml:1055
-#: src/app/qml/RoutinePage.qml:1291
+#: src/app/qml/EisenhowerPage.qml:1535 src/app/qml/RoutinePage.qml:1065
+#: src/app/qml/RoutinePage.qml:1348
 #, kde-format
 msgctxt "@label"
 msgid "Start time:"
 msgstr "Início:"
 
-#: src/app/qml/EisenhowerPage.qml:1555 src/app/qml/RoutinePage.qml:1078
-#: src/app/qml/RoutinePage.qml:1314
+#: src/app/qml/EisenhowerPage.qml:1555 src/app/qml/RoutinePage.qml:1088
+#: src/app/qml/RoutinePage.qml:1371
 #, kde-format
 msgctxt "@label"
 msgid "Duration:"
@@ -2335,8 +2335,8 @@ msgid "You have unsaved changes. Would you like to save them before closing?"
 msgstr "Há alterações não salvas. Deseja salvá-las antes de fechar?"
 
 #: src/app/qml/GuardedDialog.qml:19 src/app/qml/ListDialog.qml:27
-#: src/app/qml/ListDialog.qml:82 src/app/qml/RoutinePage.qml:930
-#: src/app/qml/RoutinePage.qml:1035 src/app/qml/TaskDetails.qml:777
+#: src/app/qml/ListDialog.qml:82 src/app/qml/RoutinePage.qml:934
+#: src/app/qml/RoutinePage.qml:1045 src/app/qml/TaskDetails.qml:777
 #: src/app/qml/TaskDetails.qml:796
 #, kde-format
 msgctxt "@action:button"
@@ -2496,6 +2496,7 @@ msgid "Focus time (min)"
 msgstr "Tempo de foco (min)"
 
 #: src/app/qml/InsightsPage.qml:377
+#, kde-format
 msgctxt "chart legend green bar"
 msgid "Tasks completed"
 msgstr "Tarefas concluídas"
@@ -2894,7 +2895,7 @@ msgid "e.g. Work, Personal, Studies…"
 msgstr "ex.: Trabalho, Pessoal, Estudos…"
 
 #: src/app/qml/JournalPage.qml:1075 src/app/qml/ListDialog.qml:124
-#: src/app/qml/RoutinePage.qml:1163
+#: src/app/qml/RoutinePage.qml:1220
 #, kde-format
 msgctxt "@label"
 msgid "Color:"
@@ -3706,146 +3707,216 @@ msgctxt "@info:tooltip"
 msgid "Delete block"
 msgstr "Excluir bloco"
 
-#: src/app/qml/RoutinePage.qml:792 src/app/qml/RoutinePage.qml:1096
+#: src/app/qml/RoutinePage.qml:792 src/app/qml/RoutinePage.qml:1153
 #: src/app/qml/TaskDetails.qml:367
 #, kde-format
 msgctxt "weekday short"
 msgid "Mon"
 msgstr "Seg"
 
-#: src/app/qml/RoutinePage.qml:792 src/app/qml/RoutinePage.qml:1096
+#: src/app/qml/RoutinePage.qml:792 src/app/qml/RoutinePage.qml:1153
 #: src/app/qml/TaskDetails.qml:368
 #, kde-format
 msgctxt "weekday short"
 msgid "Tue"
 msgstr "Ter"
 
-#: src/app/qml/RoutinePage.qml:792 src/app/qml/RoutinePage.qml:1096
+#: src/app/qml/RoutinePage.qml:792 src/app/qml/RoutinePage.qml:1153
 #: src/app/qml/TaskDetails.qml:369
 #, kde-format
 msgctxt "weekday short"
 msgid "Wed"
 msgstr "Qua"
 
-#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1097
+#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1154
 #: src/app/qml/TaskDetails.qml:370
 #, kde-format
 msgctxt "weekday short"
 msgid "Thu"
 msgstr "Qui"
 
-#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1097
+#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1154
 #: src/app/qml/TaskDetails.qml:371
 #, kde-format
 msgctxt "weekday short"
 msgid "Fri"
 msgstr "Sex"
 
-#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1097
+#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1154
 #: src/app/qml/TaskDetails.qml:372
 #, kde-format
 msgctxt "weekday short"
 msgid "Sat"
 msgstr "Sáb"
 
-#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1097
+#: src/app/qml/RoutinePage.qml:793 src/app/qml/RoutinePage.qml:1154
 #: src/app/qml/TaskDetails.qml:373
 #, kde-format
 msgctxt "weekday short"
 msgid "Sun"
 msgstr "Dom"
 
-#: src/app/qml/RoutinePage.qml:964
+#: src/app/qml/RoutinePage.qml:970
 #, kde-format
 msgctxt "storage option"
 msgid "Offline only (local)"
 msgstr "Somente offline (local)"
 
-#: src/app/qml/RoutinePage.qml:966
+#: src/app/qml/RoutinePage.qml:972
 #, kde-format
 msgctxt "storage option"
 msgid "Nextcloud Calendar (%1)"
 msgstr "Nextcloud Calendar (%1)"
 
-#: src/app/qml/RoutinePage.qml:1028
+#: src/app/qml/RoutinePage.qml:1038
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Routine Block"
 msgstr "Editar Bloco da Rotina"
 
-#: src/app/qml/RoutinePage.qml:1028
+#: src/app/qml/RoutinePage.qml:1038
 #, kde-format
 msgctxt "@title:window"
 msgid "New Routine Block"
 msgstr "Novo Bloco da Rotina"
 
-#: src/app/qml/RoutinePage.qml:1044
+#: src/app/qml/RoutinePage.qml:1054
 #, kde-format
 msgctxt "@label"
 msgid "Activity:"
 msgstr "Atividade:"
 
-#: src/app/qml/RoutinePage.qml:1046
+#: src/app/qml/RoutinePage.qml:1056
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "e.g. Deep work, Gym, Study…"
 msgstr "ex.: Foco profundo, Academia, Estudos…"
 
-#: src/app/qml/RoutinePage.qml:1050
+#: src/app/qml/RoutinePage.qml:1060
 #, kde-format
 msgctxt "@label"
 msgid "Category:"
 msgstr "Categoria:"
 
-#: src/app/qml/RoutinePage.qml:1052
+#: src/app/qml/RoutinePage.qml:1062
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Optional (Work, Health, Study…)"
 msgstr "Opcional (Trabalho, Saúde, Estudos…)"
 
-#: src/app/qml/RoutinePage.qml:1083
+#: src/app/qml/RoutinePage.qml:1093
 #, kde-format
 msgctxt "@label"
 msgid "Repeat:"
 msgstr "Repetir:"
 
-#: src/app/qml/RoutinePage.qml:1084
+#: src/app/qml/RoutinePage.qml:1094
 #, kde-format
 msgctxt "@option:check"
 msgid "Recurring routine template"
 msgstr "Modelo de rotina recorrente"
 
-#: src/app/qml/RoutinePage.qml:1091
+#: src/app/qml/RoutinePage.qml:1100
+#, kde-format
+msgctxt "@label"
+msgid "Frequency:"
+msgstr "Frequência:"
+
+#: src/app/qml/RoutinePage.qml:1108 src/app/qml/TaskDetails.qml:326
+#, kde-format
+msgctxt "recurrence"
+msgid "Daily"
+msgstr "Diariamente"
+
+#: src/app/qml/RoutinePage.qml:1109 src/app/qml/TaskDetails.qml:327
+#, kde-format
+msgctxt "recurrence"
+msgid "Weekly"
+msgstr "Semanalmente"
+
+#: src/app/qml/RoutinePage.qml:1110 src/app/qml/TaskDetails.qml:328
+#, kde-format
+msgctxt "recurrence"
+msgid "Monthly"
+msgstr "Mensalmente"
+
+#: src/app/qml/RoutinePage.qml:1111 src/app/qml/TaskDetails.qml:329
+#, kde-format
+msgctxt "recurrence"
+msgid "Yearly"
+msgstr "Anualmente"
+
+#: src/app/qml/RoutinePage.qml:1124 src/app/qml/TaskDetails.qml:353
+#, kde-format
+msgctxt "recurrence interval, e.g. every 2 (weeks)"
+msgid "every %1"
+msgid_plural "every %1"
+msgstr[0] "a cada %1"
+msgstr[1] "a cada %1"
+
+#: src/app/qml/RoutinePage.qml:1134
+#, kde-format
+msgctxt "recurrence unit"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "dia"
+msgstr[1] "dias"
+
+#: src/app/qml/RoutinePage.qml:1136
+#, kde-format
+msgctxt "recurrence unit"
+msgid "month"
+msgid_plural "months"
+msgstr[0] "mês"
+msgstr[1] "meses"
+
+#: src/app/qml/RoutinePage.qml:1138
+#, kde-format
+msgctxt "recurrence unit"
+msgid "year"
+msgid_plural "years"
+msgstr[0] "ano"
+msgstr[1] "anos"
+
+#: src/app/qml/RoutinePage.qml:1140
+#, kde-format
+msgctxt "recurrence unit"
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] "semana"
+msgstr[1] "semanas"
+
+#: src/app/qml/RoutinePage.qml:1148
 #, kde-format
 msgctxt "@label"
 msgid "Days:"
 msgstr "Dias:"
 
-#: src/app/qml/RoutinePage.qml:1117
+#: src/app/qml/RoutinePage.qml:1174
 #, kde-format
 msgctxt "@label"
 msgid "Starts on:"
 msgstr "Inicia em:"
 
-#: src/app/qml/RoutinePage.qml:1123
+#: src/app/qml/RoutinePage.qml:1180
 #, kde-format
 msgctxt "@option:check"
 msgid "Only from start date forward"
 msgstr "Somente a partir desta data"
 
-#: src/app/qml/RoutinePage.qml:1137 src/app/qml/TaskDetails.qml:438
+#: src/app/qml/RoutinePage.qml:1194 src/app/qml/TaskDetails.qml:438
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick date"
 msgstr "Escolher data"
 
-#: src/app/qml/RoutinePage.qml:1158
+#: src/app/qml/RoutinePage.qml:1215
 #, kde-format
 msgctxt "@info"
 msgid "Repeats only from this date onward (does not backfill earlier months)."
 msgstr "Repete apenas desta data em diante (não preenche meses anteriores)."
 
-#: src/app/qml/RoutinePage.qml:1159
+#: src/app/qml/RoutinePage.qml:1216
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3853,96 +3924,103 @@ msgid ""
 msgstr ""
 "Aparece em todas as datas passadas e futuras nos dias da semana marcados."
 
-#: src/app/qml/RoutinePage.qml:1183
+#: src/app/qml/RoutinePage.qml:1240
 #, kde-format
 msgctxt "@label"
 msgid "Notification:"
 msgstr "Notificação:"
 
-#: src/app/qml/RoutinePage.qml:1184
+#: src/app/qml/RoutinePage.qml:1241
 #, kde-format
 msgctxt "@option:check"
 msgid "Send system notification"
 msgstr "Enviar notificação do sistema"
 
-#: src/app/qml/RoutinePage.qml:1190
+#: src/app/qml/RoutinePage.qml:1247
 #, kde-format
 msgctxt "@label"
 msgid "Remind:"
 msgstr "Lembrar:"
 
-#: src/app/qml/RoutinePage.qml:1192
+#: src/app/qml/RoutinePage.qml:1249
 #, kde-format
 msgctxt "routine lead"
 msgid "At start time"
 msgstr "No horário de início"
 
-#: src/app/qml/RoutinePage.qml:1193
+#: src/app/qml/RoutinePage.qml:1250
 #, kde-format
 msgctxt "routine lead"
 msgid "5 minutes before"
 msgstr "5 minutos antes"
 
-#: src/app/qml/RoutinePage.qml:1194
+#: src/app/qml/RoutinePage.qml:1251
 #, kde-format
 msgctxt "routine lead"
 msgid "10 minutes before"
 msgstr "10 minutos antes"
 
-#: src/app/qml/RoutinePage.qml:1195
+#: src/app/qml/RoutinePage.qml:1252
 #, kde-format
 msgctxt "routine lead"
 msgid "15 minutes before"
 msgstr "15 minutos antes"
 
-#: src/app/qml/RoutinePage.qml:1196
+#: src/app/qml/RoutinePage.qml:1253
 #, kde-format
 msgctxt "routine lead"
 msgid "30 minutes before"
 msgstr "30 minutos antes"
 
-#: src/app/qml/RoutinePage.qml:1201
+#: src/app/qml/RoutinePage.qml:1258
 #, kde-format
 msgctxt "@label"
 msgid "Notes:"
 msgstr "Notas:"
 
-#: src/app/qml/RoutinePage.qml:1210 src/app/qml/RoutinePage.qml:1323
+#: src/app/qml/RoutinePage.qml:1267 src/app/qml/RoutinePage.qml:1380
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Storage:"
 msgstr "Armazenamento:"
 
-#: src/app/qml/RoutinePage.qml:1269
+#: src/app/qml/RoutinePage.qml:1326
 #, kde-format
 msgctxt "@title:window"
 msgid "Schedule Task in Day Planner"
 msgstr "Agendar Tarefa no Dia"
 
-#: src/app/qml/RoutinePage.qml:1351
+#: src/app/qml/RoutinePage.qml:1408
 #, kde-format
 msgctxt "@title"
 msgid "Routine Templates"
 msgstr "Modelos de Rotina"
 
-#: src/app/qml/RoutinePage.qml:1355
+#: src/app/qml/RoutinePage.qml:1412
 #, kde-format
 msgctxt "@action:button"
 msgid "New"
 msgstr "Novo"
 
-#: src/app/qml/RoutinePage.qml:1364
+#: src/app/qml/RoutinePage.qml:1421
 #, kde-format
 msgctxt "@info"
 msgid ""
-"Recurring blocks automatically appear on the selected days of every week."
+"Recurring blocks repeat automatically according to their frequency and start "
+"date."
 msgstr ""
-"Blocos recorrentes aparecem automaticamente nos dias selecionados de cada "
-"semana."
+"Blocos recorrentes se repetem automaticamente conforme a frequência e a data "
+"de início."
 
-#: src/app/qml/RoutinePage.qml:1396
+#: src/app/qml/RoutinePage.qml:1454
 #, kde-format
-msgctxt "template time and start date"
+msgctxt "template time and repeat summary"
+msgid "%1 · %2"
+msgstr "%1 · %2"
+
+#: src/app/qml/RoutinePage.qml:1457
+#, kde-format
+msgctxt "template summary and start date"
 msgid "%1 · From %2"
 msgstr "%1 · A partir de %2"
 
@@ -5531,43 +5609,11 @@ msgctxt "recurrence"
 msgid "Does not repeat"
 msgstr "Não repete"
 
-#: src/app/qml/TaskDetails.qml:326
-#, kde-format
-msgctxt "recurrence"
-msgid "Daily"
-msgstr "Diariamente"
-
-#: src/app/qml/TaskDetails.qml:327
-#, kde-format
-msgctxt "recurrence"
-msgid "Weekly"
-msgstr "Semanalmente"
-
-#: src/app/qml/TaskDetails.qml:328
-#, kde-format
-msgctxt "recurrence"
-msgid "Monthly"
-msgstr "Mensalmente"
-
-#: src/app/qml/TaskDetails.qml:329
-#, kde-format
-msgctxt "recurrence"
-msgid "Yearly"
-msgstr "Anualmente"
-
 #: src/app/qml/TaskDetails.qml:332
 #, kde-format
 msgctxt "recurrence set by another application"
 msgid "Custom"
 msgstr "Personalizada"
-
-#: src/app/qml/TaskDetails.qml:353
-#, kde-format
-msgctxt "recurrence interval, e.g. every 2 (weeks)"
-msgid "every %1"
-msgid_plural "every %1"
-msgstr[0] "a cada %1"
-msgstr[1] "a cada %1"
 
 #: src/app/qml/TaskDetails.qml:407
 #, kde-format
@@ -6062,25 +6108,81 @@ msgid_plural "Delete (%1)"
 msgstr[0] "Excluir (%1)"
 msgstr[1] "Excluir (%1)"
 
-#: src/app/routinemanager.cpp:201
+#: src/app/routinemanager.cpp:246
 #, kde-format
 msgctxt "routine date"
 msgid "Today — %1"
 msgstr "Hoje — %1"
 
-#: src/app/routinemanager.cpp:204
+#: src/app/routinemanager.cpp:249
 #, kde-format
 msgctxt "routine date"
 msgid "Tomorrow — %1"
 msgstr "Amanhã — %1"
 
-#: src/app/routinemanager.cpp:207
+#: src/app/routinemanager.cpp:252
 #, kde-format
 msgctxt "routine date"
 msgid "Yesterday — %1"
 msgstr "Ontem — %1"
 
-#: src/app/routinemanager.cpp:625
+#: src/app/routinemanager.cpp:347
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every day"
+msgstr "Todo dia"
+
+#: src/app/routinemanager.cpp:348
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every %1 day"
+msgid_plural "Every %1 days"
+msgstr[0] "A cada %1 dia"
+msgstr[1] "A cada %1 dias"
+
+#: src/app/routinemanager.cpp:352
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every month"
+msgstr "Todo mês"
+
+#: src/app/routinemanager.cpp:353
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every %1 month"
+msgid_plural "Every %1 months"
+msgstr[0] "A cada %1 mês"
+msgstr[1] "A cada %1 meses"
+
+#: src/app/routinemanager.cpp:357
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every year"
+msgstr "Todo ano"
+
+#: src/app/routinemanager.cpp:358
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every %1 year"
+msgid_plural "Every %1 years"
+msgstr[0] "A cada %1 ano"
+msgstr[1] "A cada %1 anos"
+
+#: src/app/routinemanager.cpp:368
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every week"
+msgstr "Toda semana"
+
+#: src/app/routinemanager.cpp:369
+#, kde-format
+msgctxt "routine recurrence summary"
+msgid "Every %1 week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "A cada %1 semana"
+msgstr[1] "A cada %1 semanas"
+
+#: src/app/routinemanager.cpp:721
 #, kde-format
 msgctxt "routine category for scheduled task"
 msgid "Task"
@@ -6822,4 +6924,3 @@ msgstr "Importar tarefas"
 #~ msgctxt "file type"
 #~ msgid "PNG image (*.png)"
 #~ msgstr "Imagem PNG (*.png)"
-

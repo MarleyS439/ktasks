@@ -232,6 +232,11 @@ SET start_date = CASE
     END
 WHERE deleted = 0 AND specific_date = '' AND start_date = '';
 )"),
+        // v10: Recurrence frequency and interval for routine blocks
+        QStringLiteral(R"(
+ALTER TABLE routine_blocks ADD COLUMN repeat_freq TEXT NOT NULL DEFAULT 'WEEKLY';
+ALTER TABLE routine_blocks ADD COLUMN repeat_interval INTEGER NOT NULL DEFAULT 1;
+)"),
     };
 }
 
@@ -1457,7 +1462,16 @@ bool Database::clearJournalRemoteDelete(qint64 accountId, qint64 remoteId)
 static const QString kRoutineCols = QStringLiteral(
     "id, uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, start_date, linked_task_id, color, category, "
     "notify_enabled, notify_minutes_before, active, sort_order, created_at, modified_at, "
-    "sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted");
+    "sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted, repeat_freq, repeat_interval");
+
+static QString normalizeRoutineFreq(const QString &raw)
+{
+    const QString up = raw.trimmed().toUpper();
+    if (up == QLatin1String("DAILY") || up == QLatin1String("WEEKLY") || up == QLatin1String("MONTHLY") || up == QLatin1String("YEARLY")) {
+        return up;
+    }
+    return QStringLiteral("WEEKLY");
+}
 
 RoutineBlock Database::routineBlockFromQuery(const QSqlQuery &q)
 {
@@ -1490,6 +1504,8 @@ RoutineBlock Database::routineBlockFromQuery(const QSqlQuery &q)
     b.syncState = SyncState(q.value(23).toInt());
     b.rev = q.value(24).toLongLong();
     b.deleted = q.value(25).toBool();
+    b.repeatFreq = normalizeRoutineFreq(q.value(26).toString());
+    b.repeatInterval = qMax(1, q.value(27).toInt());
     return b;
 }
 
@@ -1572,8 +1588,8 @@ bool Database::insertRoutineBlock(RoutineBlock &b)
     }
     QSqlQuery q(handle());
     q.prepare(QStringLiteral(
-        "INSERT INTO routine_blocks (uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, start_date, linked_task_id, color, category, notify_enabled, notify_minutes_before, active, sort_order, created_at, modified_at, sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted) "
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"));
+        "INSERT INTO routine_blocks (uid, title, notes, start_minute, duration_minutes, days_mask, specific_date, start_date, linked_task_id, color, category, notify_enabled, notify_minutes_before, active, sort_order, created_at, modified_at, sync_account_id, calendar_href, href, etag, base_ics, sync_state, rev, deleted, repeat_freq, repeat_interval) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"));
     q.addBindValue(b.uid);
     q.addBindValue(b.title);
     q.addBindValue(b.notes);
@@ -1599,6 +1615,8 @@ bool Database::insertRoutineBlock(RoutineBlock &b)
     q.addBindValue(int(b.syncState));
     q.addBindValue(b.rev);
     q.addBindValue(b.deleted ? 1 : 0);
+    q.addBindValue(normalizeRoutineFreq(b.repeatFreq));
+    q.addBindValue(qMax(1, b.repeatInterval));
     if (!exec(q)) {
         return false;
     }
@@ -1615,7 +1633,7 @@ bool Database::updateRoutineBlockUser(const RoutineBlock &b)
 {
     QSqlQuery q(handle());
     q.prepare(QStringLiteral(
-        "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, start_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, sync_account_id=?, "
+        "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, start_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, repeat_freq=?, repeat_interval=?, sync_account_id=?, "
         "calendar_href = CASE WHEN ? = 0 THEN '' ELSE calendar_href END, "
         "href = CASE WHEN ? = 0 THEN '' ELSE href END, "
         "etag = CASE WHEN ? = 0 THEN '' ELSE etag END, "
@@ -1638,6 +1656,8 @@ bool Database::updateRoutineBlockUser(const RoutineBlock &b)
     q.addBindValue(b.active ? 1 : 0);
     q.addBindValue(b.sortOrder);
     q.addBindValue(tsToDb(QDateTime::currentDateTimeUtc()));
+    q.addBindValue(normalizeRoutineFreq(b.repeatFreq));
+    q.addBindValue(qMax(1, b.repeatInterval));
     q.addBindValue(b.syncAccountId);
     q.addBindValue(b.syncAccountId);
     q.addBindValue(b.syncAccountId);
@@ -1653,7 +1673,7 @@ bool Database::updateRoutineBlockFull(const RoutineBlock &b)
     QSqlQuery q(handle());
     q.prepare(QStringLiteral(
         "UPDATE routine_blocks SET title=?, notes=?, start_minute=?, duration_minutes=?, days_mask=?, specific_date=?, start_date=?, linked_task_id=?, color=?, category=?, notify_enabled=?, notify_minutes_before=?, active=?, sort_order=?, modified_at=?, "
-        "sync_account_id=?, calendar_href=?, href=?, etag=?, base_ics=?, sync_state=?, rev=?, deleted=? WHERE id=?"));
+        "sync_account_id=?, calendar_href=?, href=?, etag=?, base_ics=?, sync_state=?, rev=?, deleted=?, repeat_freq=?, repeat_interval=? WHERE id=?"));
     q.addBindValue(b.title);
     q.addBindValue(b.notes);
     q.addBindValue(qBound(0, b.startMinute, 1439));
@@ -1677,6 +1697,8 @@ bool Database::updateRoutineBlockFull(const RoutineBlock &b)
     q.addBindValue(int(b.syncState));
     q.addBindValue(b.rev);
     q.addBindValue(b.deleted ? 1 : 0);
+    q.addBindValue(normalizeRoutineFreq(b.repeatFreq));
+    q.addBindValue(qMax(1, b.repeatInterval));
     q.addBindValue(b.id);
     return exec(q);
 }

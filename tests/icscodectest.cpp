@@ -312,6 +312,31 @@ private Q_SLOTS:
         QCOMPARE(IcsCodec::decode(clearedIcs)->quadrant, 0);
         QCOMPARE(IcsCodec::decode(clearedIcs)->trackedSeconds, 0);
     }
+
+    void routineFrequencyAndIntervalRoundTrip()
+    {
+        auto roundTrip = [](const QString &freq, int interval, int daysMask) {
+            RoutineBlock b;
+            b.uid = QStringLiteral("rt-") + freq;
+            b.title = QStringLiteral("Bloco ") + freq;
+            b.startDate = QDate(2026, 11, 2);
+            b.repeatFreq = freq;
+            b.repeatInterval = interval;
+            b.daysMask = daysMask;
+            const QString ics = IcsCodec::encodeEvent(b, {});
+            const auto dec = IcsCodec::decodeEvent(ics);
+            QVERIFY(dec.has_value());
+            QCOMPARE(dec->block.repeatFreq, freq);
+            QCOMPARE(dec->block.repeatInterval, interval);
+            if (freq == QLatin1String("WEEKLY")) {
+                QCOMPARE(dec->block.daysMask, daysMask);
+            }
+        };
+        roundTrip(QStringLiteral("DAILY"), 3, 127);
+        roundTrip(QStringLiteral("WEEKLY"), 2, (1 << 0) | (1 << 2));
+        roundTrip(QStringLiteral("MONTHLY"), 2, 127);
+        roundTrip(QStringLiteral("YEARLY"), 1, 127);
+    }
 };
 
 QTEST_GUILESS_MAIN(IcsCodecTest)
