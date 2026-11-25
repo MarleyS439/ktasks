@@ -975,6 +975,7 @@ Item {
         }
 
         function openNewWithRange(asTemplate, startMin, durationMins) {
+            expandedMode = false;
             editId = 0;
             isTemplate = !!asTemplate;
             restrictStartDate = true;
@@ -1009,6 +1010,7 @@ Item {
             if (!info.exists) {
                 return;
             }
+            expandedMode = false;
             editId = id;
             isTemplate = !!info.isTemplate;
             const infoStart = info.startDate ?? "";
@@ -1035,11 +1037,23 @@ Item {
             bTitle.forceActiveFocus();
         }
 
+        property bool expandedMode: false
+
         title: editId > 0 ? i18nc("@title:window", "Edit Routine Block") : i18nc("@title:window", "New Routine Block")
         padding: Kirigami.Units.largeSpacing
-        preferredWidth: Kirigami.Units.gridUnit * 32
+        preferredWidth: expandedMode
+            ? Math.max(Kirigami.Units.gridUnit * 48, (applicationWindow()?.width ?? 1000) - Kirigami.Units.gridUnit * 4)
+            : Math.min(Kirigami.Units.gridUnit * 34, (applicationWindow()?.width ?? 800) - Kirigami.Units.gridUnit * 4)
+        preferredHeight: expandedMode
+            ? Math.max(Kirigami.Units.gridUnit * 34, (applicationWindow()?.height ?? 720) - Kirigami.Units.gridUnit * 4)
+            : Math.min(formScroll.implicitHeight + Kirigami.Units.gridUnit * 7, (applicationWindow()?.height ?? 720) - Kirigami.Units.gridUnit * 4)
         standardButtons: Kirigami.Dialog.Cancel
         customFooterActions: [
+            Kirigami.Action {
+                icon.name: blockDialog.expandedMode ? "view-restore" : "view-fullscreen"
+                text: blockDialog.expandedMode ? i18nc("@action:button", "Restore Size") : i18nc("@action:button", "Expand View")
+                onTriggered: blockDialog.expandedMode = !blockDialog.expandedMode
+            },
             Kirigami.Action {
                 icon.name: "dialog-ok"
                 text: blockDialog.editId > 0 ? i18nc("@action:button", "Save") : i18nc("@action:button", "Add")
@@ -1048,7 +1062,15 @@ Item {
             }
         ]
 
-        Kirigami.FormLayout {
+        QQC2.ScrollView {
+            id: formScroll
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentWidth: availableWidth
+            clip: true
+
+            Kirigami.FormLayout {
+                width: formScroll.availableWidth
             QQC2.TextField {
                 id: bTitle
                 Kirigami.FormData.label: i18nc("@label", "Activity:")
@@ -1253,12 +1275,21 @@ Item {
                     i18nc("routine lead", "30 minutes before")
                 ]
             }
-            QQC2.TextArea {
-                id: bNotes
+            QQC2.ScrollView {
+                id: notesScroll
                 Kirigami.FormData.label: i18nc("@label", "Notes:")
                 Layout.fillWidth: true
-                Layout.preferredHeight: Kirigami.Units.gridUnit * 3
-                wrapMode: TextEdit.Wrap
+                Layout.preferredHeight: blockDialog.expandedMode
+                    ? Kirigami.Units.gridUnit * 14
+                    : Math.min(Kirigami.Units.gridUnit * 10, Math.max(Kirigami.Units.gridUnit * 4, bNotes.contentHeight + Kirigami.Units.gridUnit))
+                clip: true
+                QQC2.ScrollBar.vertical.policy: QQC2.ScrollBar.AsNeeded
+
+                QQC2.TextArea {
+                    id: bNotes
+                    wrapMode: TextEdit.Wrap
+                    placeholderText: i18nc("@info:placeholder", "Details or notes for this routine block…")
+                }
             }
             QQC2.ComboBox {
                 id: bStorage
@@ -1274,6 +1305,7 @@ Item {
                     }
                 }
             }
+        }
         }
     }
 
