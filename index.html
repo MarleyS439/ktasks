@@ -82,7 +82,7 @@
         <div class="hero-copy">
           <div class="hero-kicker">
             <img src="assets/ktasks-symbolic.svg" alt="" width="16" height="16" class="symbolic-tint" />
-            <span data-i18n="heroKicker">Aplicativo Comunitário KDE · v1.0.9</span>
+            <span data-i18n="heroKicker">Aplicativo Comunitário KDE · v1.0.10</span>
           </div>
           <h1 data-i18n="heroTitle">Organize tarefas, foco e rotina em sintonia com o KDE Plasma</h1>
           <p class="hero-lead" data-i18n="heroLead">
@@ -97,8 +97,8 @@
               </svg>
               <span data-i18n="ctaDownload">Baixar e Instalar</span>
             </a>
-            <a href="https://github.com/MarleyS439/ktasks/releases/tag/v1.0.9" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-secondary">
-              <span data-i18n="ctaRelease">Release v1.0.9</span>
+            <a href="https://github.com/MarleyS439/ktasks/releases/tag/v1.0.10" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-secondary">
+              <span data-i18n="ctaRelease">Release v1.0.10</span>
             </a>
           </div>
 
@@ -261,7 +261,7 @@
       <div class="container">
         <div class="section-head">
           <span class="section-eyebrow" data-i18n="compatEyebrow">Compatibilidade</span>
-          <h2 data-i18n="compatTitle">Feito para Plasma 6, pronto para qualquer Linux moderno</h2>
+          <h2 data-i18n="compatTitle">Feito para Plasma 6, pronto para Linux e Windows</h2>
         </div>
 
         <div class="compat-table-wrap">
@@ -275,7 +275,7 @@
             <tbody>
               <tr>
                 <td><strong>Desktop &amp; Display</strong></td>
-                <td data-i18n="cRowDesktop">KDE Plasma 6 nativo em Wayland e X11 (estilo <code>org.kde.desktop</code> e ícones <code>Breeze</code>) + bandeja e atalho global <code>Meta+Alt+N</code>.</td>
+                <td data-i18n="cRowDesktop">KDE Plasma 6 nativo em Wayland/X11 (<code>org.kde.desktop</code>, Breeze, bandeja e atalho global) + build portátil x86_64 para Windows 10/11.</td>
               </tr>
               <tr>
                 <td><strong>Qt &amp; KDE Frameworks</strong></td>
@@ -304,7 +304,7 @@
       <div class="container">
         <div class="section-head">
           <span class="section-eyebrow" data-i18n="instEyebrow">Instalação</span>
-          <h2 data-i18n="instTitle">Baixe o pacote para sua distribuição</h2>
+          <h2 data-i18n="instTitle">Baixe o pacote para seu sistema</h2>
           <p data-i18n="instSub">
             Pacotes assinados por checksum SHA-256 gerados automaticamente no GitHub Actions a cada release.
           </p>
@@ -314,6 +314,7 @@
           <div class="install-tabs" role="tablist" aria-label="Métodos de instalação">
             <button type="button" role="tab" aria-selected="true" class="inst-tab active" data-install="flatpak">Flatpak (Universal)</button>
             <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="arch">Arch Linux / CachyOS</button>
+            <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="windows">Windows 10/11 (.zip)</button>
             <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="source" data-i18n="tabSource">Código-fonte (CMake)</button>
           </div>
 
@@ -323,7 +324,7 @@
                 <h3>Flatpak Bundle (<code>org.kde.Platform//6.10</code>)</h3>
                 <p data-i18n="fpNote">Recomendado para Ubuntu, Fedora, Debian, Mint, openSUSE e desktops não-Arch.</p>
               </div>
-              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.9/io.github.marleys439.ktasks-x86_64.flatpak" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadFlatpak">Baixar .flatpak (v1.0.9)</a>
+              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.10/io.github.marleys439.ktasks-x86_64.flatpak" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadFlatpak">Baixar .flatpak (v1.0.10)</a>
             </div>
             <div class="code-wrap">
               <pre><code id="cmd-flatpak">flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -339,11 +340,26 @@ flatpak run io.github.marleys439.ktasks</code></pre>
                 <h3>Arch Linux / CachyOS / EndeavourOS (<code>.pkg.tar.zst</code>)</h3>
                 <p data-i18n="archNote">Instalação nativa via pacman ou compilação local usando o PKGBUILD incluído.</p>
               </div>
-              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.9/ktasks-1.0.9-1-x86_64.pkg.tar.zst" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadArch">Baixar .pkg.tar.zst (v1.0.9)</a>
+              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.10/ktasks-1.0.10-1-x86_64.pkg.tar.zst" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadArch">Baixar .pkg.tar.zst (v1.0.10)</a>
             </div>
             <div class="code-wrap">
-              <pre><code id="cmd-arch">sudo pacman -U ktasks-1.0.9-1-x86_64.pkg.tar.zst</code></pre>
+              <pre><code id="cmd-arch">sudo pacman -U ktasks-1.0.10-1-x86_64.pkg.tar.zst</code></pre>
               <button type="button" class="copy-btn" data-copy="cmd-arch" data-i18n="btnCopy">Copiar</button>
+            </div>
+          </div>
+
+          <div class="install-pane" id="pane-windows">
+            <div class="pane-head">
+              <div>
+                <h3>Windows 10 / 11 (<code>x86_64 Portable .zip</code>)</h3>
+                <p data-i18n="winNote">Pacote portátil completo (ktasks.exe + bibliotecas Qt 6/KF6). Extrair e executar, sem instalador.</p>
+              </div>
+              <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.0.10/ktasks-1.0.10-windows-x86_64.zip" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadWindows">Baixar Windows .zip (v1.0.10)</a>
+            </div>
+            <div class="code-wrap">
+              <pre><code id="cmd-windows">Expand-Archive ktasks-1.0.10-windows-x86_64.zip -DestinationPath .
+.\ktasks-1.0.10-windows-x86_64\ktasks.exe</code></pre>
+              <button type="button" class="copy-btn" data-copy="cmd-windows" data-i18n="btnCopy">Copiar</button>
             </div>
           </div>
 
@@ -353,7 +369,7 @@ flatpak run io.github.marleys439.ktasks</code></pre>
                 <h3>CMake + KDE Frameworks 6</h3>
                 <p data-i18n="srcNote">Compilação direta com suporte completo a KDE Plasma e testes unitários.</p>
               </div>
-              <a href="https://github.com/MarleyS439/ktasks/releases/tag/v1.0.9" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-secondary">SHA256SUMS.txt</a>
+              <a href="https://github.com/MarleyS439/ktasks/releases/tag/v1.0.10" target="_blank" rel="noopener noreferrer" class="breeze-btn breeze-btn-secondary">SHA256SUMS.txt</a>
             </div>
             <div class="code-wrap">
               <pre><code id="cmd-source">git clone https://github.com/MarleyS439/ktasks.git
