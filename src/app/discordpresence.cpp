@@ -97,6 +97,13 @@ bool DiscordPresence::isValidClientId(const QString &clientId)
 
 QStringList DiscordPresence::candidateSocketPaths()
 {
+#ifdef Q_OS_WIN
+    QStringList paths;
+    for (int i = 0; i < 10; ++i) {
+        paths << QStringLiteral("\\\\.\\pipe\\discord-ipc-%1").arg(i);
+    }
+    return paths;
+#else
     QStringList dirs;
     const QString xdg = qEnvironmentVariable("XDG_RUNTIME_DIR");
     if (!xdg.isEmpty()) {
@@ -111,6 +118,7 @@ QStringList DiscordPresence::candidateSocketPaths()
         }
     }
     return paths;
+#endif
 }
 
 QJsonObject DiscordPresence::buildSetActivityPayload(qint64 pid,

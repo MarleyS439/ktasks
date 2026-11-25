@@ -1068,7 +1068,9 @@ Item {
                             Layout.fillWidth: true
                             color: Kirigami.Theme.disabledTextColor
                             wrapMode: Text.Wrap
-                            text: i18nc("empty external cal", "No appointments found for the next 3 days across your enabled KOrganizer / desktop or .ics calendars.")
+                            text: App.supportsLinuxDesktop
+                                  ? i18nc("empty external cal", "No appointments found for the next 3 days across your enabled KOrganizer / desktop or .ics calendars.")
+                                  : i18nc("empty external cal", "No appointments found for the next 3 days across your added .ics calendars.")
                         }
 
                         Repeater {

@@ -7,16 +7,22 @@
 
 #include <KColorSchemeManager>
 #include <KColorSchemeModel>
+#ifdef KTASKS_HAVE_GLOBALACCEL
 #include <KGlobalAccel>
+#endif
 #include <KLocalizedString>
 #include <KStatusNotifierItem>
 #include <KUser>
+#ifndef Q_OS_WIN
 #include <KWindowSystem>
+#endif
 #include <QClipboard>
 #include <QCommandLineParser>
 #include <QCoreApplication>
+#ifdef KTASKS_HAVE_DBUS
 #include <QDBusConnection>
 #include <QDBusMessage>
+#endif
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
@@ -25,6 +31,7 @@
 #include <QMenu>
 #include <QProcess>
 #include <QQmlEngine>
+#include <QSettings>
 #include <QStandardPaths>
 #include <QTimeZone>
 #include <QUrlQuery>
@@ -266,6 +273,7 @@ void Application::setupGlobalShortcut()
     connect(m_globalQuickAdd, &QAction::triggered, this, [this] {
         Q_EMIT quickAddWindowRequested();
     });
+#ifdef KTASKS_HAVE_GLOBALACCEL
     const QKeySequence defaultSeq(Qt::META | Qt::ALT | Qt::Key_N);
     // Avoid conflict if the desktop action "QuickAdd" (X-KDE-Shortcuts) already owns Meta+Alt+N.
     const auto desktopKeys = KGlobalAccel::self()->globalShortcut(kDesktopId + QStringLiteral(".desktop"), QStringLiteral("QuickAdd"));
@@ -281,16 +289,57 @@ void Application::setupGlobalShortcut()
             Q_EMIT shortcutsChanged();
         }
     });
+#endif
 }
 
 QString Application::globalShortcut() const
 {
+#ifdef KTASKS_HAVE_GLOBALACCEL
     const auto keys = KGlobalAccel::self()->shortcut(m_globalQuickAdd);
     if (!keys.isEmpty()) {
         return keys.first().toString(QKeySequence::NativeText);
     }
     const auto desktopKeys = KGlobalAccel::self()->globalShortcut(kDesktopId + QStringLiteral(".desktop"), QStringLiteral("QuickAdd"));
     return desktopKeys.isEmpty() ? QString() : desktopKeys.first().toString(QKeySequence::NativeText);
+#else
+    return QString();
+#endif
+}
+
+bool Application::supportsGlobalShortcut() const
+{
+#ifdef KTASKS_HAVE_GLOBALACCEL
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool Application::supportsTaskbarBadge() const
+{
+#ifdef KTASKS_HAVE_DBUS
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool Application::supportsDoNotDisturb() const
+{
+#ifdef KTASKS_HAVE_DBUS
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool Application::supportsLinuxDesktop() const
+{
+#ifdef Q_OS_LINUX
+    return true;
+#else
+    return false;
+#endif
 }
 
 void Application::activateQuickAddWindow(QWindow *win)
@@ -303,8 +352,12 @@ void Application::activateQuickAddWindow(QWindow *win)
         win->setWindowStates(win->windowStates() & ~Qt::WindowMinimized);
     }
     win->raise();
+#ifndef Q_OS_WIN
     KWindowSystem::updateStartupId(win);
     KWindowSystem::activateWindow(win);
+#else
+    win->requestActivate();
+#endif
 }
 
 QString Application::systemAvatarPath() const
@@ -555,7 +608,9 @@ QColor Application::adaptiveChipColor(const QColor &tint, const QColor &bg) cons
 
 void Application::openGlobalShortcutSettings()
 {
+#ifdef Q_OS_LINUX
     QProcess::startDetached(QStringLiteral("systemsettings"), {QStringLiteral("kcm_keys")});
+#endif
 }
 
 // ---- tray, badge, window ----
@@ -623,6 +678,7 @@ void Application::updateTray()
 // the number of tasks due on the application's icon.
 void Application::updateBadge()
 {
+#ifdef KTASKS_HAVE_DBUS
     const int due = m_settings->showBadge() ? m_sidebar->dueCount() : 0;
     QDBusMessage msg = QDBusMessage::createSignal(QStringLiteral("/io/github/marleys439/ktasks"), QStringLiteral("com.canonical.Unity.LauncherEntry"), QStringLiteral("Update"));
     QVariantMap props;
@@ -630,6 +686,7 @@ void Application::updateBadge()
     props[QStringLiteral("count-visible")] = due > 0;
     msg.setArguments({QStringLiteral("application://") + kDesktopId + QStringLiteral(".desktop"), props});
     QDBusConnection::sessionBus().send(msg);
+#endif
 }
 
 void Application::setWindow(QWindow *window)
@@ -645,16 +702,24 @@ void Application::showWindow(const QString &xdgToken)
     if (!m_window) {
         return;
     }
+#ifndef Q_OS_WIN
     if (!xdgToken.isEmpty()) {
         KWindowSystem::setCurrentXdgActivationToken(xdgToken);
     }
+#else
+    Q_UNUSED(xdgToken)
+#endif
     m_window->show();
     if (m_window->windowState() & Qt::WindowMinimized) {
         m_window->setWindowStates(m_window->windowStates() & ~Qt::WindowMinimized);
     }
     m_window->raise();
+#ifndef Q_OS_WIN
     KWindowSystem::updateStartupId(m_window);
     KWindowSystem::activateWindow(m_window);
+#else
+    m_window->requestActivate();
+#endif
 }
 
 void Application::quit()
@@ -732,14 +797,21 @@ void Application::setColorScheme(int index)
     Q_EMIT colorSchemeChanged();
 }
 
+#ifndef Q_OS_WIN
 static QString autostartFile()
 {
     return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QStringLiteral("/autostart/") + kDesktopId + QStringLiteral(".desktop");
 }
+#endif
 
 bool Application::autostart() const
 {
+#ifdef Q_OS_WIN
+    QSettings reg(QStringLiteral("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
+    return reg.contains(QStringLiteral("KTasks"));
+#else
     return QFile::exists(autostartFile());
+#endif
 }
 
 void Application::setAutostart(bool on)
@@ -747,6 +819,15 @@ void Application::setAutostart(bool on)
     if (on == autostart()) {
         return;
     }
+#ifdef Q_OS_WIN
+    QSettings reg(QStringLiteral("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
+    if (on) {
+        const QString exe = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
+        reg.setValue(QStringLiteral("KTasks"), QStringLiteral("\"%1\" --hidden").arg(exe));
+    } else {
+        reg.remove(QStringLiteral("KTasks"));
+    }
+#else
     if (on) {
         QDir().mkpath(QFileInfo(autostartFile()).absolutePath());
         QFile f(autostartFile());
@@ -759,12 +840,15 @@ void Application::setAutostart(bool on)
     } else {
         QFile::remove(autostartFile());
     }
+#endif
     Q_EMIT autostartChanged();
 }
 
 void Application::openNotificationSettings()
 {
+#ifdef Q_OS_LINUX
     QProcess::startDetached(QStringLiteral("systemsettings"), {QStringLiteral("kcm_notifications"), QStringLiteral("--args"), QStringLiteral("--notifyrc ktasks")});
+#endif
 }
 
 // ---- tasks ----

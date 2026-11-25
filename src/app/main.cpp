@@ -5,10 +5,18 @@
 
 #include <KAboutData>
 #include <KColorSchemeManager>
-#include <KCrash>
-#include <KDBusService>
+#include <KIconTheme>
 #include <KLocalizedQmlContext>
 #include <KLocalizedString>
+#ifdef KTASKS_HAVE_CRASH
+#include <KCrash>
+#endif
+#ifdef KTASKS_HAVE_DBUS
+#include <KDBusService>
+#else
+#include <QLocalServer>
+#include <QLocalSocket>
+#endif
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
@@ -66,6 +74,9 @@ static void migrateLegacyAfazerData(const QString &newDataDir)
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_WIN
+    KIconTheme::initTheme();
+#endif
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("ktasks");
 
@@ -81,7 +92,9 @@ int main(int argc, char *argv[])
     KAboutData::setApplicationData(about);
     QGuiApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("io.github.marleys439.ktasks"), QIcon::fromTheme(QStringLiteral("view-task"))));
     QGuiApplication::setQuitOnLastWindowClosed(false);
+#ifdef KTASKS_HAVE_CRASH
     KCrash::initialize();
+#endif
 
     QCommandLineParser parser;
     about.setupCommandLine(&parser);
@@ -93,10 +106,30 @@ int main(int argc, char *argv[])
 
     // One instance only: a second launch hands its arguments to the first.
     const bool isolated = qEnvironmentVariableIsSet("KTASKS_DATA_DIR");
+#ifdef KTASKS_HAVE_DBUS
     std::unique_ptr<KDBusService> service;
     if (!isolated) {
         service = std::make_unique<KDBusService>(KDBusService::Unique);
     }
+#else
+    std::unique_ptr<QLocalServer> localServer;
+    const QString singleInstanceKey = QStringLiteral("ktasks-single-instance");
+    if (!isolated) {
+        QLocalSocket probe;
+        probe.connectToServer(singleInstanceKey, QIODevice::WriteOnly);
+        if (probe.waitForConnected(250)) {
+            const QByteArray payload = app.arguments().join(QChar(0x1e)).toUtf8();
+            probe.write(payload);
+            probe.flush();
+            probe.waitForBytesWritten(500);
+            probe.disconnectFromServer();
+            return 0;
+        }
+        QLocalServer::removeServer(singleInstanceKey);
+        localServer = std::make_unique<QLocalServer>();
+        localServer->listen(singleInstanceKey);
+    }
+#endif
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
@@ -118,11 +151,27 @@ int main(int argc, char *argv[])
 
     Application application(&db);
     application.handleArguments(app.arguments(), true);
+#ifdef KTASKS_HAVE_DBUS
     if (service) {
         QObject::connect(service.get(), &KDBusService::activateRequested, &application, [&application](const QStringList &arguments, const QString &) {
             application.handleArguments(arguments, false);
         });
     }
+#else
+    if (localServer) {
+        QObject::connect(localServer.get(), &QLocalServer::newConnection, &application, [&localServer, &application] {
+            while (QLocalSocket *sock = localServer->nextPendingConnection()) {
+                QObject::connect(sock, &QLocalSocket::readyRead, &application, [sock, &application] {
+                    const QByteArray raw = sock->readAll();
+                    const QString decoded = QString::fromUtf8(raw);
+                    const QStringList args = decoded.isEmpty() ? QStringList() : decoded.split(QChar(0x1e));
+                    application.handleArguments(args, false);
+                });
+                QObject::connect(sock, &QLocalSocket::disconnected, sock, &QObject::deleteLater);
+            }
+        });
+    }
+#endif
 
     QQmlApplicationEngine engine;
     KLocalization::setupLocalizedContext(&engine);

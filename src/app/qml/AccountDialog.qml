@@ -98,7 +98,9 @@ Kirigami.Dialog {
                 QQC2.Label {
                     Layout.fillWidth: true
                     wrapMode: Text.Wrap
-                    text: i18nc("@info", "For any CalDAV server, or a Nextcloud app password you created yourself. The password is stored in the system keyring (KWallet).")
+                    text: App.supportsLinuxDesktop
+                          ? i18nc("@info", "For any CalDAV server, or a Nextcloud app password you created yourself. The password is stored in the system keyring (KWallet).")
+                          : i18nc("@info", "For any CalDAV server, or a Nextcloud app password you created yourself. The password is stored securely in Windows Credential Manager.")
                 }
                 Kirigami.FormLayout {
                     Layout.fillWidth: true

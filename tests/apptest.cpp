@@ -1262,6 +1262,85 @@ private Q_SLOTS:
         QVERIFY(!RoutineManager::matchesDate(yearly, QDate(2027, 6, 15)));
         QVERIFY(RoutineManager::matchesDate(yearly, QDate(2028, 6, 15)));
     }
+
+    void routineBlockModalFixedSizeAndScrollableNotes()
+    {
+        KLocalizedString::setApplicationDomain("ktasks");
+        Application app(db.get());
+        QQmlApplicationEngine engine;
+        engine.rootContext()->setContextObject(new KLocalizedQmlContext(&engine));
+        qmlRegisterSingletonInstance("app.ktasks.backend", 1, 0, "App", &app);
+        qmlRegisterUncreatableType<TaskModel>("app.ktasks.backend", 1, 0, "TaskModel", QStringLiteral("enums only"));
+
+        const QByteArray hostCode = QStringLiteral(
+            "import QtQuick\n"
+            "import org.kde.kirigami as Kirigami\n"
+            "import \"%1\"\n"
+            "Kirigami.ApplicationWindow {\n"
+            "    width: 1100\n"
+            "    height: 850\n"
+            "    visible: true\n"
+            "    property alias routinePage: rp\n"
+            "    RoutinePage { id: rp; anchors.fill: parent }\n"
+            "}\n")
+            .arg(QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml")).toString())
+            .toUtf8();
+        QQmlComponent hostComp(&engine);
+        hostComp.setData(hostCode, QUrl::fromLocalFile(QStringLiteral(KTASKS_SOURCE_DIR "/src/app/qml/routine_test_host.qml")));
+        QVERIFY2(hostComp.isReady(), qPrintable(hostComp.errorString()));
+        std::unique_ptr<QObject> hostObj(hostComp.create());
+        auto *win = qobject_cast<QQuickWindow *>(hostObj.get());
+        QVERIFY(win != nullptr);
+        win->requestActivate();
+        QVERIFY(QTest::qWaitForWindowActive(win));
+
+        auto *rp = win->property("routinePage").value<QObject *>();
+        QVERIFY(rp != nullptr);
+        auto *dialog = rp->findChild<QObject *>(QStringLiteral("routineBlockDialog"));
+        QVERIFY(dialog != nullptr);
+        QVERIFY(QMetaObject::invokeMethod(dialog, "openNew", Q_ARG(QVariant, false), Q_ARG(QVariant, 540)));
+        QTRY_VERIFY(dialog->property("opened").toBool());
+
+        auto *notesBox = dialog->findChild<QQuickItem *>(QStringLiteral("routineNotesBox"));
+        auto *notesScroll = dialog->findChild<QQuickItem *>(QStringLiteral("routineNotesScroll"));
+        auto *notesArea = dialog->findChild<QQuickItem *>(QStringLiteral("routineNotesArea"));
+        QVERIFY(notesBox != nullptr);
+        QVERIFY(notesScroll != nullptr);
+        QVERIFY(notesArea != nullptr);
+
+        QTRY_VERIFY(notesBox->height() > 20.0);
+        const qreal initialDialogHeight = dialog->property("height").toReal();
+        const qreal initialDialogWidth = dialog->property("width").toReal();
+        const qreal initialNotesBoxHeight = notesBox->height();
+        const qreal initialScrollHeight = notesScroll->height();
+        QVERIFY(initialDialogHeight > 0.0);
+        QVERIFY(initialDialogWidth > 0.0);
+
+        notesArea->forceActiveFocus();
+        QTRY_VERIFY(notesArea->hasActiveFocus());
+
+        for (int i = 0; i < 25; ++i) {
+            QTest::keyClick(win, Qt::Key_X);
+            QTest::keyClick(win, Qt::Key_Return);
+        }
+        QTest::qWait(100);
+
+        // Neither the dialog nor the notes box may grow when typing newlines
+        QCOMPARE(dialog->property("height").toReal(), initialDialogHeight);
+        QCOMPARE(dialog->property("width").toReal(), initialDialogWidth);
+        QCOMPARE(notesBox->height(), initialNotesBoxHeight);
+        QCOMPARE(notesScroll->height(), initialScrollHeight);
+
+        // Internal ScrollView must overflow and scroll cleanly
+        auto *flickable = notesScroll->property("contentItem").value<QQuickItem *>();
+        QVERIFY(flickable != nullptr);
+        QVERIFY2(flickable->property("contentHeight").toReal() > notesScroll->height() * 2.0,
+                 qPrintable(QStringLiteral("Expected internal scrollable overflow, contentHeight=%1 scrollHeight=%2")
+                                .arg(flickable->property("contentHeight").toReal())
+                                .arg(notesScroll->height())));
+        QVERIFY2(flickable->property("contentY").toReal() > 0.0,
+                 "Expected notes ScrollView to scroll internally on Return");
+    }
 };
 
 QTEST_MAIN(AppTest)

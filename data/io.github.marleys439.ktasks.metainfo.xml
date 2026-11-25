@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.10" date="2026-11-25">
+      <description>
+        <p>Use compact fixed dimensions with internal notes scrolling for the Routine Block modal, and add a portable Windows x86_64 release build with native Windows autostart, single-instance, Credential Manager, and Discord named-pipe IPC support.</p>
+      </description>
+    </release>
     <release version="1.0.9" date="2026-11-24">
       <description>
         <p>Add dynamic resizing and an expanded wide-view toggle to the Routine Block dialog, and wrap its notes field in a bounded scrollable area.</p>

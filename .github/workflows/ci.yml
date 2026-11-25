@@ -39,3 +39,76 @@ jobs:
         run: |
           appstreamcli validate --pedantic --no-net data/io.github.marleys439.ktasks.metainfo.xml
           desktop-file-validate data/io.github.marleys439.ktasks.desktop
+
+  build-windows:
+    name: Windows (UCRT64) Build & Tests
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 UCRT64
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-extra-cmake-modules
+            mingw-w64-ucrt-x86_64-gettext-tools
+            mingw-w64-ucrt-x86_64-openssl
+            mingw-w64-ucrt-x86_64-libical
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-declarative
+            mingw-w64-ucrt-x86_64-qt6-svg
+            mingw-w64-ucrt-x86_64-qt6-shadertools
+            mingw-w64-ucrt-x86_64-qt6-tools
+            mingw-w64-ucrt-x86_64-qt6-translations
+            mingw-w64-ucrt-x86_64-qtkeychain-qt6
+            mingw-w64-ucrt-x86_64-kcoreaddons
+            mingw-w64-ucrt-x86_64-kconfig
+            mingw-w64-ucrt-x86_64-ki18n
+            mingw-w64-ucrt-x86_64-knotifications
+            mingw-w64-ucrt-x86_64-kstatusnotifieritem
+            mingw-w64-ucrt-x86_64-kcolorscheme
+            mingw-w64-ucrt-x86_64-kwindowsystem
+            mingw-w64-ucrt-x86_64-kiconthemes
+            mingw-w64-ucrt-x86_64-kirigami
+            mingw-w64-ucrt-x86_64-kirigami-addons
+            mingw-w64-ucrt-x86_64-qqc2-desktop-style
+            mingw-w64-ucrt-x86_64-breeze-icons
+
+      - name: Detect KF6 version
+        id: kfver
+        run: |
+          ver=$(pacman -Q mingw-w64-ucrt-x86_64-kcoreaddons | awk '{print $2}' | cut -d- -f1)
+          echo "ver=$ver" >> "$GITHUB_OUTPUT"
+
+      - name: Cache KF6CalendarCore
+        id: cache-kcal
+        uses: actions/cache@v4
+        with:
+          path: |
+            C:/msys64/ucrt64/include/KF6/KCalendarCore
+            C:/msys64/ucrt64/lib/cmake/KF6CalendarCore
+            C:/msys64/ucrt64/lib/libKF6CalendarCore*
+            C:/msys64/ucrt64/bin/libKF6CalendarCore*
+          key: ucrt64-kf6calendarcore-${{ steps.kfver.outputs.ver }}
+
+      - name: Build & install KF6CalendarCore
+        run: bash packaging/install-win-kcalendarcore.sh
+
+      - name: Configure and build (Release)
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j"$(nproc)"
+
+      - name: Run unit tests
+        run: |
+          QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure

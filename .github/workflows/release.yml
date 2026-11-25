@@ -1,4 +1,4 @@
-name: Release Packages (Arch + Flatpak)
+name: Release Packages (Arch + Flatpak + Windows)
 
 on:
   push:
@@ -84,9 +84,90 @@ jobs:
           name: ktasks-flatpak-bundle
           path: dist-flatpak/io.github.marleys439.ktasks-x86_64.flatpak
 
+  package-windows:
+    name: Windows Portable Bundle (.zip)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 UCRT64
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-extra-cmake-modules
+            mingw-w64-ucrt-x86_64-gettext-tools
+            mingw-w64-ucrt-x86_64-openssl
+            mingw-w64-ucrt-x86_64-libical
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-declarative
+            mingw-w64-ucrt-x86_64-qt6-svg
+            mingw-w64-ucrt-x86_64-qt6-shadertools
+            mingw-w64-ucrt-x86_64-qt6-tools
+            mingw-w64-ucrt-x86_64-qt6-translations
+            mingw-w64-ucrt-x86_64-qtkeychain-qt6
+            mingw-w64-ucrt-x86_64-kcoreaddons
+            mingw-w64-ucrt-x86_64-kconfig
+            mingw-w64-ucrt-x86_64-ki18n
+            mingw-w64-ucrt-x86_64-knotifications
+            mingw-w64-ucrt-x86_64-kstatusnotifieritem
+            mingw-w64-ucrt-x86_64-kcolorscheme
+            mingw-w64-ucrt-x86_64-kwindowsystem
+            mingw-w64-ucrt-x86_64-kiconthemes
+            mingw-w64-ucrt-x86_64-kirigami
+            mingw-w64-ucrt-x86_64-kirigami-addons
+            mingw-w64-ucrt-x86_64-qqc2-desktop-style
+            mingw-w64-ucrt-x86_64-breeze-icons
+            mingw-w64-ucrt-x86_64-python
+            7zip
+
+      - name: Detect KF6 version
+        id: kfver
+        run: |
+          ver=$(pacman -Q mingw-w64-ucrt-x86_64-kcoreaddons | awk '{print $2}' | cut -d- -f1)
+          echo "ver=$ver" >> "$GITHUB_OUTPUT"
+
+      - name: Cache KF6CalendarCore
+        id: cache-kcal
+        uses: actions/cache@v4
+        with:
+          path: |
+            C:/msys64/ucrt64/include/KF6/KCalendarCore
+            C:/msys64/ucrt64/lib/cmake/KF6CalendarCore
+            C:/msys64/ucrt64/lib/libKF6CalendarCore*
+            C:/msys64/ucrt64/bin/libKF6CalendarCore*
+          key: ucrt64-kf6calendarcore-${{ steps.kfver.outputs.ver }}
+
+      - name: Build & install KF6CalendarCore
+        run: bash packaging/install-win-kcalendarcore.sh
+
+      - name: Build, test, and package portable Windows zip
+        run: |
+          cmake -S . -B build-win -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build-win -j"$(nproc)"
+          QT_QPA_PLATFORM=offscreen ctest --test-dir build-win --output-on-failure
+          pkgver=$(bash -c 'source packaging/PKGBUILD && printf "%s" "$pkgver"')
+          mkdir -p dist-windows
+          bash packaging/package-windows.sh "$(pwd)" "$(pwd)/build-win" "$(pwd)/dist-windows" "$pkgver"
+
+      - name: Upload Windows portable archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ktasks-windows-zip
+          path: dist-windows/*.zip
+
   publish-release:
     name: Publish GitHub Release Assets
-    needs: [package-archlinux, package-flatpak]
+    needs: [package-archlinux, package-flatpak, package-windows]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
@@ -99,7 +180,7 @@ jobs:
       - name: Generate SHA256SUMS.txt
         run: |
           cd release-assets
-          sha256sum *.pkg.tar.zst *.flatpak > SHA256SUMS.txt
+          sha256sum *.pkg.tar.zst *.flatpak *.zip > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
       - name: Create or update GitHub Release with packages

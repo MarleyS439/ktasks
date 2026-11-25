@@ -6,9 +6,11 @@
 
 #include <KLocalizedString>
 #include <KNotification>
+#ifdef KTASKS_HAVE_DBUS
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusReply>
+#endif
 #include <QLocale>
 #include <QStandardPaths>
 
@@ -37,6 +39,7 @@ FocusManager::~FocusManager()
 {
     if (m_dndActive) {
         m_dndActive = false;
+#ifdef KTASKS_HAVE_DBUS
         if (!QStandardPaths::isTestModeEnabled() && m_dndCookie != 0) {
             QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.Notifications"),
                                                               QStringLiteral("/org/freedesktop/Notifications"),
@@ -46,6 +49,7 @@ FocusManager::~FocusManager()
             QDBusConnection::sessionBus().call(msg, QDBus::NoBlock);
             m_dndCookie = 0;
         }
+#endif
     }
 }
 
@@ -456,6 +460,9 @@ void FocusManager::syncDesktopIntegrations()
 
 void FocusManager::syncDoNotDisturb()
 {
+#ifndef KTASKS_HAVE_DBUS
+    return;
+#else
     const bool wantDnd = m_settings->focusDoNotDisturb() && m_hasSession && m_running && (m_mode == FocusMode::Pomodoro || m_mode == FocusMode::Stopwatch);
     if (wantDnd == m_dndActive) {
         return;
@@ -486,6 +493,7 @@ void FocusManager::syncDoNotDisturb()
         m_dndActive = false;
     }
     Q_EMIT integrationsChanged();
+#endif
 }
 
 void FocusManager::syncDiscordPresence()

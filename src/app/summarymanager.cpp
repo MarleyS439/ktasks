@@ -499,6 +499,7 @@ void SummaryManager::rebuildInternal(bool emitChanged, bool forceExternalRefresh
 QStringList SummaryManager::discoverExternalIcsPaths() const
 {
     QStringList rawPaths;
+#ifdef Q_OS_LINUX
     if (m_settings->integrateKOrganizer()) {
         const QString cfgDir = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
         const QDir dir(cfgDir);
@@ -517,6 +518,7 @@ QStringList SummaryManager::discoverExternalIcsPaths() const
             rawPaths << stdIcs;
         }
     }
+#endif
     rawPaths << m_settings->extraIcsPaths();
 
     QStringList out;
@@ -541,7 +543,11 @@ void SummaryManager::loadLocalExternalEvents(const QDate &today, const QDateTime
     m_icsSources.clear();
     m_icsLoadedFiles = 0;
 
-    if (!m_settings->integrateKOrganizer() && m_settings->extraIcsPaths().isEmpty()) {
+    if (
+#ifdef Q_OS_LINUX
+        !m_settings->integrateKOrganizer() &&
+#endif
+        m_settings->extraIcsPaths().isEmpty()) {
         return;
     }
 
@@ -880,6 +886,7 @@ void SummaryManager::mergeExternalAndComputeSchedule(bool emitChanged)
     QStringList sortedSources = allSources.values();
     sortedSources.sort(Qt::CaseInsensitive);
 
+#ifdef Q_OS_LINUX
     if (!m_settings->integrateKOrganizer() && m_settings->extraIcsPaths().isEmpty()) {
         m_externalCalStatus = i18nc("external calendar status", "External agenda disabled in Settings.");
     } else if (!sortedSources.isEmpty()) {
@@ -893,6 +900,19 @@ void SummaryManager::mergeExternalAndComputeSchedule(bool emitChanged)
     } else {
         m_externalCalStatus = i18nc("external calendar status", "No external calendar with events found. Connect KOrganizer or add an .ics file in Settings.");
     }
+#else
+    if (m_settings->extraIcsPaths().isEmpty()) {
+        m_externalCalStatus = i18nc("external calendar status", "Add a local .ics calendar file in Settings to view appointments here.");
+    } else if (!sortedSources.isEmpty()) {
+        m_externalCalStatus = i18ncp("external cal sources",
+                                     "Read-only from %2 (%1 calendar) — kept separate from Routine.",
+                                     "Read-only from %2 (%1 calendars) — kept separate from Routine.",
+                                     sortedSources.size(),
+                                     sortedSources.join(QStringLiteral(", ")));
+    } else {
+        m_externalCalStatus = i18nc("external calendar status", "No events found in your configured .ics calendar files.");
+    }
+#endif
 
     Q_UNUSED(today)
     if (emitChanged) {
@@ -1023,6 +1043,7 @@ void SummaryManager::resolveWeatherLocationAndFetch(bool /*force*/)
         return;
     }
 
+#ifdef Q_OS_LINUX
     const QString kwPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + QStringLiteral("/kweather/kweatherrc");
     if (QFileInfo::exists(kwPath)) {
         KSharedConfigPtr kwCfg = KSharedConfig::openConfig(kwPath, KConfig::SimpleConfig);
@@ -1046,6 +1067,7 @@ void SummaryManager::resolveWeatherLocationAndFetch(bool /*force*/)
             return;
         }
     }
+#endif
 
     ensureNetwork();
     m_weatherLoading = true;

@@ -897,6 +897,7 @@ Item {
     // Add / Edit Routine Block Dialog
     GuardedDialog {
         id: blockDialog
+        objectName: "routineBlockDialog"
         property var editId: 0
         property int daysMask: 127
         property string repeatFreq: "WEEKLY"
@@ -975,7 +976,6 @@ Item {
         }
 
         function openNewWithRange(asTemplate, startMin, durationMins) {
-            expandedMode = false;
             editId = 0;
             isTemplate = !!asTemplate;
             restrictStartDate = true;
@@ -1010,7 +1010,6 @@ Item {
             if (!info.exists) {
                 return;
             }
-            expandedMode = false;
             editId = id;
             isTemplate = !!info.isTemplate;
             const infoStart = info.startDate ?? "";
@@ -1037,23 +1036,12 @@ Item {
             bTitle.forceActiveFocus();
         }
 
-        property bool expandedMode: false
-
         title: editId > 0 ? i18nc("@title:window", "Edit Routine Block") : i18nc("@title:window", "New Routine Block")
         padding: Kirigami.Units.largeSpacing
-        preferredWidth: expandedMode
-            ? Math.max(Kirigami.Units.gridUnit * 48, (applicationWindow()?.width ?? 1000) - Kirigami.Units.gridUnit * 4)
-            : Math.min(Kirigami.Units.gridUnit * 34, (applicationWindow()?.width ?? 800) - Kirigami.Units.gridUnit * 4)
-        preferredHeight: expandedMode
-            ? Math.max(Kirigami.Units.gridUnit * 34, (applicationWindow()?.height ?? 720) - Kirigami.Units.gridUnit * 4)
-            : Math.min(formScroll.implicitHeight + Kirigami.Units.gridUnit * 7, (applicationWindow()?.height ?? 720) - Kirigami.Units.gridUnit * 4)
+        preferredWidth: Kirigami.Units.gridUnit * 32
+        preferredHeight: Kirigami.Units.gridUnit * 30
         standardButtons: Kirigami.Dialog.Cancel
         customFooterActions: [
-            Kirigami.Action {
-                icon.name: blockDialog.expandedMode ? "view-restore" : "view-fullscreen"
-                text: blockDialog.expandedMode ? i18nc("@action:button", "Restore Size") : i18nc("@action:button", "Expand View")
-                onTriggered: blockDialog.expandedMode = !blockDialog.expandedMode
-            },
             Kirigami.Action {
                 icon.name: "dialog-ok"
                 text: blockDialog.editId > 0 ? i18nc("@action:button", "Save") : i18nc("@action:button", "Add")
@@ -1062,15 +1050,7 @@ Item {
             }
         ]
 
-        QQC2.ScrollView {
-            id: formScroll
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            contentWidth: availableWidth
-            clip: true
-
-            Kirigami.FormLayout {
-                width: formScroll.availableWidth
+        Kirigami.FormLayout {
             QQC2.TextField {
                 id: bTitle
                 Kirigami.FormData.label: i18nc("@label", "Activity:")
@@ -1275,20 +1255,45 @@ Item {
                     i18nc("routine lead", "30 minutes before")
                 ]
             }
-            QQC2.ScrollView {
-                id: notesScroll
+            Rectangle {
+                id: notesBox
+                objectName: "routineNotesBox"
                 Kirigami.FormData.label: i18nc("@label", "Notes:")
                 Layout.fillWidth: true
-                Layout.preferredHeight: blockDialog.expandedMode
-                    ? Kirigami.Units.gridUnit * 14
-                    : Math.min(Kirigami.Units.gridUnit * 10, Math.max(Kirigami.Units.gridUnit * 4, bNotes.contentHeight + Kirigami.Units.gridUnit))
-                clip: true
-                QQC2.ScrollBar.vertical.policy: QQC2.ScrollBar.AsNeeded
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 5
+                Layout.minimumHeight: Kirigami.Units.gridUnit * 5
+                Layout.maximumHeight: Kirigami.Units.gridUnit * 5
+                implicitHeight: Kirigami.Units.gridUnit * 5
+                Kirigami.Theme.inherit: false
+                color: Kirigami.Theme.backgroundColor
+                border.width: 1
+                border.color: bNotes.activeFocus ? Kirigami.Theme.highlightColor : Qt.alpha(Kirigami.Theme.textColor, 0.22)
+                radius: Kirigami.Units.cornerRadius
 
-                QQC2.TextArea {
-                    id: bNotes
-                    wrapMode: TextEdit.Wrap
-                    placeholderText: i18nc("@info:placeholder", "Details or notes for this routine block…")
+                TapHandler {
+                    onTapped: bNotes.forceActiveFocus()
+                }
+
+                QQC2.ScrollView {
+                    id: notesScroll
+                    objectName: "routineNotesScroll"
+                    anchors.fill: parent
+                    anchors.margins: 1
+                    clip: true
+                    QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+                    QQC2.ScrollBar.vertical.policy: QQC2.ScrollBar.AsNeeded
+
+                    QQC2.TextArea {
+                        id: bNotes
+                        objectName: "routineNotesArea"
+                        padding: Kirigami.Units.smallSpacing
+                        wrapMode: TextEdit.Wrap
+                        textFormat: TextEdit.PlainText
+                        selectByMouse: true
+                        activeFocusOnTab: true
+                        background: null
+                        placeholderText: i18nc("@info:placeholder", "Details or notes for this routine block…")
+                    }
                 }
             }
             QQC2.ComboBox {
@@ -1305,7 +1310,6 @@ Item {
                     }
                 }
             }
-        }
         }
     }
 

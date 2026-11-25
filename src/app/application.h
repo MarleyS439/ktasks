@@ -57,6 +57,10 @@ class Application : public AbstractKirigamiApplication
     Q_PROPERTY(int colorScheme READ colorScheme WRITE setColorScheme NOTIFY colorSchemeChanged)
     Q_PROPERTY(bool autostart READ autostart WRITE setAutostart NOTIFY autostartChanged)
     Q_PROPERTY(QString globalShortcut READ globalShortcut NOTIFY shortcutsChanged)
+    Q_PROPERTY(bool supportsGlobalShortcut READ supportsGlobalShortcut CONSTANT)
+    Q_PROPERTY(bool supportsTaskbarBadge READ supportsTaskbarBadge CONSTANT)
+    Q_PROPERTY(bool supportsDoNotDisturb READ supportsDoNotDisturb CONSTANT)
+    Q_PROPERTY(bool supportsLinuxDesktop READ supportsLinuxDesktop CONSTANT)
     Q_PROPERTY(QString systemAvatarPath READ systemAvatarPath CONSTANT)
     Q_PROPERTY(QString systemFullName READ systemFullName CONSTANT)
     Q_PROPERTY(QString effectiveAvatarPath READ effectiveAvatarPath NOTIFY profileChanged)
@@ -150,6 +154,10 @@ public:
     bool autostart() const;
     void setAutostart(bool on);
     QString globalShortcut() const;
+    bool supportsGlobalShortcut() const;
+    bool supportsTaskbarBadge() const;
+    bool supportsDoNotDisturb() const;
+    bool supportsLinuxDesktop() const;
     QString systemAvatarPath() const;
     QString systemFullName() const;
     QString effectiveAvatarPath() const;

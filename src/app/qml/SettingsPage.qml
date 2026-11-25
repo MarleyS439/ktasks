@@ -122,6 +122,7 @@ Kirigami.Page {
                     }
                 }
                 FormCard.FormSwitchDelegate {
+                    visible: App.supportsLinuxDesktop
                     text: i18nc("@option:check", "Use system profile picture")
                     description: App.systemAvatarPath !== "" ? i18nc("@info", "Uses the user avatar configured in KDE System Settings.")
                                                              : i18nc("@info", "No system avatar detected; choose a custom image below if desired.")
@@ -161,7 +162,9 @@ Kirigami.Page {
             FormCard.FormCard {
                 FormCard.FormComboBoxDelegate {
                     text: i18nc("@label:listbox", "Color scheme")
-                    description: i18nc("@info", "“Default” follows the color scheme chosen in System Settings.")
+                    description: App.supportsLinuxDesktop
+                                 ? i18nc("@info", "“Default” follows the color scheme chosen in System Settings.")
+                                 : i18nc("@info", "“Default” follows the operating system light or dark appearance.")
                     model: App.colorSchemes
                     currentIndex: App.colorScheme
                     onActivated: index => App.colorScheme = index
@@ -309,6 +312,7 @@ Kirigami.Page {
                     onToggled: App.settings.showTrayIcon = checked
                 }
                 FormCard.FormSwitchDelegate {
+                    visible: App.supportsTaskbarBadge
                     text: i18nc("@option:check", "Show the number of tasks due on the task manager icon")
                     checked: App.settings.showBadge
                     onToggled: App.settings.showBadge = checked
@@ -335,6 +339,7 @@ Kirigami.Page {
                     onClicked: App.trigger("options_configure_keybinding")
                 }
                 FormCard.FormButtonDelegate {
+                    visible: App.supportsGlobalShortcut
                     icon.name: "preferences-desktop-keyboard-shortcut"
                     text: i18nc("@action:button", "Shortcut to Add a Task from Anywhere")
                     description: App.globalShortcut !== "" ? i18nc("@info %1 is a keyboard shortcut", "Currently %1. Change it in System Settings.", App.globalShortcut)
@@ -447,8 +452,11 @@ Kirigami.Page {
                     currentIndex: Math.max(0, values.indexOf(App.settings.pomodoroLongBreakMinutes))
                     onActivated: index => App.settings.pomodoroLongBreakMinutes = values[index]
                 }
-                FormCard.FormDelegateSeparator {}
+                FormCard.FormDelegateSeparator {
+                    visible: App.supportsDoNotDisturb
+                }
                 FormCard.FormSwitchDelegate {
+                    visible: App.supportsDoNotDisturb
                     text: i18nc("@option:check", "Activate PC Do Not Disturb mode while focusing")
                     description: i18nc("@info", "Automatically silences desktop notifications during active Pomodoro or Stopwatch sessions and restores them on breaks or completion.")
                     checked: App.settings.focusDoNotDisturb
@@ -533,6 +541,7 @@ Kirigami.Page {
                     onClicked: App.notifier.sendTestNotification()
                 }
                 FormCard.FormButtonDelegate {
+                    visible: App.supportsLinuxDesktop
                     icon.name: "preferences-desktop-notification"
                     text: i18nc("@action:button", "Sounds and Pop-ups in System Settings…")
                     description: i18nc("@info", "Choose per kind of notification whether it shows a pop-up, plays a sound or stays in the history.")
@@ -582,9 +591,11 @@ Kirigami.Page {
 
             // ---------- Desktop Focus Integration ----------
             FormCard.FormHeader {
+                visible: App.supportsDoNotDisturb
                 title: i18nc("@title:group", "Desktop Integration")
             }
             FormCard.FormCard {
+                visible: App.supportsDoNotDisturb
                 FormCard.FormSwitchDelegate {
                     text: i18nc("@option:check", "Enable PC Do Not Disturb mode during focus")
                     description: i18nc("@info", "Silences desktop notifications while Pomodoro or Stopwatch is active.")
@@ -599,6 +610,7 @@ Kirigami.Page {
             }
             FormCard.FormCard {
                 FormCard.FormSwitchDelegate {
+                    visible: App.supportsLinuxDesktop
                     text: i18nc("@option:check", "Show KOrganizer / desktop calendars on Summary (read-only)")
                     description: i18nc("@info", "Reads active KOrganizer/Akonadi calendars (Google Agenda, Birthdays, personal) and local .ics files into External Agenda without mixing them into Nextcloud Routine sync.")
                     checked: App.settings.integrateKOrganizer
@@ -627,7 +639,9 @@ Kirigami.Page {
                     text: i18nc("@label", "Weather city")
                     description: App.settings.weatherCity !== ""
                                  ? App.settings.weatherCity
-                                 : i18nc("@info", "Automatic (uses KDE KWeather city or approximate IP location)")
+                                 : (App.supportsLinuxDesktop
+                                    ? i18nc("@info", "Automatic (uses KDE KWeather city or approximate IP location)")
+                                    : i18nc("@info", "Automatic (uses approximate IP location)"))
                     trailing: RowLayout {
                         spacing: Kirigami.Units.smallSpacing
                         QQC2.Button {
