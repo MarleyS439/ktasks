@@ -169,7 +169,10 @@ echo "Smoke screenshot verified: $(ls -lh "$SMOKE_IMG")"
 rm -rf "$SMOKE_DATA"
 
 # Pack final portable zip
-(cd "$OUT_DIR" && 7z a -tzip -mx=9 "${BUNDLE_NAME}.zip" "${BUNDLE_NAME}" >/dev/null || python3 -c "
+(cd "$OUT_DIR" && if command -v 7z >/dev/null 2>&1; then
+    7z a -tzip -mx=9 "${BUNDLE_NAME}.zip" "${BUNDLE_NAME}" >/dev/null
+else
+    python3 -c "
 import zipfile, os
 zip_path = '${BUNDLE_NAME}.zip'
 base = '${BUNDLE_NAME}'
@@ -178,5 +181,6 @@ with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as zf
         for f in fs:
             p = os.path.join(r, f)
             zf.write(p, p)
-")
+"
+fi)
 ls -lh "${OUT_DIR}/${BUNDLE_NAME}.zip"
