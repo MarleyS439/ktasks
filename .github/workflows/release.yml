@@ -154,7 +154,10 @@ jobs:
         run: |
           cmake -S . -B build-win -G Ninja -DCMAKE_BUILD_TYPE=Release
           cmake --build build-win -j"$(nproc)"
-          QT_QPA_PLATFORM=offscreen ctest --test-dir build-win --output-on-failure
+          if ! QT_QPA_PLATFORM=offscreen ctest --test-dir build-win --output-on-failure -V; then
+            QT_QPA_PLATFORM=offscreen ./build-win/bin/apptest.exe || true
+            exit 1
+          fi
           pkgver=$(bash -c 'source packaging/PKGBUILD && printf "%s" "$pkgver"')
           mkdir -p dist-windows
           bash packaging/package-windows.sh "$(pwd)" "$(pwd)/build-win" "$(pwd)/dist-windows" "$pkgver"

@@ -1098,6 +1098,7 @@ private Q_SLOTS:
         // 1. Do Not Disturb toggles across Focus / Pause / Break / Complete / Setting off
         QVERIFY(!fm.dndActive());
         fm.startPomodoro(privTaskId);
+#ifdef KTASKS_HAVE_DBUS
         QVERIFY(fm.dndActive());
         fm.togglePause();
         QVERIFY(!fm.dndActive());
@@ -1120,6 +1121,11 @@ private Q_SLOTS:
         fm.advanceSecondsForTesting(25 * 60);
         QVERIFY(!fm.hasSession());
         QVERIFY(!fm.dndActive());
+#else
+        QVERIFY(!fm.dndActive());
+        fm.discard();
+        QVERIFY(!fm.dndActive());
+#endif
 
         // 3. Discord Rich Presence omits private task title when showTaskTitle == false
         DiscordPresence::ActivityState act;
