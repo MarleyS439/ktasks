@@ -103,12 +103,12 @@ Translations = translations
 EOF
 
 # Recursively resolve every MinGW/UCRT64 PE DLL dependency using objdump
-PKG_DIR_UNIX="$PKG_DIR" python3 - << 'PYEOF'
+PKG_DIR_WIN="$(cygpath -w "$PKG_DIR")" UCRT_BIN_WIN="$(cygpath -w /ucrt64/bin)" python3 - << 'PYEOF'
 import os, re, shutil, subprocess
 from collections import deque
 
-pkg_dir = os.environ["PKG_DIR_UNIX"]
-ucrt_bin = "/ucrt64/bin"
+pkg_dir = os.environ["PKG_DIR_WIN"]
+ucrt_bin = os.environ["UCRT_BIN_WIN"]
 ucrt_map = {f.lower(): f for f in os.listdir(ucrt_bin) if f.lower().endswith(".dll")}
 
 queue = deque()
@@ -144,19 +144,16 @@ PYEOF
 SMOKE_DATA=$(mktemp -d)
 SMOKE_IMG="${SMOKE_DATA}/smoke.png"
 echo "Running isolated Windows portable bundle smoke test..."
-if command -v cygpath >/dev/null 2>&1; then
-    SMOKE_DATA_WIN=$(cygpath -w "$SMOKE_DATA")
-    SMOKE_IMG_WIN=$(cygpath -w "$SMOKE_IMG")
-else
-    SMOKE_DATA_WIN="$SMOKE_DATA"
-    SMOKE_IMG_WIN="$SMOKE_IMG"
-fi
+SMOKE_DATA_WIN=$(cygpath -w "$SMOKE_DATA")
+SMOKE_IMG_WIN=$(cygpath -w "$SMOKE_IMG")
 
 env -i \
     SYSTEMROOT="${SYSTEMROOT:-C:\\Windows}" \
     WINDIR="${WINDIR:-C:\\Windows}" \
-    TEMP="${TEMP:-C:\\Windows\\Temp}" \
-    TMP="${TMP:-C:\\Windows\\Temp}" \
+    TEMP="$SMOKE_DATA_WIN" \
+    TMP="$SMOKE_DATA_WIN" \
+    LOCALAPPDATA="$SMOKE_DATA_WIN" \
+    APPDATA="$SMOKE_DATA_WIN" \
     PATH="/c/Windows/System32:/c/Windows" \
     QT_QPA_PLATFORM="offscreen" \
     KTASKS_DATA_DIR="$SMOKE_DATA_WIN" \
