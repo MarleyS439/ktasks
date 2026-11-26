@@ -129,6 +129,13 @@ Prebuilt bundles are attached to every tagged [GitHub Release](https://github.co
   ```bash
   sudo pacman -U ktasks-*-x86_64.pkg.tar.zst
   ```
+- **Windows 10 / 11 (portable):**
+  Extract `ktasks-<version>-windows-x86_64.zip` anywhere and run `ktasks.exe`.
+  Data lives in `%APPDATA%\ktasks` (`ktasks.db`), and each run writes
+  `ktasks.log` there (the previous run is kept as `ktasks.log.old`), which is
+  the file to attach to a bug report. Notifications appear as tray
+  notifications; the system-wide shortcut, taskbar badge and Do Not Disturb
+  are Linux-only.
 
 ## Building from Source & Installing
 
@@ -158,6 +165,7 @@ ktasks --add "Buy milk tomorrow 9am #home"   # Add task to running instance (or 
 ktasks --quick-add                           # Open global quick entry dialog
 ktasks --hidden                              # Start minimized in the system tray
 QT_LOGGING_RULES="ktasks.*=true" ktasks      # Enable debug logs (passwords/content redacted)
+KTASKS_LOG_FILE=/tmp/ktasks.log ktasks       # Also write the log to a file (always on for Windows)
 ```
 
 ## Translations

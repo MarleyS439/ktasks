@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.0.11" date="2026-11-26">
+      <description>
+        <p>Fix the Windows build: the interface is translated again, reminders and other notifications show as tray notifications, the tray icon no longer disappears, a profile picture can be chosen and loads correctly, and secure connections no longer miss their OpenSSL library. Windows now keeps a ktasks.log next to the data. The view leaves a list that was deleted, and a new end-to-end test exercises every part of the window.</p>
+      </description>
+    </release>
     <release version="1.0.10" date="2026-11-25">
       <description>
         <p>Use compact fixed dimensions with internal notes scrolling for the Routine Block modal, and add a portable Windows x86_64 release build with native Windows autostart, single-instance, Credential Manager, and Discord named-pipe IPC support.</p>
