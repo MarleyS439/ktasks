@@ -129,9 +129,11 @@ Prebuilt bundles are attached to every tagged [GitHub Release](https://github.co
   ```bash
   sudo pacman -U ktasks-*-x86_64.pkg.tar.zst
   ```
-- **Android 9+ (arm64):**
-  Download `ktasks-<version>-android-arm64.apk` from Releases and open it on the
-  phone (allow installing apps from your browser or file manager when asked).
+- **Android 9+:**
+  Download `ktasks-<version>-android-arm64.apk` from Releases (most phones), or
+  `ktasks-<version>-android-armv7.apk` for phones with a 32-bit Android such as
+  the Samsung Galaxy A01/A10 (if the arm64 one says "app not compatible"), and
+  open it on the phone (allow installing apps from your browser or file manager when asked).
   Updates install over the previous version and keep the data. Allow
   notifications when the app asks, to receive reminders. Reminders are shown
   while KTasks is running; the tray, autostart, global shortcut, Discord and

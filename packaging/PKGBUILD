@@ -1,7 +1,7 @@
 # Maintainer: MarleyS439 <https://github.com/MarleyS439>
 # AUR/Local Arch package for KTasks
 pkgname=ktasks
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=1
 pkgdesc="Offline-first task, priority matrix, Pomodoro, routine, and journal manager for KDE Plasma (optional Nextcloud sync)"
 arch=('x86_64' 'aarch64')
