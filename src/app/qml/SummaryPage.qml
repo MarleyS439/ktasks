@@ -153,7 +153,7 @@ Item {
                         spacing: Kirigami.Units.largeSpacing
 
                         Components.Avatar {
-                            source: App.effectiveAvatarPath !== "" ? ("file://" + App.effectiveAvatarPath) : ""
+                            source: App.effectiveAvatarUrl
                             name: App.effectiveProfileName
                             implicitWidth: Kirigami.Units.iconSizes.large
                             implicitHeight: Kirigami.Units.iconSizes.large

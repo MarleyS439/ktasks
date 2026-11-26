@@ -19,6 +19,7 @@
 #endif
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDateTime>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -34,6 +35,56 @@
 #ifndef KTASKS_VERSION
 #define KTASKS_VERSION "1.0.0"
 #endif
+
+// A Windows GUI program has no console, so warnings would be lost. Keep the
+// messages of the current and the previous session next to the database, where
+// a user can find them and attach them to a bug report. KTASKS_LOG_FILE forces
+// a log file on any platform.
+static QFile *s_logFile = nullptr;
+static QtMessageHandler s_previousHandler = nullptr;
+
+static void fileMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    if (s_logFile && s_logFile->isOpen()) {
+        static const char *const names[] = {"debug", "warning", "critical", "fatal", "info"};
+        const int idx = (type >= QtDebugMsg && type <= QtInfoMsg) ? int(type) : 0;
+        const QByteArray line = QDateTime::currentDateTime().toString(Qt::ISODateWithMs).toUtf8() + ' ' + names[idx] + ' '
+            + (context.category ? QByteArray(context.category) + ": " : QByteArray()) + msg.toUtf8() + '\n';
+        s_logFile->write(line);
+        s_logFile->flush();
+    }
+    if (s_previousHandler) {
+        s_previousHandler(type, context, msg);
+    }
+}
+
+static void setupFileLogging(const QString &dataDir)
+{
+    QString path = qEnvironmentVariable("KTASKS_LOG_FILE");
+#ifdef Q_OS_WIN
+    if (path.isEmpty()) {
+        path = dataDir + QStringLiteral("/ktasks.log");
+    }
+#else
+    Q_UNUSED(dataDir)
+#endif
+    if (path.isEmpty()) {
+        return;
+    }
+    QDir().mkpath(QFileInfo(path).absolutePath());
+    const QString old = path + QStringLiteral(".old");
+    if (QFileInfo::exists(path)) {
+        QFile::remove(old);
+        QFile::rename(path, old);
+    }
+    s_logFile = new QFile(path);
+    if (!s_logFile->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        delete s_logFile;
+        s_logFile = nullptr;
+        return;
+    }
+    s_previousHandler = qInstallMessageHandler(fileMessageHandler);
+}
 
 static void migrateLegacyAfazerData(const QString &newDataDir)
 {
@@ -138,6 +189,8 @@ int main(int argc, char *argv[])
     KColorSchemeManager::instance();
 
     const QString dataDir = isolated ? qEnvironmentVariable("KTASKS_DATA_DIR") : QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    setupFileLogging(dataDir);
+    qCInfo(lcApp) << "KTasks" << KTASKS_VERSION << "starting; data directory:" << QDir::toNativeSeparators(dataDir);
     if (!isolated) {
         migrateLegacyAfazerData(dataDir);
     }

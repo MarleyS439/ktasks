@@ -31,6 +31,13 @@ public:
     /** Shows a sample reminder so the user can see what to expect. */
     Q_INVOKABLE void sendTestNotification();
 
+    /**
+     * Whether KNotifications can show anything on this platform. The Windows
+     * build of KNotifications has no visual backend, so there every
+     * notification is handed to fallbackMessage() instead (a tray balloon).
+     */
+    static bool hasNativeBackend();
+
     struct Due {
         qint64 taskId;
         QString uid;
@@ -54,6 +61,8 @@ public:
 Q_SIGNALS:
     /** The user clicked a notification: show the window, select the task (0: none). */
     void activateRequested(qlonglong taskId, const QString &view, const QString &xdgToken);
+    /** A notification for platforms without a KNotifications backend; see hasNativeBackend(). */
+    void fallbackMessage(const QString &title, const QString &text, qlonglong taskId, const QString &view, bool warning);
 
 private:
     void check();
@@ -64,6 +73,7 @@ private:
     void maybeShowSummary(const QDateTime &now);
     void closeObsolete();
     void snooze(const QString &uid, int minutes);
+    void deliver(KNotification *n, qlonglong taskId, const QString &view, bool warning = false);
 
     TaskStore *m_store;
     Settings *m_settings;

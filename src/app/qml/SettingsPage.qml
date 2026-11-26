@@ -109,13 +109,13 @@ Kirigami.Page {
                     text: App.effectiveProfileName
                     description: App.effectiveProfileEmail !== "" ? App.effectiveProfileEmail : i18nc("@info", "Add your name, email, and profile picture")
                     leading: Components.Avatar {
-                        source: App.effectiveAvatarPath !== "" ? ("file://" + App.effectiveAvatarPath) : ""
+                        source: App.effectiveAvatarUrl
                         name: App.effectiveProfileName
                         implicitWidth: Kirigami.Units.iconSizes.large
                         implicitHeight: Kirigami.Units.iconSizes.large
                     }
                     trailing: QQC2.Button {
-                        visible: !App.settings.useSystemAvatar
+                        visible: !App.settings.useSystemAvatar || !App.supportsLinuxDesktop
                         icon.name: "document-open"
                         text: i18nc("@action:button", "Choose Photo…")
                         onClicked: avatarDialog.open()

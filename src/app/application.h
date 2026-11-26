@@ -23,6 +23,7 @@
 #include <QVariantMap>
 
 class KStatusNotifierItem;
+class QSystemTrayIcon;
 class QWindow;
 
 /**
@@ -64,6 +65,7 @@ class Application : public AbstractKirigamiApplication
     Q_PROPERTY(QString systemAvatarPath READ systemAvatarPath CONSTANT)
     Q_PROPERTY(QString systemFullName READ systemFullName CONSTANT)
     Q_PROPERTY(QString effectiveAvatarPath READ effectiveAvatarPath NOTIFY profileChanged)
+    Q_PROPERTY(QUrl effectiveAvatarUrl READ effectiveAvatarUrl NOTIFY profileChanged)
     Q_PROPERTY(QString effectiveProfileName READ effectiveProfileName NOTIFY profileChanged)
     Q_PROPERTY(QString effectiveProfileEmail READ effectiveProfileEmail NOTIFY profileChanged)
 
@@ -160,6 +162,7 @@ public:
     bool supportsLinuxDesktop() const;
     QString systemAvatarPath() const;
     QString systemFullName() const;
+    QUrl effectiveAvatarUrl() const;
     QString effectiveAvatarPath() const;
     QString effectiveProfileName() const;
     QString effectiveProfileEmail() const;
@@ -266,6 +269,9 @@ private:
     QAction *addAppAction(const QString &name, const QString &text, const QString &icon, const QKeySequence &shortcut, std::function<void()> fn);
     void setupTray();
     void updateTray();
+    void activateFromNotification(qlonglong taskId, const QString &view, const QString &xdgToken);
+    void showFallbackMessage(const QString &title, const QString &text, qlonglong taskId, const QString &view, bool warning);
+    QSystemTrayIcon *messageTrayIcon();
     void updateBadge();
     void setupGlobalShortcut();
     bool editTask(qlonglong id, const QString &what, const std::function<void(KTasks::Task &)> &fn);
@@ -287,6 +293,10 @@ private:
     BackupManager *m_backup;
     PdfExporter *m_pdf;
     KStatusNotifierItem *m_tray = nullptr;
+    QPointer<QSystemTrayIcon> m_messageIcon; // shows fallback notifications (Windows)
+    QSystemTrayIcon *m_ownMessageIcon = nullptr; // used when the tray icon is turned off
+    qlonglong m_fallbackTaskId = 0;
+    QString m_fallbackView;
     QAction *m_globalQuickAdd = nullptr;
     QPointer<QWindow> m_window;
     mutable QHash<quint64, QColor> m_chipColorCache;

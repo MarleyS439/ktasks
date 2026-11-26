@@ -33,6 +33,7 @@
 #include <QQmlEngine>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QSystemTrayIcon>
 #include <QTimeZone>
 #include <QUrlQuery>
 #include <QWindow>
@@ -111,33 +112,8 @@ Application::Application(Database *db, QObject *parent)
     connect(m_journal, &JournalManager::message, this, [this](const QString &text) {
         Q_EMIT message(text, false);
     });
-    connect(m_notifier, &Notifier::activateRequested, this, [this](qlonglong taskId, const QString &view, const QString &token) {
-        showWindow(token);
-        if (view == QLatin1String("settings")) {
-            Q_EMIT showSettings();
-        } else if (view == QLatin1String("routine")) {
-            Q_EMIT showSection(QStringLiteral("routine"));
-        } else if (view == QLatin1String("journal")) {
-            Q_EMIT showSection(QStringLiteral("journal"));
-        } else if (view.startsWith(QLatin1String("search:"))) {
-            Q_EMIT showSection(QStringLiteral("tasks"));
-            m_tasks->setView(QStringLiteral("all"));
-            m_tasks->setSearchText(i18nc("appended to the title of the local copy kept after a sync conflict", "conflicting copy"));
-        } else if (!view.isEmpty()) {
-            Q_EMIT showSection(QStringLiteral("tasks"));
-            m_tasks->setSearchText(QString());
-            m_tasks->setView(view);
-        }
-        if (taskId > 0) {
-            if (const Task *t = m_store->task(taskId)) {
-                if (m_tasks->indexOfTask(taskId) < 0) {
-                    m_tasks->setSearchText(QString());
-                    m_tasks->setView(QStringLiteral("list:%1").arg(t->listId));
-                }
-                Q_EMIT showTask(taskId);
-            }
-        }
-    });
+    connect(m_notifier, &Notifier::activateRequested, this, &Application::activateFromNotification);
+    connect(m_notifier, &Notifier::fallbackMessage, this, &Application::showFallbackMessage);
 
     setupActions();
     setupGlobalShortcut();
@@ -387,7 +363,8 @@ QString Application::systemFullName() const
 
 QString Application::effectiveAvatarPath() const
 {
-    if (m_settings->useSystemAvatar()) {
+    // The system picture is only offered (and its switch only shown) on Linux.
+    if (m_settings->useSystemAvatar() && supportsLinuxDesktop()) {
         return systemAvatarPath();
     }
     const QString custom = m_settings->profileAvatarPath();
@@ -395,6 +372,13 @@ QString Application::effectiveAvatarPath() const
         return custom;
     }
     return {};
+}
+
+QUrl Application::effectiveAvatarUrl() const
+{
+    // "file://" + path is not a valid URL for a Windows path such as C:/...
+    const QString path = effectiveAvatarPath();
+    return path.isEmpty() ? QUrl() : QUrl::fromLocalFile(path);
 }
 
 QString Application::effectiveProfileName() const
@@ -606,6 +590,88 @@ QColor Application::adaptiveChipColor(const QColor &tint, const QColor &bg) cons
     return result;
 }
 
+void Application::activateFromNotification(qlonglong taskId, const QString &view, const QString &token)
+{
+    showWindow(token);
+    if (view == QLatin1String("settings")) {
+        Q_EMIT showSettings();
+    } else if (view == QLatin1String("routine")) {
+        Q_EMIT showSection(QStringLiteral("routine"));
+    } else if (view == QLatin1String("journal")) {
+        Q_EMIT showSection(QStringLiteral("journal"));
+    } else if (view.startsWith(QLatin1String("search:"))) {
+        Q_EMIT showSection(QStringLiteral("tasks"));
+        m_tasks->setView(QStringLiteral("all"));
+        m_tasks->setSearchText(i18nc("appended to the title of the local copy kept after a sync conflict", "conflicting copy"));
+    } else if (!view.isEmpty()) {
+        Q_EMIT showSection(QStringLiteral("tasks"));
+        m_tasks->setSearchText(QString());
+        m_tasks->setView(view);
+    }
+    if (taskId > 0) {
+        if (const Task *t = m_store->task(taskId)) {
+            if (m_tasks->indexOfTask(taskId) < 0) {
+                m_tasks->setSearchText(QString());
+                m_tasks->setView(QStringLiteral("list:%1").arg(t->listId));
+            }
+            Q_EMIT showTask(taskId);
+        }
+    }
+}
+
+// KNotifications has no visual backend on Windows: show notifications as a
+// balloon of the tray icon instead, and open the task when it is clicked.
+QSystemTrayIcon *Application::messageTrayIcon()
+{
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        return nullptr;
+    }
+    QSystemTrayIcon *icon = nullptr;
+    if (m_tray) {
+        // KStatusNotifierItem uses a QSystemTrayIcon of its own off D-Bus.
+        icon = m_tray->findChild<QSystemTrayIcon *>();
+    }
+    if (!icon) {
+        if (!m_ownMessageIcon) {
+            m_ownMessageIcon = new QSystemTrayIcon(QGuiApplication::windowIcon(), this);
+            m_ownMessageIcon->setToolTip(i18n("KTasks"));
+            connect(m_ownMessageIcon, &QSystemTrayIcon::activated, this, [this] {
+                showWindow();
+            });
+        }
+        icon = m_ownMessageIcon;
+    } else if (m_ownMessageIcon) {
+        m_ownMessageIcon->hide();
+    }
+    if (icon != m_messageIcon) {
+        m_messageIcon = icon;
+        connect(icon, &QSystemTrayIcon::messageClicked, this, [this] {
+            activateFromNotification(m_fallbackTaskId, m_fallbackView, QString());
+        });
+    }
+    if (!icon->isVisible()) {
+        icon->show();
+    }
+    return icon;
+}
+
+void Application::showFallbackMessage(const QString &title, const QString &text, qlonglong taskId, const QString &view, bool warning)
+{
+    m_fallbackTaskId = taskId;
+    m_fallbackView = view;
+    QSystemTrayIcon *icon = messageTrayIcon();
+    if (!icon) {
+        qCWarning(lcNotify) << "no system tray to show a notification:" << title;
+        return;
+    }
+    if (warning) {
+        icon->showMessage(title, text, QSystemTrayIcon::Warning, 15000);
+    } else {
+        icon->showMessage(title, text, QGuiApplication::windowIcon(), 15000);
+    }
+    qCInfo(lcNotify) << "tray notification shown:" << title << (icon == m_ownMessageIcon ? "(own icon)" : "(tray icon)");
+}
+
 void Application::openGlobalShortcutSettings()
 {
 #ifdef Q_OS_LINUX
@@ -671,7 +737,13 @@ void Application::updateTray()
     }
     m_tray->setToolTip(kAppIconId, i18n("KTasks"), sub);
     // Stay in the visible part of the tray only when something needs attention.
+#ifdef KTASKS_HAVE_DBUS
     m_tray->setStatus(due > 0 ? KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
+#else
+    // Off D-Bus, KStatusNotifierItem hides a passive icon altogether, which
+    // would leave a window closed to the background with no way back.
+    m_tray->setStatus(KStatusNotifierItem::Active);
+#endif
 }
 
 // The Unity launcher API, which Plasma's task manager understands, shows

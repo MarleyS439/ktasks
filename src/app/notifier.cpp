@@ -314,7 +314,7 @@ void Notifier::showRoutineReminder(const RoutineBlock &block, const QDate &date)
         }
     });
     m_openRoutines.insert(logUid, n);
-    n->sendEvent();
+    deliver(n, 0, QStringLiteral("routine"));
     qCInfo(lcNotify) << "routine reminder shown for block" << id;
 }
 
@@ -367,7 +367,7 @@ void Notifier::showReminder(const Task &task, bool snoozed)
         snooze(uid, int(QDateTime::currentDateTime().secsTo(until) / 60) + 1);
     });
     m_open.insert(uid, n);
-    n->sendEvent();
+    deliver(n, id, QString());
     qCInfo(lcNotify) << "reminder shown for task" << id;
 }
 
@@ -392,7 +392,7 @@ void Notifier::showMissed(const QList<const Task *> &tasks)
     connect(show, &KNotificationAction::activated, this, [this, n] {
         Q_EMIT activateRequested(0, QStringLiteral("today"), n->xdgActivationToken());
     });
-    n->sendEvent();
+    deliver(n, 0, QStringLiteral("today"));
 }
 
 void Notifier::snooze(const QString &uid, int minutes)
@@ -476,7 +476,7 @@ void Notifier::maybeShowSummary(const QDateTime &now)
     connect(show, &KNotificationAction::activated, this, [this, n] {
         Q_EMIT activateRequested(0, QStringLiteral("today"), n->xdgActivationToken());
     });
-    n->sendEvent();
+    deliver(n, 0, QStringLiteral("today"));
 }
 
 void Notifier::notifyConflicts(const QString &accountName, const QStringList &titles)
@@ -496,7 +496,7 @@ void Notifier::notifyConflicts(const QString &accountName, const QStringList &ti
     connect(open, &KNotificationAction::activated, this, [this, n] {
         Q_EMIT activateRequested(0, QStringLiteral("search:conflict"), n->xdgActivationToken());
     });
-    n->sendEvent();
+    deliver(n, 0, QStringLiteral("search:conflict"), true);
 }
 
 void Notifier::notifySyncProblem(const QString &accountName, const QString &message, bool needsLogin)
@@ -513,7 +513,7 @@ void Notifier::notifySyncProblem(const QString &accountName, const QString &mess
     connect(open, &KNotificationAction::activated, this, [this, n] {
         Q_EMIT activateRequested(0, QStringLiteral("settings"), n->xdgActivationToken());
     });
-    n->sendEvent();
+    deliver(n, 0, QStringLiteral("settings"), true);
 }
 
 void Notifier::sendTestNotification()
@@ -527,5 +527,25 @@ void Notifier::sendTestNotification()
     const int minutes = qMax(1, m_settings->snoozeMinutes());
     auto *later = n->addAction(i18ncp("notification action", "Snooze %1 minute", "Snooze %1 minutes", minutes));
     connect(later, &KNotificationAction::activated, n, &KNotification::close);
-    n->sendEvent();
+    deliver(n, 0, QString());
+}
+
+bool Notifier::hasNativeBackend()
+{
+#ifdef KTASKS_HAVE_DBUS
+    return true;
+#else
+    return false;
+#endif
+}
+
+void Notifier::deliver(KNotification *n, qlonglong taskId, const QString &view, bool warning)
+{
+    if (hasNativeBackend()) {
+        n->sendEvent();
+        return;
+    }
+    Q_EMIT fallbackMessage(n->title(), n->text(), taskId, view, warning);
+    // Nothing would ever close or free it without a backend.
+    n->deleteLater();
 }

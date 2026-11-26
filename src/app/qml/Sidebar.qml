@@ -310,7 +310,7 @@ Kirigami.OverlayDrawer {
                 spacing: Kirigami.Units.smallSpacing
 
                 Components.Avatar {
-                    source: App.effectiveAvatarPath !== "" ? ("file://" + App.effectiveAvatarPath) : ""
+                    source: App.effectiveAvatarUrl
                     name: App.effectiveProfileName
                     implicitWidth: Kirigami.Units.iconSizes.medium
                     implicitHeight: Kirigami.Units.iconSizes.medium

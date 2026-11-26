@@ -14,19 +14,33 @@ STAGE_DIR=$(mktemp -d)
 trap 'rm -rf "$STAGE_DIR"' EXIT
 
 rm -rf "$PKG_DIR"
-mkdir -p "$PKG_DIR" "$PKG_DIR/plugins" "$PKG_DIR/qml" "$PKG_DIR/data" "$PKG_DIR/share" "$PKG_DIR/translations"
+mkdir -p "$PKG_DIR" "$PKG_DIR/plugins" "$PKG_DIR/qml" "$PKG_DIR/data" "$PKG_DIR/translations"
 
 cmake --install "$BUILD_DIR" --prefix "$STAGE_DIR"
 
 cp -v "$STAGE_DIR/bin/ktasks.exe" "$PKG_DIR/ktasks.exe"
-if [[ -d "$STAGE_DIR/share/locale" ]]; then
-    cp -a "$STAGE_DIR/share/locale" "$PKG_DIR/share/"
-    cp -a "$STAGE_DIR/share/locale" "$PKG_DIR/data/"
-fi
-if [[ -d "$STAGE_DIR/share/knotifications6" ]]; then
-    cp -a "$STAGE_DIR/share/knotifications6" "$PKG_DIR/data/"
-fi
 cp -v "$SRC_DIR/LICENSE" "$PKG_DIR/LICENSE.txt"
+
+# On Windows KDE installs data files (KTasks' own translations, its notifyrc)
+# under bin/data, not share. Qt looks for GenericDataLocation files in
+# <exe dir>/data, which is where KI18n and KNotifications search.
+mkdir -p "$PKG_DIR/data/locale"
+for datadir in "$STAGE_DIR/bin/data" "$STAGE_DIR/share"; do
+    if [[ -d "$datadir/locale" ]]; then
+        cp -a "$datadir/locale/." "$PKG_DIR/data/locale/"
+    fi
+    if [[ -d "$datadir/knotifications6" ]]; then
+        mkdir -p "$PKG_DIR/data/knotifications6"
+        cp -a "$datadir/knotifications6/." "$PKG_DIR/data/knotifications6/"
+    fi
+done
+# Translations of the KDE Frameworks themselves (Kirigami, KI18n, ...) live in
+# the same place of the MSYS2 prefix.
+if [[ -d /ucrt64/bin/data/locale ]]; then
+    cp -an /ucrt64/bin/data/locale/. "$PKG_DIR/data/locale/"
+fi
+test -f "$PKG_DIR/data/locale/pt_BR/LC_MESSAGES/ktasks.mo" || { echo "ERROR: ktasks.mo missing from bundle" >&2; exit 1; }
+test -f "$PKG_DIR/data/knotifications6/ktasks.notifyrc" || { echo "ERROR: ktasks.notifyrc missing from bundle" >&2; exit 1; }
 
 # Copy Breeze compiled icon resource so KIconTheme::initTheme() finds all app/UI icons
 if [[ -f /ucrt64/bin/data/icontheme.rcc ]]; then
@@ -35,11 +49,6 @@ fi
 if [[ -f /ucrt64/bin/data/icons/breeze/breeze-icons.rcc ]]; then
     mkdir -p "$PKG_DIR/data/icons/breeze"
     cp -v /ucrt64/bin/data/icons/breeze/breeze-icons.rcc "$PKG_DIR/data/icons/breeze/breeze-icons.rcc"
-fi
-if [[ -d /ucrt64/share/locale/pt_BR ]]; then
-    mkdir -p "$PKG_DIR/share/locale" "$PKG_DIR/data/locale"
-    cp -a /ucrt64/share/locale/pt_BR "$PKG_DIR/share/locale/"
-    cp -a /ucrt64/share/locale/pt_BR "$PKG_DIR/data/locale/"
 fi
 
 # Run windeployqt if present, deploying plugins into plugins/ and QML imports cleanly
@@ -111,6 +120,15 @@ pkg_dir = os.environ["PKG_DIR_WIN"]
 ucrt_bin = os.environ["UCRT_BIN_WIN"]
 ucrt_map = {f.lower(): f for f in os.listdir(ucrt_bin) if f.lower().endswith(".dll")}
 
+# Libraries loaded at run time (not import-table dependencies): Qt's OpenSSL
+# TLS backend loads libssl/libcrypto by name.
+for name in list(ucrt_map.values()):
+    low = name.lower()
+    if re.match(r"lib(ssl|crypto)-\d+(-x64)?\.dll$", low):
+        dst = os.path.join(pkg_dir, name)
+        if not os.path.exists(dst):
+            shutil.copy2(os.path.join(ucrt_bin, name), dst)
+
 queue = deque()
 for root, _, files in os.walk(pkg_dir):
     for fn in files:
@@ -140,30 +158,50 @@ while queue:
 print(f"Resolved and copied {copied} UCRT64 runtime DLLs")
 PYEOF
 
-# Smoke-test the portable bundle with MSYS2 removed from PATH to prove standalone execution
-SMOKE_DATA=$(mktemp -d)
-SMOKE_IMG="${SMOKE_DATA}/smoke.png"
-echo "Running isolated Windows portable bundle smoke test..."
-SMOKE_DATA_WIN=$(cygpath -w "$SMOKE_DATA")
-SMOKE_IMG_WIN=$(cygpath -w "$SMOKE_IMG")
-
-env -i \
-    SYSTEMROOT="${SYSTEMROOT:-C:\\Windows}" \
-    WINDIR="${WINDIR:-C:\\Windows}" \
-    TEMP="$SMOKE_DATA_WIN" \
-    TMP="$SMOKE_DATA_WIN" \
-    LOCALAPPDATA="$SMOKE_DATA_WIN" \
-    APPDATA="$SMOKE_DATA_WIN" \
-    PATH="/c/Windows/System32:/c/Windows" \
-    QT_QPA_PLATFORM="offscreen" \
-    KTASKS_DATA_DIR="$SMOKE_DATA_WIN" \
-    KTASKS_SCREENSHOT="$SMOKE_IMG_WIN" \
-    KTASKS_SCREENSHOT_DELAY="1500" \
-    "$PKG_DIR/ktasks.exe"
-
-test -s "$SMOKE_IMG"
-echo "Smoke screenshot verified: $(ls -lh "$SMOKE_IMG")"
-rm -rf "$SMOKE_DATA"
+# Smoke-test the portable bundle with MSYS2 removed from PATH to prove
+# standalone execution, once per section of the window. The application writes
+# ktasks.log next to its database on Windows; any QML error fails the build.
+smoke_failed=0
+for section in summary tasks routine matrix journal insights settings; do
+    SMOKE_DATA=$(mktemp -d)
+    SMOKE_IMG="${SMOKE_DATA}/smoke.png"
+    SMOKE_DATA_WIN=$(cygpath -w "$SMOKE_DATA")
+    SMOKE_IMG_WIN=$(cygpath -w "$SMOKE_IMG")
+    echo "Running isolated Windows portable bundle smoke test: $section"
+    env -i \
+        SYSTEMROOT="${SYSTEMROOT:-C:\\Windows}" \
+        WINDIR="${WINDIR:-C:\\Windows}" \
+        TEMP="$SMOKE_DATA_WIN" \
+        TMP="$SMOKE_DATA_WIN" \
+        LOCALAPPDATA="$SMOKE_DATA_WIN" \
+        APPDATA="$SMOKE_DATA_WIN" \
+        PATH="/c/Windows/System32:/c/Windows" \
+        QT_QPA_PLATFORM="offscreen" \
+        KTASKS_DATA_DIR="$SMOKE_DATA_WIN" \
+        KTASKS_SHOW="$section" \
+        KTASKS_SCREENSHOT="$SMOKE_IMG_WIN" \
+        KTASKS_SCREENSHOT_DELAY="3000" \
+        "$PKG_DIR/ktasks.exe" || smoke_failed=1
+    if [[ ! -s "$SMOKE_IMG" ]]; then
+        echo "ERROR: no screenshot for section $section" >&2
+        smoke_failed=1
+    fi
+    if [[ -f "$SMOKE_DATA/ktasks.log" ]]; then
+        echo "---- ktasks.log ($section) ----"
+        cat "$SMOKE_DATA/ktasks.log"
+        if grep -E '\.qml:[0-9]+|is not installed|is not a type|Cannot assign|TypeError|ReferenceError|failed to load' "$SMOKE_DATA/ktasks.log"; then
+            echo "ERROR: QML problems in section $section" >&2
+            smoke_failed=1
+        fi
+    else
+        echo "ERROR: ktasks.log was not written" >&2
+        smoke_failed=1
+    fi
+    rm -rf "$SMOKE_DATA"
+done
+if [[ "$smoke_failed" != 0 ]]; then
+    exit 1
+fi
 
 # Pack final portable zip
 (cd "$OUT_DIR" && if command -v 7z >/dev/null 2>&1; then
