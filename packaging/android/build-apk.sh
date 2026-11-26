@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-# Builds, packages and signs the KTasks Android APK with KDE Craft. Runs inside
+# Builds, packages and signs the KTasks Android APK with KDE Craft for
+# CRAFT_TARGET (android-arm64-clang, the default, or android-arm32-clang). Runs inside
 # invent-registry.kde.org/sysadmin/ci-images/android-qt611 with the repository
 # mounted at /src, a scratch directory at /work and the output at /out.
 # Signing uses ANDROID_KEYSTORE_B64 and ANDROID_KEYSTORE_PASSWORD (key alias
@@ -11,7 +12,12 @@ set -euo pipefail
 SRC=/src
 WORK=/work
 OUT=/out
-TARGET=android-arm64-clang
+TARGET="${CRAFT_TARGET:-android-arm64-clang}"
+case "$TARGET" in
+    android-arm64-clang) ABI_LABEL=arm64 ;;
+    android-arm32-clang) ABI_LABEL=armv7 ;;
+    *) echo "ERROR: unsupported target $TARGET" >&2; exit 1 ;;
+esac
 mkdir -p "$WORK" "$OUT"
 cd "$WORK"
 
@@ -48,6 +54,8 @@ fi
 rm -rf "$bpdir/ktasks"
 cp -r "$SRC/packaging/craft/ktasks" "$bpdir/ktasks"
 
+# Without a binary cache (32-bit ARM) this compiles Qt and KDE Frameworks;
+# packages already installed by an earlier, interrupted run are kept.
 craftmaster -c --install-deps ktasks
 craftmaster -c --no-cache --options "ktasks.srcDir=$SRC" ktasks
 craftmaster -c --package --options "ktasks.srcDir=$SRC" ktasks
@@ -57,7 +65,7 @@ echo "Craft package directory: $pkgdir"
 ls -la "$pkgdir"
 apk=$(ls -t "$pkgdir"/*.apk | head -n1)
 version=$(sed -n 's/^project(ktasks VERSION \([0-9.]*\).*/\1/p' "$SRC/CMakeLists.txt")
-name="ktasks-${version}-android-arm64"
+name="ktasks-${version}-android-${ABI_LABEL}"
 
 buildtools="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
 "$buildtools/zipalign" -p -f 4 "$apk" "$WORK/aligned.apk"

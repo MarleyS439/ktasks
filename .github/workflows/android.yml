@@ -9,9 +9,19 @@ permissions:
 
 jobs:
   package-android:
-    name: Android APK (arm64)
+    name: Android APK (${{ matrix.label }})
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    # 32-bit ARM has no KDE binary cache: its first build compiles Qt and KDE
+    # Frameworks and may need more than one run (progress is cached).
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: android-arm64-clang
+            label: arm64
+          - target: android-arm32-clang
+            label: armv7
     steps:
       - name: Free disk space for the Android SDK image and Craft
         run: |
@@ -22,42 +32,67 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Restore Craft downloads and binary cache
-        uses: actions/cache@v4
+      - name: Restore Craft downloads, binary cache and installed packages
+        id: craft-cache
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ runner.temp }}/work/craft/downloads
             ${{ runner.temp }}/work/craft/cache
-          key: craft-android-arm64-${{ hashFiles('packaging/craft/ktasks/ktasks.py', 'packaging/android/CraftConfig.ini') }}
-          restore-keys: craft-android-arm64-
+            ${{ runner.temp }}/work/craft/${{ matrix.target }}
+          key: craft-${{ matrix.target }}-${{ hashFiles('packaging/craft/ktasks/ktasks.py', 'packaging/android/CraftConfig.ini') }}-${{ github.run_id }}
+          restore-keys: |
+            craft-${{ matrix.target }}-${{ hashFiles('packaging/craft/ktasks/ktasks.py', 'packaging/android/CraftConfig.ini') }}-
+            craft-${{ matrix.target }}-
 
       - name: Build and sign the APK in KDE's Android image
         env:
+          CRAFT_TARGET: ${{ matrix.target }}
           ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
           mkdir -p "$RUNNER_TEMP/work" "$RUNNER_TEMP/out"
           docker run --rm --user root \
-            -e ANDROID_KEYSTORE_B64 -e ANDROID_KEYSTORE_PASSWORD \
+            -e CRAFT_TARGET -e ANDROID_KEYSTORE_B64 -e ANDROID_KEYSTORE_PASSWORD \
             -v "$GITHUB_WORKSPACE:/src" \
             -v "$RUNNER_TEMP/work:/work" \
             -v "$RUNNER_TEMP/out:/out" \
             invent-registry.kde.org/sysadmin/ci-images/android-qt611:latest \
             bash /src/packaging/android/build-apk.sh
-          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/work" "$RUNNER_TEMP/out"
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/out"
           mkdir -p dist-android
           cp -v "$RUNNER_TEMP"/out/*.apk dist-android/
+
+      - name: Keep only installed packages for the cache
+        if: always()
+        run: |
+          # Build trees are large and not needed to resume.
+          sudo rm -rf "$RUNNER_TEMP/work/craft/${{ matrix.target }}/build" "$RUNNER_TEMP/work/craft/${{ matrix.target }}/tmp"
+          # Link to the Craft clone, which craftmaster recreates (not cached).
+          sudo rm -f "$RUNNER_TEMP/work/craft/${{ matrix.target }}/craft"
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/work" || true
+          du -sh "$RUNNER_TEMP"/work/craft/* 2>/dev/null || true
+
+      - name: Save Craft cache (also after a timeout or failure)
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ${{ runner.temp }}/work/craft/downloads
+            ${{ runner.temp }}/work/craft/cache
+            ${{ runner.temp }}/work/craft/${{ matrix.target }}
+          key: craft-${{ matrix.target }}-${{ hashFiles('packaging/craft/ktasks/ktasks.py', 'packaging/android/CraftConfig.ini') }}-${{ github.run_id }}
 
       - name: Upload Craft logs on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: craft-android-logs
-          path: ${{ runner.temp }}/work/craft/android-arm64-clang/logs/
+          name: craft-${{ matrix.label }}-logs
+          path: ${{ runner.temp }}/work/craft/${{ matrix.target }}/logs/
           if-no-files-found: ignore
 
       - name: Upload Android APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ktasks-android-apk
+          name: ktasks-android-apk-${{ matrix.label }}
           path: dist-android/*.apk
