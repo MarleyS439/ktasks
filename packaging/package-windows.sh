@@ -189,7 +189,9 @@ for section in summary tasks routine matrix journal insights settings; do
     if [[ -f "$SMOKE_DATA/ktasks.log" ]]; then
         echo "---- ktasks.log ($section) ----"
         cat "$SMOKE_DATA/ktasks.log"
-        if grep -E '\.qml:[0-9]+|is not installed|is not a type|Cannot assign|TypeError|ReferenceError|failed to load' "$SMOKE_DATA/ktasks.log"; then
+        # KTasks' own QML, or a module/library missing from the bundle.
+        # (Warnings inside Kirigami itself are not ours to fix.)
+        if grep -E 'qrc:/qt/qml/app/ktasks/|is not installed|is not a type|module "[^"]*" .*not found|Cannot load library|failed to load' "$SMOKE_DATA/ktasks.log"; then
             echo "ERROR: QML problems in section $section" >&2
             smoke_failed=1
         fi

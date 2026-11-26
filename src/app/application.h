@@ -73,6 +73,10 @@ public:
     Application(KTasks::Database *db, QObject *parent = nullptr);
     ~Application() override;
 
+    TaskStore *store() const
+    {
+        return m_store;
+    }
     TaskModel *tasks() const
     {
         return m_tasks;

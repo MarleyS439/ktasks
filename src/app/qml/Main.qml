@@ -403,6 +403,7 @@ StatefulApp.StatefulWindow {
 
             Loader {
                 id: summaryLoader
+                objectName: "summaryLoader"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 active: root.currentSection === "summary"
@@ -429,6 +430,7 @@ StatefulApp.StatefulWindow {
             }
             Loader {
                 id: tasksLoader
+                objectName: "tasksLoader"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 active: root.currentSection === "tasks"
@@ -441,6 +443,7 @@ StatefulApp.StatefulWindow {
             }
             Loader {
                 id: matrixLoader
+                objectName: "matrixLoader"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 active: root.currentSection === "matrix"
@@ -453,6 +456,7 @@ StatefulApp.StatefulWindow {
             }
             Loader {
                 id: insightsLoader
+                objectName: "insightsLoader"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 active: root.currentSection === "insights"
@@ -463,6 +467,7 @@ StatefulApp.StatefulWindow {
             }
             Loader {
                 id: routineLoader
+                objectName: "routineLoader"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 active: root.currentSection === "routine"
@@ -478,6 +483,7 @@ StatefulApp.StatefulWindow {
             }
             Loader {
                 id: journalLoader
+                objectName: "journalLoader"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 active: root.currentSection === "journal"
@@ -537,21 +543,25 @@ StatefulApp.StatefulWindow {
 
     Loader {
         id: listDialogLoader
+        objectName: "listDialogLoader"
         active: false
         sourceComponent: ListDialog {}
     }
     Loader {
         id: accountDialogLoader
+        objectName: "accountDialogLoader"
         active: false
         sourceComponent: AccountDialog {}
     }
     Loader {
         id: printDialogLoader
+        objectName: "printDialogLoader"
         active: false
         sourceComponent: PrintDialog {}
     }
     Loader {
         id: quickAddWindowLoader
+        objectName: "quickAddWindowLoader"
         active: false
         sourceComponent: QuickAddWindow {}
     }

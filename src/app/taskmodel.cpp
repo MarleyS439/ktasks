@@ -44,10 +44,19 @@ TaskModel::TaskModel(TaskStore *store, Settings *settings, QObject *parent)
     , m_settings(settings)
 {
     connect(store, &TaskStore::changed, this, [this] {
+        // The list on screen was deleted (here or on another device): show
+        // all tasks rather than an empty page whose new tasks go elsewhere.
+        if (isListView() && !m_store->list(listId())) {
+            setView(QStringLiteral("all"));
+            return;
+        }
         rebuild();
         Q_EMIT titleChanged();
     });
     m_view = settings->lastView();
+    if (isListView() && !m_store->list(listId())) {
+        m_view = QStringLiteral("all");
+    }
     m_sortMode = qMax(0, settings->sortMode(m_view));
     rebuild();
 }
