@@ -37,11 +37,10 @@ jobs:
         env:
           ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
         run: |
           mkdir -p "$RUNNER_TEMP/work" "$RUNNER_TEMP/out"
           docker run --rm --user root \
-            -e ANDROID_KEYSTORE_B64 -e ANDROID_KEYSTORE_PASSWORD -e ANDROID_KEY_ALIAS \
+            -e ANDROID_KEYSTORE_B64 -e ANDROID_KEYSTORE_PASSWORD \
             -v "$GITHUB_WORKSPACE:/src" \
             -v "$RUNNER_TEMP/work:/work" \
             -v "$RUNNER_TEMP/out:/out" \
