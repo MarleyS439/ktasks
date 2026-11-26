@@ -295,18 +295,22 @@ Kirigami.Page {
             }
             FormCard.FormCard {
                 FormCard.FormSwitchDelegate {
+                    // Phones manage the app's lifetime themselves.
+                    visible: !App.isMobile
                     text: i18nc("@option:check", "Keep running when the window is closed")
                     description: i18nc("@info", "Needed for reminders to appear while the window is closed.")
                     checked: App.settings.runInBackground
                     onToggled: App.settings.runInBackground = checked
                 }
                 FormCard.FormSwitchDelegate {
+                    visible: !App.isMobile
                     text: i18nc("@option:check", "Start with the session")
                     description: i18nc("@info", "Starts hidden in the system tray when you log in.")
                     checked: App.autostart
                     onToggled: App.autostart = checked
                 }
                 FormCard.FormSwitchDelegate {
+                    visible: !App.isMobile
                     text: i18nc("@option:check", "Show an icon in the system tray")
                     checked: App.settings.showTrayIcon
                     onToggled: App.settings.showTrayIcon = checked
@@ -554,11 +558,13 @@ Kirigami.Page {
         FormCard.FormCardPage {
             globalToolBarStyle: Kirigami.ApplicationHeaderStyle.None
 
-            // ---------- Discord Rich Presence ----------
+            // ---------- Discord Rich Presence (desktop only) ----------
             FormCard.FormHeader {
+                visible: !App.isMobile
                 title: i18nc("@title:group", "Discord Rich Presence")
             }
             FormCard.FormCard {
+                visible: !App.isMobile
                 FormCard.FormSwitchDelegate {
                     text: i18nc("@option:check", "Enable Discord Rich Presence during focus")
                     checked: App.settings.discordPresenceEnabled

@@ -41,6 +41,7 @@ Kirigami.Dialog {
 
     customFooterActions: [
         Kirigami.Action {
+            visible: App.supportsPrinting
             icon.name: "document-preview"
             text: i18nc("@action:button", "Preview…")
             onTriggered: {
@@ -50,6 +51,7 @@ Kirigami.Dialog {
             }
         },
         Kirigami.Action {
+            visible: App.supportsPrinting
             icon.name: "document-print"
             text: i18nc("@action:button", "Print…")
             onTriggered: {

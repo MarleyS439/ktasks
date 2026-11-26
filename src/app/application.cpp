@@ -11,9 +11,13 @@
 #include <KGlobalAccel>
 #endif
 #include <KLocalizedString>
+#ifdef KTASKS_HAVE_TRAY
 #include <KStatusNotifierItem>
+#include <QMenu>
+#include <QSystemTrayIcon>
+#endif
 #include <KUser>
-#ifndef Q_OS_WIN
+#if defined(KTASKS_HAVE_WINDOWSYSTEM) && !defined(Q_OS_WIN)
 #include <KWindowSystem>
 #endif
 #include <QClipboard>
@@ -28,12 +32,10 @@
 #include <QFile>
 #include <QGuiApplication>
 #include <QLocale>
-#include <QMenu>
 #include <QProcess>
 #include <QQmlEngine>
 #include <QSettings>
 #include <QStandardPaths>
-#include <QSystemTrayIcon>
 #include <QTimeZone>
 #include <QUrlQuery>
 #include <QWindow>
@@ -309,9 +311,27 @@ bool Application::supportsDoNotDisturb() const
 #endif
 }
 
+bool Application::isMobile() const
+{
+#ifdef Q_OS_ANDROID
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool Application::supportsPrinting() const
+{
+#ifdef KTASKS_HAVE_PRINTER
+    return true;
+#else
+    return false;
+#endif
+}
+
 bool Application::supportsLinuxDesktop() const
 {
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     return true;
 #else
     return false;
@@ -328,7 +348,7 @@ void Application::activateQuickAddWindow(QWindow *win)
         win->setWindowStates(win->windowStates() & ~Qt::WindowMinimized);
     }
     win->raise();
-#ifndef Q_OS_WIN
+#if defined(KTASKS_HAVE_WINDOWSYSTEM) && !defined(Q_OS_WIN)
     KWindowSystem::updateStartupId(win);
     KWindowSystem::activateWindow(win);
 #else
@@ -623,6 +643,7 @@ void Application::activateFromNotification(qlonglong taskId, const QString &view
 // balloon of the tray icon instead, and open the task when it is clicked.
 QSystemTrayIcon *Application::messageTrayIcon()
 {
+#ifdef KTASKS_HAVE_TRAY
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         return nullptr;
     }
@@ -653,10 +674,14 @@ QSystemTrayIcon *Application::messageTrayIcon()
         icon->show();
     }
     return icon;
+#else
+    return nullptr;
+#endif
 }
 
 void Application::showFallbackMessage(const QString &title, const QString &text, qlonglong taskId, const QString &view, bool warning)
 {
+#ifdef KTASKS_HAVE_TRAY
     m_fallbackTaskId = taskId;
     m_fallbackView = view;
     QSystemTrayIcon *icon = messageTrayIcon();
@@ -670,11 +695,18 @@ void Application::showFallbackMessage(const QString &title, const QString &text,
         icon->showMessage(title, text, QGuiApplication::windowIcon(), 15000);
     }
     qCInfo(lcNotify) << "tray notification shown:" << title << (icon == m_ownMessageIcon ? "(own icon)" : "(tray icon)");
+#else
+    Q_UNUSED(title)
+    Q_UNUSED(text)
+    Q_UNUSED(taskId)
+    Q_UNUSED(view)
+    Q_UNUSED(warning)
+#endif
 }
 
 void Application::openGlobalShortcutSettings()
 {
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     QProcess::startDetached(QStringLiteral("systemsettings"), {QStringLiteral("kcm_keys")});
 #endif
 }
@@ -683,6 +715,7 @@ void Application::openGlobalShortcutSettings()
 
 void Application::setupTray()
 {
+#ifdef KTASKS_HAVE_TRAY
     if (!m_settings->showTrayIcon()) {
         delete m_tray;
         m_tray = nullptr;
@@ -717,10 +750,13 @@ void Application::setupTray()
         }
     }
     updateTray();
+#else
+#endif
 }
 
 void Application::updateTray()
 {
+#ifdef KTASKS_HAVE_TRAY
     if (!m_tray) {
         return;
     }
@@ -744,6 +780,8 @@ void Application::updateTray()
     // would leave a window closed to the background with no way back.
     m_tray->setStatus(KStatusNotifierItem::Active);
 #endif
+#else
+#endif
 }
 
 // The Unity launcher API, which Plasma's task manager understands, shows
@@ -764,9 +802,11 @@ void Application::updateBadge()
 void Application::setWindow(QWindow *window)
 {
     m_window = window;
+#ifdef KTASKS_HAVE_TRAY
     if (m_tray && window) {
         m_tray->setAssociatedWindow(window);
     }
+#endif
 }
 
 void Application::showWindow(const QString &xdgToken)
@@ -774,7 +814,7 @@ void Application::showWindow(const QString &xdgToken)
     if (!m_window) {
         return;
     }
-#ifndef Q_OS_WIN
+#if defined(KTASKS_HAVE_WINDOWSYSTEM) && !defined(Q_OS_WIN)
     if (!xdgToken.isEmpty()) {
         KWindowSystem::setCurrentXdgActivationToken(xdgToken);
     }
@@ -786,7 +826,7 @@ void Application::showWindow(const QString &xdgToken)
         m_window->setWindowStates(m_window->windowStates() & ~Qt::WindowMinimized);
     }
     m_window->raise();
-#ifndef Q_OS_WIN
+#if defined(KTASKS_HAVE_WINDOWSYSTEM) && !defined(Q_OS_WIN)
     KWindowSystem::updateStartupId(m_window);
     KWindowSystem::activateWindow(m_window);
 #else
@@ -918,7 +958,7 @@ void Application::setAutostart(bool on)
 
 void Application::openNotificationSettings()
 {
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     QProcess::startDetached(QStringLiteral("systemsettings"), {QStringLiteral("kcm_notifications"), QStringLiteral("--args"), QStringLiteral("--notifyrc ktasks")});
 #endif
 }

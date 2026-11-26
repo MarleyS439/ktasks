@@ -1,0 +1,66 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches: [feature/android]  # TEMPORARY: iterate on the port
+
+permissions:
+  contents: read
+
+jobs:
+  package-android:
+    name: Android APK (arm64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Free disk space for the Android SDK image and Craft
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          sudo docker image prune --all --force
+          df -h /
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore Craft downloads and binary cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/work/craft/downloads
+            ${{ runner.temp }}/work/craft/cache
+          key: craft-android-arm64-${{ hashFiles('packaging/craft/ktasks/ktasks.py', 'packaging/android/CraftConfig.ini') }}
+          restore-keys: craft-android-arm64-
+
+      - name: Build and sign the APK in KDE's Android image
+        env:
+          ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/work" "$RUNNER_TEMP/out"
+          docker run --rm --user root \
+            -e ANDROID_KEYSTORE_B64 -e ANDROID_KEYSTORE_PASSWORD -e ANDROID_KEY_ALIAS \
+            -v "$GITHUB_WORKSPACE:/src" \
+            -v "$RUNNER_TEMP/work:/work" \
+            -v "$RUNNER_TEMP/out:/out" \
+            invent-registry.kde.org/sysadmin/ci-images/android-qt611:latest \
+            bash /src/packaging/android/build-apk.sh
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/work" "$RUNNER_TEMP/out"
+          mkdir -p dist-android
+          cp -v "$RUNNER_TEMP"/out/*.apk dist-android/
+
+      - name: Upload Craft logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: craft-android-logs
+          path: ${{ runner.temp }}/work/craft/android-arm64-clang/logs/
+          if-no-files-found: ignore
+
+      - name: Upload Android APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ktasks-android-apk
+          path: dist-android/*.apk

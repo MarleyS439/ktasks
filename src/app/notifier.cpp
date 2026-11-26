@@ -532,7 +532,8 @@ void Notifier::sendTestNotification()
 
 bool Notifier::hasNativeBackend()
 {
-#ifdef KTASKS_HAVE_DBUS
+#if defined(KTASKS_HAVE_DBUS) || defined(Q_OS_ANDROID)
+    // Linux (D-Bus notification server) and Android (system notifications).
     return true;
 #else
     return false;

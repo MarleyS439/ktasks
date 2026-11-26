@@ -499,7 +499,7 @@ void SummaryManager::rebuildInternal(bool emitChanged, bool forceExternalRefresh
 QStringList SummaryManager::discoverExternalIcsPaths() const
 {
     QStringList rawPaths;
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     if (m_settings->integrateKOrganizer()) {
         const QString cfgDir = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
         const QDir dir(cfgDir);
@@ -544,7 +544,7 @@ void SummaryManager::loadLocalExternalEvents(const QDate &today, const QDateTime
     m_icsLoadedFiles = 0;
 
     if (
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
         !m_settings->integrateKOrganizer() &&
 #endif
         m_settings->extraIcsPaths().isEmpty()) {
@@ -886,7 +886,7 @@ void SummaryManager::mergeExternalAndComputeSchedule(bool emitChanged)
     QStringList sortedSources = allSources.values();
     sortedSources.sort(Qt::CaseInsensitive);
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     if (!m_settings->integrateKOrganizer() && m_settings->extraIcsPaths().isEmpty()) {
         m_externalCalStatus = i18nc("external calendar status", "External agenda disabled in Settings.");
     } else if (!sortedSources.isEmpty()) {
@@ -1043,7 +1043,7 @@ void SummaryManager::resolveWeatherLocationAndFetch(bool /*force*/)
         return;
     }
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     const QString kwPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + QStringLiteral("/kweather/kweatherrc");
     if (QFileInfo::exists(kwPath)) {
         KSharedConfigPtr kwCfg = KSharedConfig::openConfig(kwPath, KConfig::SimpleConfig);

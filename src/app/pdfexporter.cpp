@@ -12,9 +12,12 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QPainter>
+#include <QPdfWriter>
+#ifdef KTASKS_HAVE_PRINTER
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#endif
 #include <QTextDocument>
 #include <algorithm>
 
@@ -615,12 +618,12 @@ QString PdfExporter::buildHtml(const QVariantMap &options) const
     return buildTasksHtml(scope, options);
 }
 
-void PdfExporter::renderToPrinter(QPrinter &printer, const QString &html, const QString &headerTitle) const
+void PdfExporter::renderToDevice(QPagedPaintDevice &printer, const QString &html, const QString &headerTitle) const
 {
     QTextDocument doc;
     doc.setHtml(html);
 
-    const QRectF pageRect = printer.pageRect(QPrinter::Point);
+    const QRectF pageRect = printer.pageLayout().paintRect(QPageLayout::Point);
     const qreal footerHeight = 26.0;
     const QSizeF bodySize(pageRect.width(), qMax<qreal>(100.0, pageRect.height() - footerHeight));
     doc.setPageSize(bodySize);
@@ -674,21 +677,26 @@ bool PdfExporter::exportPdf(const QUrl &fileUrl, const QVariantMap &options)
     if (!path.endsWith(QLatin1String(".pdf"), Qt::CaseInsensitive)) {
         path += QStringLiteral(".pdf");
     }
-    QPrinter printer(QPrinter::HighResolution);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName(path);
-    printer.setPageSize(QPageSize(QPageSize::A4));
-    printer.setPageMargins(QMarginsF(14, 14, 14, 14), QPageLayout::Millimeter);
-    printer.setDocName(QFileInfo(path).completeBaseName());
+    QPdfWriter writer(path);
+    writer.setResolution(1200);
+    writer.setPageSize(QPageSize(QPageSize::A4));
+    writer.setPageMargins(QMarginsF(14, 14, 14, 14), QPageLayout::Millimeter);
+    writer.setTitle(QFileInfo(path).completeBaseName());
+    writer.setCreator(QStringLiteral("KTasks"));
 
     const QString scope = options.value(QStringLiteral("scope"), QStringLiteral("today")).toString();
-    renderToPrinter(printer, buildHtml(options), viewDisplayTitle(scope, m_taskModel, m_store));
+    renderToDevice(writer, buildHtml(options), viewDisplayTitle(scope, m_taskModel, m_store));
     Q_EMIT message(i18n("PDF exported to %1", path), false);
     return true;
 }
 
 bool PdfExporter::print(const QVariantMap &options)
 {
+#ifndef KTASKS_HAVE_PRINTER
+    Q_UNUSED(options)
+    Q_EMIT message(i18n("Printing is not available on this device; export a PDF instead."), true);
+    return false;
+#else
     QPrinter printer(QPrinter::HighResolution);
     printer.setPageSize(QPageSize(QPageSize::A4));
     printer.setPageMargins(QMarginsF(14, 14, 14, 14), QPageLayout::Millimeter);
@@ -698,12 +706,17 @@ bool PdfExporter::print(const QVariantMap &options)
         return false;
     }
     const QString scope = options.value(QStringLiteral("scope"), QStringLiteral("today")).toString();
-    renderToPrinter(printer, buildHtml(options), viewDisplayTitle(scope, m_taskModel, m_store));
+    renderToDevice(printer, buildHtml(options), viewDisplayTitle(scope, m_taskModel, m_store));
     return true;
+#endif
 }
 
 void PdfExporter::printPreview(const QVariantMap &options)
 {
+#ifndef KTASKS_HAVE_PRINTER
+    Q_UNUSED(options)
+    Q_EMIT message(i18n("Printing is not available on this device; export a PDF instead."), true);
+#else
     QPrinter printer(QPrinter::HighResolution);
     printer.setPageSize(QPageSize(QPageSize::A4));
     printer.setPageMargins(QMarginsF(14, 14, 14, 14), QPageLayout::Millimeter);
@@ -714,7 +727,8 @@ void PdfExporter::printPreview(const QVariantMap &options)
     QPrintPreviewDialog dlg(&printer);
     dlg.setWindowTitle(i18nc("@title:window", "Print Preview — KTasks"));
     connect(&dlg, &QPrintPreviewDialog::paintRequested, this, [this, html, headerTitle](QPrinter *p) {
-        renderToPrinter(*p, html, headerTitle);
+        renderToDevice(*p, html, headerTitle);
     });
     dlg.exec();
+#endif
 }

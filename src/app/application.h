@@ -62,6 +62,8 @@ class Application : public AbstractKirigamiApplication
     Q_PROPERTY(bool supportsTaskbarBadge READ supportsTaskbarBadge CONSTANT)
     Q_PROPERTY(bool supportsDoNotDisturb READ supportsDoNotDisturb CONSTANT)
     Q_PROPERTY(bool supportsLinuxDesktop READ supportsLinuxDesktop CONSTANT)
+    Q_PROPERTY(bool isMobile READ isMobile CONSTANT)
+    Q_PROPERTY(bool supportsPrinting READ supportsPrinting CONSTANT)
     Q_PROPERTY(QString systemAvatarPath READ systemAvatarPath CONSTANT)
     Q_PROPERTY(QString systemFullName READ systemFullName CONSTANT)
     Q_PROPERTY(QString effectiveAvatarPath READ effectiveAvatarPath NOTIFY profileChanged)
@@ -164,6 +166,9 @@ public:
     bool supportsTaskbarBadge() const;
     bool supportsDoNotDisturb() const;
     bool supportsLinuxDesktop() const;
+    /** Android: no tray, autostart, extra windows, printing or Discord. */
+    bool isMobile() const;
+    bool supportsPrinting() const;
     QString systemAvatarPath() const;
     QString systemFullName() const;
     QUrl effectiveAvatarUrl() const;

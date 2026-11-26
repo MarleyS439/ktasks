@@ -635,6 +635,11 @@ StatefulApp.StatefulWindow {
             root.openPrintDialog(scope, 0);
         }
         function onQuickAddWindowRequested() {
+            if (App.isMobile) {
+                // One window on a phone: type the task on the tasks page.
+                onFocusQuickAdd();
+                return;
+            }
             quickAddWindowLoader.active = true;
             quickAddWindowLoader.item.present();
         }

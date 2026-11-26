@@ -5,7 +5,9 @@
 
 #include <KAboutData>
 #include <KColorSchemeManager>
+#ifdef Q_OS_WIN
 #include <KIconTheme>
+#endif
 #include <KLocalizedQmlContext>
 #include <KLocalizedString>
 #ifdef KTASKS_HAVE_CRASH
@@ -17,14 +19,22 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 #endif
+#ifdef Q_OS_ANDROID
+#include <QGuiApplication>
+#if __has_include(<KNotificationPermission>)
+#include <KNotificationPermission>
+#define KTASKS_HAVE_NOTIFICATION_PERMISSION 1
+#endif
+#else
 #include <QApplication>
+#include <QMessageBox>
+#endif
 #include <QCommandLineParser>
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QIcon>
-#include <QMessageBox>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QQuickWindow>
@@ -123,12 +133,19 @@ static void migrateLegacyAfazerData(const QString &newDataDir)
     }
 }
 
+#ifdef Q_OS_ANDROID
+Q_DECL_EXPORT
+#endif
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_WIN
     KIconTheme::initTheme();
 #endif
+#ifdef Q_OS_ANDROID
+    QGuiApplication app(argc, argv);
+#else
     QApplication app(argc, argv);
+#endif
     KLocalizedString::setApplicationDomain("ktasks");
 
     KAboutData about(QStringLiteral("ktasks"),
@@ -157,7 +174,9 @@ int main(int argc, char *argv[])
 
     // One instance only: a second launch hands its arguments to the first.
     const bool isolated = qEnvironmentVariableIsSet("KTASKS_DATA_DIR");
-#ifdef KTASKS_HAVE_DBUS
+#if defined(Q_OS_ANDROID)
+    // Android keeps a single activity (launchMode singleTop) by itself.
+#elif defined(KTASKS_HAVE_DBUS)
     std::unique_ptr<KDBusService> service;
     if (!isolated) {
         service = std::make_unique<KDBusService>(KDBusService::Unique);
@@ -183,7 +202,11 @@ int main(int argc, char *argv[])
 #endif
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
+#ifdef Q_OS_ANDROID
+        QQuickStyle::setStyle(QStringLiteral("org.kde.breeze"));
+#else
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+#endif
     }
     // Follows the system color scheme and restores the one chosen in the settings.
     KColorSchemeManager::instance();
@@ -198,13 +221,16 @@ int main(int argc, char *argv[])
     QString error;
     if (!db.open(&error)) {
         qCCritical(lcApp) << "cannot open the database:" << error;
+#ifndef Q_OS_ANDROID
         QMessageBox::critical(nullptr, i18n("KTasks"), i18n("The task database could not be opened:\n%1\n\nYour data was not changed.", error));
+#endif
         return 1;
     }
 
     Application application(&db);
     application.handleArguments(app.arguments(), true);
-#ifdef KTASKS_HAVE_DBUS
+#if defined(Q_OS_ANDROID)
+#elif defined(KTASKS_HAVE_DBUS)
     if (service) {
         QObject::connect(service.get(), &KDBusService::activateRequested, &application, [&application](const QStringList &arguments, const QString &) {
             application.handleArguments(arguments, false);
@@ -240,6 +266,14 @@ int main(int argc, char *argv[])
     if (window && !application.startHidden()) {
         window->show();
     }
+#ifdef KTASKS_HAVE_NOTIFICATION_PERMISSION
+    // Android 13+ shows reminders only after the user allows notifications.
+    if (KNotificationPermission::checkPermission() != Qt::PermissionStatus::Granted) {
+        KNotificationPermission::requestPermission(&application, [](Qt::PermissionStatus status) {
+            qCInfo(lcNotify) << "notification permission:" << int(status);
+        });
+    }
+#endif
 
     // Development aids: open a task or the settings, save a picture of the window and quit.
     if (qEnvironmentVariableIntValue("KTASKS_SELECT") > 0) {

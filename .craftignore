@@ -1,0 +1,7 @@
+# Files Craft leaves out of the Android package (regular expressions).
+qml/QtQuick/Controls/Material/.*
+qml/QtQuick/Controls/Universal/.*
+qml/QtQuick/Controls/Imagine/.*
+qml/QtQuick/Controls/Fusion/.*
+lib/qml/org/kde/kirigami/styles/Material/.*
+share/locale/.*/kf6_entry.desktop

@@ -21,13 +21,20 @@ target_compile_definitions(ktasksapp PRIVATE TRANSLATION_DOMAIN="ktasks")
 target_include_directories(ktasksapp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(ktasksapp PUBLIC
     ktaskscore
-    Qt6::Widgets Qt6::Qml Qt6::Quick Qt6::PrintSupport
+    Qt6::Qml Qt6::Quick
     KF6::CoreAddons KF6::ConfigCore KF6::ConfigGui KF6::I18n KF6::Notifications
-    KF6::StatusNotifierItem KF6::ColorScheme KF6::WindowSystem KF6::IconThemes
+    KF6::ColorScheme
     KirigamiAddonsStatefulApp
     qt6keychain
 )
-if(UNIX AND NOT APPLE)
+if(ANDROID)
+    target_link_libraries(ktasksapp PUBLIC Qt6::Svg KF6::Kirigami OpenSSL::SSL)
+else()
+    # Desktop only: tray icon, printing, window activation, icon theme setup.
+    target_link_libraries(ktasksapp PUBLIC Qt6::Widgets Qt6::PrintSupport KF6::StatusNotifierItem KF6::WindowSystem KF6::IconThemes)
+    target_compile_definitions(ktasksapp PUBLIC KTASKS_HAVE_TRAY=1 KTASKS_HAVE_PRINTER=1 KTASKS_HAVE_WINDOWSYSTEM=1)
+endif()
+if(UNIX AND NOT APPLE AND NOT ANDROID)
     target_link_libraries(ktasksapp PUBLIC Qt6::DBus KF6::GlobalAccel)
     target_compile_definitions(ktasksapp PUBLIC KTASKS_HAVE_DBUS=1 KTASKS_HAVE_GLOBALACCEL=1)
 endif()
@@ -78,9 +85,15 @@ target_link_libraries(ktasks PRIVATE
     Qt6::QuickControls2
     KF6::I18nQml
 )
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT ANDROID)
     target_link_libraries(ktasks PRIVATE KF6::DBusAddons KF6::Crash)
     target_compile_definitions(ktasks PRIVATE KTASKS_HAVE_CRASH=1)
 endif()
 
 install(TARGETS ktasks ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+
+if(ANDROID)
+    include(ECMAddAndroidApk)
+    ecm_add_android_apk(ktasks ANDROID_DIR ${CMAKE_SOURCE_DIR}/android)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/androidicons.cmake)
+endif()

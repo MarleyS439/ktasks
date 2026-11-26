@@ -9,12 +9,13 @@ class JournalManager;
 class RoutineManager;
 class TaskModel;
 class TaskStore;
-class QPrinter;
+class QPagedPaintDevice;
 
 /**
  * Generates KDE Breeze-styled printouts and PDF exports for tasks (Today,
  * Week / Next 7 days, Overdue, current view/list), daily routine, or journal
- * entries using Qt6::PrintSupport.
+ * entries. PDFs are written with QPdfWriter everywhere; printing (desktop
+ * only) uses Qt6::PrintSupport.
  */
 class PdfExporter : public QObject
 {
@@ -37,7 +38,7 @@ private:
     QString buildMatrixHtml(const QVariantMap &options) const;
     QString buildRoutineHtml(const QVariantMap &options) const;
     QString buildJournalHtml(const QVariantMap &options) const;
-    void renderToPrinter(QPrinter &printer, const QString &html, const QString &headerTitle) const;
+    void renderToDevice(QPagedPaintDevice &device, const QString &html, const QString &headerTitle) const;
 
     TaskStore *m_store;
     TaskModel *m_taskModel;
