@@ -16,6 +16,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickItem>
+#include <QQuickStyle>
 #include <QQuickWindow>
 #include <QStandardPaths>
 #include <QTemporaryDir>
@@ -143,6 +144,11 @@ private Q_SLOTS:
         s_prevHandler = qInstallMessageHandler(collectingHandler);
 
         KLocalizedString::setApplicationDomain("ktasks");
+        // The style main() uses; without it Windows falls back to its native
+        // style, which KTasks does not target.
+        if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
+            QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+        }
         m_dir = std::make_unique<QTemporaryDir>();
         m_db = std::make_unique<Database>(m_dir->filePath(QStringLiteral("ktasks.db")));
         QVERIFY(m_db->open());
