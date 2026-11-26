@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.1.0" date="2026-11-26">
+      <description>
+        <p>First Android version (arm64): the same tasks, routine, priority matrix, journal, insights and Nextcloud synchronization, with system notifications for reminders. PDFs are now written the same way on every platform; printing stays a desktop feature.</p>
+      </description>
+    </release>
     <release version="1.0.11" date="2026-11-26">
       <description>
         <p>Fix the Windows build: the interface is translated again, reminders and other notifications show as tray notifications, the tray icon no longer disappears, a profile picture can be chosen and loads correctly, and secure connections no longer miss their OpenSSL library. Windows now keeps a ktasks.log next to the data. The view leaves a list that was deleted, and a new end-to-end test exercises every part of the window.</p>

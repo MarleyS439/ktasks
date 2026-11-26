@@ -3,8 +3,6 @@ name: Android APK
 on:
   workflow_dispatch:
   workflow_call:
-  push:
-    branches: [feature/android]  # TEMPORARY: iterate on the port
 
 permissions:
   contents: read
