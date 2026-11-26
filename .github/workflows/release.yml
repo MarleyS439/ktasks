@@ -154,7 +154,12 @@ jobs:
           cmake -S . -B build-win -G Ninja -DCMAKE_BUILD_TYPE=Release
           cmake --build build-win -j"$(nproc)"
           if ! QT_QPA_PLATFORM=offscreen ctest --test-dir build-win --output-on-failure -V; then
-            QT_QPA_PLATFORM=offscreen ./build-win/bin/apptest.exe || true
+            # QtTest output does not reach the Windows console: write it to files.
+            for t in apptest uitest; do
+              QT_QPA_PLATFORM=offscreen ./build-win/bin/$t.exe -o "$t.txt,txt" || true
+              echo "=== $t ==="
+              cat "$t.txt" || true
+            done
             exit 1
           fi
           pkgver=$(bash -c 'source packaging/PKGBUILD && printf "%s" "$pkgver"')
