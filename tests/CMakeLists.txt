@@ -27,6 +27,6 @@ target_link_libraries(livesync ktaskscore)
 # End-to-end interaction test of the real main window.
 ecm_add_test(uitest.cpp
     TEST_NAME uitest
-    LINK_LIBRARIES ktasksapp KF6::I18nQml Qt6::Test Qt6::Quick
+    LINK_LIBRARIES ktasksapp KF6::I18nQml Qt6::Test Qt6::Quick Qt6::QuickControls2
 )
 target_compile_definitions(uitest PRIVATE KTASKS_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
