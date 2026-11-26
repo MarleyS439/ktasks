@@ -9,3 +9,8 @@ packaging/src/
 *.tar.zst
 .flatpak-builder/
 repo/
+build-win/
+dist-windows/
+dist-arch/
+dist-flatpak/
+*.zip
