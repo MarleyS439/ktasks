@@ -261,7 +261,7 @@
       <div class="container">
         <div class="section-head">
           <span class="section-eyebrow" data-i18n="compatEyebrow">Compatibilidade</span>
-          <h2 data-i18n="compatTitle">Feito para Plasma 6, pronto para Linux, Windows e Android</h2>
+          <h2 data-i18n="compatTitle">Feito para Plasma 6, pronto para Linux e Windows</h2>
         </div>
 
         <div class="compat-table-wrap">
@@ -315,7 +315,6 @@
             <button type="button" role="tab" aria-selected="true" class="inst-tab active" data-install="flatpak">Flatpak (Universal)</button>
             <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="arch">Arch Linux / CachyOS</button>
             <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="windows">Windows 10/11 (.zip)</button>
-            <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="android">Android (.apk)</button>
             <button type="button" role="tab" aria-selected="false" class="inst-tab" data-install="source" data-i18n="tabSource">Código-fonte (CMake)</button>
           </div>
 
@@ -361,23 +360,6 @@ flatpak run io.github.marleys439.ktasks</code></pre>
               <pre><code id="cmd-windows">Expand-Archive ktasks-1.1.1-windows-x86_64.zip -DestinationPath .
 .\ktasks-1.1.1-windows-x86_64\ktasks.exe</code></pre>
               <button type="button" class="copy-btn" data-copy="cmd-windows" data-i18n="btnCopy">Copiar</button>
-            </div>
-          </div>
-
-          <div class="install-pane" id="pane-android">
-            <div class="pane-head">
-              <div>
-                <h3>Android 9+ (<code>.apk</code>)</h3>
-                <p data-i18n="androidNote">O mesmo KTasks no celular: tarefas, rotina, matriz, diário, insights e sync com Nextcloud, com notificações do sistema. Abra o .apk no celular e permita instalar apps da origem quando pedido.</p>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:.5rem">
-                <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.1.1/ktasks-1.1.1-android-arm64.apk" class="breeze-btn breeze-btn-primary" data-i18n="btnDownloadAndroid">Baixar Android .apk (v1.1.1)</a>
-                <a href="https://github.com/MarleyS439/ktasks/releases/download/v1.1.1/ktasks-1.1.1-android-armv7.apk" class="breeze-btn breeze-btn-secondary" data-i18n="btnDownloadAndroid32">Celulares 32 bits (Galaxy A01/A10)</a>
-              </div>
-            </div>
-            <div class="code-wrap">
-              <pre><code id="cmd-android">adb install -r ktasks-1.1.1-android-arm64.apk   # ou -armv7.apk em Android 32 bits</code></pre>
-              <button type="button" class="copy-btn" data-copy="cmd-android" data-i18n="btnCopy">Copiar</button>
             </div>
           </div>
 
