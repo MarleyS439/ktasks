@@ -1,8 +1,9 @@
 name: Android APK
 
+# Not part of the public releases: run it by hand ("Run workflow") to get the
+# APKs as private workflow artifacts.
 on:
   workflow_dispatch:
-  workflow_call:
 
 permissions:
   contents: read

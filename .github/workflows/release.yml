@@ -1,4 +1,4 @@
-name: Release Packages (Arch + Flatpak + Windows + Android)
+name: Release Packages (Arch + Flatpak + Windows)
 
 on:
   push:
@@ -172,14 +172,9 @@ jobs:
           name: ktasks-windows-zip
           path: dist-windows/*.zip
 
-  package-android:
-    name: Android APK
-    uses: ./.github/workflows/android.yml
-    secrets: inherit
-
   publish-release:
     name: Publish GitHub Release Assets
-    needs: [package-archlinux, package-flatpak, package-windows, package-android]
+    needs: [package-archlinux, package-flatpak, package-windows]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
@@ -192,7 +187,7 @@ jobs:
       - name: Generate SHA256SUMS.txt
         run: |
           cd release-assets
-          sha256sum *.pkg.tar.zst *.flatpak *.zip *.apk > SHA256SUMS.txt
+          sha256sum *.pkg.tar.zst *.flatpak *.zip > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
       - name: Create or update GitHub Release with packages
