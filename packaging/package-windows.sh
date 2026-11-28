@@ -73,12 +73,22 @@ done
 # Ensure Qt plugins needed at runtime are present
 QT_PLUGINS=$(qtpaths6 --query QT_INSTALL_PLUGINS)
 QT_PLUGINS_UNIX=$(cygpath -u "$QT_PLUGINS")
-for sub in platforms styles sqldrivers tls networkinformation iconengines imageformats kiconthemes6 kf6; do
+for sub in platforms styles sqldrivers tls networkinformation iconengines imageformats multimedia kiconthemes6 kf6; do
     if [[ -d "$QT_PLUGINS_UNIX/$sub" ]]; then
         mkdir -p "$PKG_DIR/plugins/$sub"
         cp -a "$QT_PLUGINS_UNIX/$sub/." "$PKG_DIR/plugins/$sub/"
     fi
 done
+
+# The completion sound only needs an audio output: prefer Qt's native Windows
+# media backend, which avoids bundling FFmpeg, when MSYS2 ships it.
+if [[ -f "$PKG_DIR/plugins/multimedia/windowsmediaplugin.dll" ]]; then
+    rm -f "$PKG_DIR/plugins/multimedia/ffmpegmediaplugin.dll"
+fi
+if ! ls "$PKG_DIR/plugins/multimedia/"*.dll >/dev/null 2>&1; then
+    echo "ERROR: no Qt Multimedia backend plugin in the bundle" >&2
+    exit 1
+fi
 
 # Remove debug plugin DLLs if any (*d.dll when non-debug exists) to save space cleanly
 find "$PKG_DIR/plugins" -type f -name "*.a" -delete 2>/dev/null || true

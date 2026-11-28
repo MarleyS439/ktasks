@@ -21,7 +21,7 @@ target_compile_definitions(ktasksapp PRIVATE TRANSLATION_DOMAIN="ktasks")
 target_include_directories(ktasksapp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(ktasksapp PUBLIC
     ktaskscore
-    Qt6::Qml Qt6::Quick
+    Qt6::Qml Qt6::Quick Qt6::Multimedia
     KF6::CoreAddons KF6::ConfigCore KF6::ConfigGui KF6::I18n KF6::Notifications
     KF6::ColorScheme
     KirigamiAddonsStatefulApp
@@ -89,6 +89,12 @@ if(UNIX AND NOT APPLE AND NOT ANDROID)
     target_link_libraries(ktasks PRIVATE KF6::DBusAddons KF6::Crash)
     target_compile_definitions(ktasks PRIVATE KTASKS_HAVE_CRASH=1)
 endif()
+
+qt_add_resources(ktasks "sounds"
+    PREFIX /sounds
+    BASE ${CMAKE_SOURCE_DIR}/data/sounds
+    FILES ${CMAKE_SOURCE_DIR}/data/sounds/task-complete.wav
+)
 
 install(TARGETS ktasks ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

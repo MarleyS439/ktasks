@@ -6881,3 +6881,15 @@ msgstr "Excluir tarefas concluídas"
 msgctxt "undo step"
 msgid "Import tasks"
 msgstr "Importar tarefas"
+
+#: src/app/qml/SettingsPage.qml
+#, kde-format
+msgctxt "@option:check"
+msgid "Play a sound when a task is completed"
+msgstr "Tocar um som ao concluir uma tarefa"
+
+#: src/app/qml/SettingsPage.qml
+#, kde-format
+msgctxt "@info"
+msgid "A short chime when you tick off a task."
+msgstr "Um toque curto quando você marca uma tarefa como concluída."

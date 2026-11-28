@@ -19,7 +19,7 @@ jobs:
       - name: Install build & runtime dependencies
         run: |
           pacman -Syu --noconfirm --needed base-devel git cmake extra-cmake-modules ninja \
-            qt6-base qt6-declarative kirigami kirigami-addons qqc2-desktop-style \
+            qt6-base qt6-declarative qt6-multimedia qt6-multimedia-ffmpeg kirigami kirigami-addons qqc2-desktop-style \
             kcoreaddons kconfig ki18n kcalendarcore knotifications kdbusaddons \
             kstatusnotifieritem kcolorscheme kglobalaccel kwindowsystem kcrash \
             kiconthemes qtkeychain-qt6 breeze-icons openssl
@@ -111,6 +111,7 @@ jobs:
             mingw-w64-ucrt-x86_64-qt6-base
             mingw-w64-ucrt-x86_64-qt6-declarative
             mingw-w64-ucrt-x86_64-qt6-svg
+            mingw-w64-ucrt-x86_64-qt6-multimedia
             mingw-w64-ucrt-x86_64-qt6-shadertools
             mingw-w64-ucrt-x86_64-qt6-tools
             mingw-w64-ucrt-x86_64-qt6-translations

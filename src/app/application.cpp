@@ -35,6 +35,7 @@
 #include <QProcess>
 #include <QQmlEngine>
 #include <QSettings>
+#include <QSoundEffect>
 #include <QStandardPaths>
 #include <QTimeZone>
 #include <QUrlQuery>
@@ -1324,7 +1325,23 @@ void Application::setDone(qlonglong id, bool done)
         } else {
             Q_EMIT message(i18n("Task completed"), true);
         }
+        playCompletionSound();
     }
+}
+
+void Application::playCompletionSound()
+{
+    if (!m_settings->completionSound()) {
+        return;
+    }
+    if (!m_completionSound) {
+        m_completionSound = new QSoundEffect(this);
+        m_completionSound->setSource(QUrl(QStringLiteral("qrc:/sounds/task-complete.wav")));
+        m_completionSound->setVolume(0.8f);
+    }
+    // Restart when tasks are ticked off quickly one after another.
+    m_completionSound->stop();
+    m_completionSound->play(); // queued until the sound has loaded
 }
 
 void Application::setDoneMany(const QVariantList &ids, bool done)
@@ -1351,6 +1368,9 @@ void Application::setDoneMany(const QVariantList &ids, bool done)
         return;
     }
     m_store->setCompletedMany(writable, done);
+    if (done) {
+        playCompletionSound();
+    }
     Q_EMIT message(done ? i18np("%1 task completed", "%1 tasks completed", writable.size())
                         : i18np("%1 task reopened", "%1 tasks reopened", writable.size()),
                    true);

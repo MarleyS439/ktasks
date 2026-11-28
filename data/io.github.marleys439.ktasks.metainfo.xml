@@ -39,6 +39,11 @@
     <binary>ktasks</binary>
   </provides>
   <releases>
+    <release version="1.1.2" date="2026-11-27">
+      <description>
+        <p>Play a short chime when a task is completed. It can be turned off in Settings → Notifications.</p>
+      </description>
+    </release>
     <release version="1.1.1" date="2026-11-26">
       <description>
         <p>Add an Android package for 32-bit phones (armeabi-v7a), such as the Samsung Galaxy A01, which could not install the arm64 package.</p>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(ktasks VERSION 1.1.1 LANGUAGES CXX)
+project(ktasks VERSION 1.1.2 LANGUAGES CXX)
 
 set(QT_MIN_VERSION "6.6.0")
 set(KF_MIN_VERSION "6.5.0")
@@ -16,7 +16,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 include(ECMInstallIcons)
 
-set(_ktasks_qt_components Core Gui Qml Quick QuickControls2 Sql Network)
+set(_ktasks_qt_components Core Gui Qml Quick QuickControls2 Sql Network Multimedia)
 set(_ktasks_kf_components CoreAddons Config I18n CalendarCore Notifications ColorScheme)
 if(ANDROID)
     # Phones have no tray, printers dialogs or window system integration;

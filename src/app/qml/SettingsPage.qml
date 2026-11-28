@@ -474,6 +474,17 @@ Kirigami.Page {
             }
             FormCard.FormCard {
                 FormCard.FormSwitchDelegate {
+                    text: i18nc("@option:check", "Play a sound when a task is completed")
+                    description: i18nc("@info", "A short chime when you tick off a task.")
+                    checked: App.settings.completionSound
+                    onToggled: {
+                        App.settings.completionSound = checked
+                        if (checked) {
+                            App.playCompletionSound()
+                        }
+                    }
+                }
+                FormCard.FormSwitchDelegate {
                     text: i18nc("@option:check", "Show reminders")
                     description: i18nc("@info", "Desktop notifications with buttons to complete or snooze the task.")
                     checked: App.settings.notifyReminders
