@@ -31,6 +31,8 @@ class QWindow;
  * owns the desktop integration (tray icon, global shortcut, launcher badge,
  * configurable shortcuts via the Kirigami action collection).
  */
+class QSoundEffect;
+
 class Application : public AbstractKirigamiApplication
 {
     Q_OBJECT
@@ -193,6 +195,8 @@ public:
     Q_INVOKABLE void updateTask(qlonglong id, const QVariantMap &changes);
     Q_INVOKABLE void setDone(qlonglong id, bool done);
     Q_INVOKABLE void setDoneMany(const QVariantList &ids, bool done);
+    /** Plays the short "task completed" chime, if enabled in the settings. */
+    Q_INVOKABLE void playCompletionSound();
     Q_INVOKABLE void deleteTask(qlonglong id);
     Q_INVOKABLE void deleteTasks(const QVariantList &ids);
     Q_INVOKABLE void moveTask(qlonglong id, qlonglong listId);
@@ -304,6 +308,7 @@ private:
     KStatusNotifierItem *m_tray = nullptr;
     QPointer<QSystemTrayIcon> m_messageIcon; // shows fallback notifications (Windows)
     QSystemTrayIcon *m_ownMessageIcon = nullptr; // used when the tray icon is turned off
+    QSoundEffect *m_completionSound = nullptr; // created on first use
     qlonglong m_fallbackTaskId = 0;
     QString m_fallbackView;
     QAction *m_globalQuickAdd = nullptr;

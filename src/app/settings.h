@@ -61,6 +61,7 @@ public:                                                                         
     KTASKS_SETTING(bool, notifySyncProblems, setNotifySyncProblems, "Notifications", true)
     KTASKS_SETTING(bool, notifyRoutines, setNotifyRoutines, "Notifications", true)
     KTASKS_SETTING(bool, notifyFocus, setNotifyFocus, "Notifications", true)
+    KTASKS_SETTING(bool, completionSound, setCompletionSound, "Notifications", true)
     // Focus / Pomodoro
     KTASKS_SETTING(int, pomodoroFocusMinutes, setPomodoroFocusMinutes, "Focus", 25)
     KTASKS_SETTING(int, pomodoroShortBreakMinutes, setPomodoroShortBreakMinutes, "Focus", 5)

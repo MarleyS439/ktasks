@@ -1,14 +1,14 @@
 # Maintainer: MarleyS439 <https://github.com/MarleyS439>
 # AUR/Local Arch package for KTasks
 pkgname=ktasks
-pkgver=1.1.1
+pkgver=1.1.2
 pkgrel=1
 pkgdesc="Offline-first task, priority matrix, Pomodoro, routine, and journal manager for KDE Plasma (optional Nextcloud sync)"
 arch=('x86_64' 'aarch64')
 url="https://github.com/MarleyS439/ktasks"
 license=('GPL-3.0-or-later')
 options=('!debug')
-depends=('qt6-base' 'qt6-declarative' 'kirigami' 'kirigami-addons' 'qqc2-desktop-style'
+depends=('qt6-base' 'qt6-declarative' 'qt6-multimedia' 'kirigami' 'kirigami-addons' 'qqc2-desktop-style'
          'kcoreaddons' 'kconfig' 'ki18n' 'kcalendarcore' 'knotifications' 'kdbusaddons'
          'kstatusnotifieritem' 'kcolorscheme' 'kglobalaccel' 'kwindowsystem' 'kcrash'
          'kiconthemes' 'qtkeychain-qt6' 'breeze-icons' 'openssl')
